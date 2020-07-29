@@ -75,7 +75,7 @@ RUN conda config --add channels conda-forge
 
 # Encapsulate the environment info into its own yml file (which carries
 # the name `${CLASS}` in it
-COPY ${CLASS}/environment.yml /tmp/
+COPY conda-environment-files/environment.yml /tmp/
 RUN conda env create -f /tmp/environment.yml
 RUN source activate ${CLASS}
 

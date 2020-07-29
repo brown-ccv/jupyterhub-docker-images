@@ -1,10 +1,31 @@
-name: Publish Docker
-on: [push]
+name: Build and Publish Docker Image
+on: 
+  push:
+    paths:
+      - 'apma0360/**'
+      - 'Dokerfile'
+      - 'docker-compose.yml'
+      - 'scripts/**'
 jobs:
+  create:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Create and Upload Environment Files
+        run: |
+          docker-compose up conda_build
+      - uses: actions/upload-artifact@v2
+        with:
+          name: conda-environment-files
+          path: apma0360
   build:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
+      - name: Download Environment Files
+        uses: actions/download-artifact@v2
+        with:
+          name: conda-environment-files
       - uses: GoogleCloudPlatform/github-actions/setup-gcloud@master
         with:
           version: '290.0.1'
@@ -15,7 +36,7 @@ jobs:
         run: gcloud auth configure-docker
       - name: Build and Push APMA0360 image
         run: |
-          docker-compose build
-          docker-compose push
+          docker-compose build jh_image
+          docker-compose push jh_image
         env:
           CLASS: apma0360
