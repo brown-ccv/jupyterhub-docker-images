@@ -10,8 +10,6 @@ services:
       conda env export --name ${CLASS} > /tmp/environment.yml &&
       conda env export --name ${CLASS} --no-build > /tmp/environment.nb.yml
       "
-    environment:
-      - CLASS=${CLASS}
   jh_image:
     build:
       context: .

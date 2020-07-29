@@ -11,13 +11,13 @@ jobs:
   apma0360:
     runs-on: ubuntu-latest
     steps:
+      env:
+        CLASS: apma0360
       - uses: actions/checkout@v2
       - uses: satackey/action-docker-layer-caching@v0.0.4
       - name: Create and Upload Environment Files
         run: |
-          sudo docker-compose up conda_build
-        env:
-          CLASS: apma0360
+          sudo --preserve-env=CLASS docker-compose up conda_build
       - uses: actions/upload-artifact@v2
         with:
           name: conda-environment-files
@@ -34,5 +34,3 @@ jobs:
         run: |
           docker-compose build jh_image
           docker-compose push jh_image
-        env:
-          CLASS: apma0360
