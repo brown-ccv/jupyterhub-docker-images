@@ -2,14 +2,17 @@ version: '3.4'
 services:
   conda_build:
     image: brownccv/jh_sandbox:0.1.0
+    user: root
     volumes:
       - ./${CLASS}:/tmp/
     command: > 
       bash -c "conda create --name ${CLASS} python=3.8 &&
       conda install -y --name ${CLASS} -c conda-forge --file /tmp/requirements.txt &&
-      conda env export --name ${CLASS} > /tmp/environment.yml &&
-      conda env export --name ${CLASS} --no-build > /tmp/environment.nb.yml
+      sudo conda env export --name ${CLASS} > /tmp/environment.yml &&
+      sudo conda env export --name ${CLASS} --no-build > /tmp/environment.nb.yml
       "
+    environment: 
+      - CLASS=${CLASS}
   jh_image:
     build:
       context: .

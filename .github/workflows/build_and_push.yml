@@ -13,7 +13,7 @@ jobs:
     steps:
       - uses: actions/checkout@v2
       - uses: satackey/action-docker-layer-caching@v0.0.4
-      - name: Create and Upload Environment Files
+      - name: Create Environment Files
         run: |
           sudo --preserve-env=CLASS docker-compose up conda_build
         env:
