@@ -6,7 +6,7 @@ services:
       - ./${CLASS}:/tmp/
     command: > 
       bash -c "conda create --name ${CLASS} python=3.8 &&
-      sudo conda install -y --name ${CLASS} -c conda-forge --file /tmp/requirements.txt &&
+      conda install -y --name ${CLASS} -c conda-forge --file /tmp/requirements.txt &&
       sudo conda env export --name ${CLASS} > /tmp/environment.yml &&
       sudo conda env export --name ${CLASS} --no-build > /tmp/environment.nb.yml
       "
