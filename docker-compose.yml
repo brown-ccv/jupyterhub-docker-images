@@ -2,8 +2,6 @@ version: '3.4'
 services:
   conda_build:
     image: brownccv/jh_sandbox:0.1.0
-    args: 
-      CLASS: ${CLASS}
     volumes:
       - ./${CLASS}:/tmp/
     command: > 
@@ -12,6 +10,8 @@ services:
       conda env export --name ${CLASS} > /tmp/environment.yml &&
       conda env export --name ${CLASS} --no-build > /tmp/environment.nb.yml
       "
+    environment:
+      - CLASS=${CLASS}
   jh_image:
     build:
       context: .
