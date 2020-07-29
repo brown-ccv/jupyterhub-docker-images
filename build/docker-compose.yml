@@ -1,0 +1,6 @@
+version: '3.4'
+services:
+    conda_build:
+        image: brownccv/jh_sandbox:0.1.0
+        volumes:
+            - ../apma0360:/tmp/

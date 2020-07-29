@@ -1,0 +1,8 @@
+version: '3.4'
+services:
+  jh_image:
+    build:
+      context: .
+      args: 
+        CLASS: ${CLASS}
+    image: gcr.io/jupyterhub-docker-images/${CLASS}

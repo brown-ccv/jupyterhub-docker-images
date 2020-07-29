@@ -1,0 +1,16 @@
+anaconda 
+jupyter_contrib_nbextensions
+jupyterlab-git
+jupyter-server-proxy
+matplotlib 
+nbdime
+nbgitpuller
+nodejs>10
+numpy 
+pandas 
+pip
+RISE
+seaborn 
+scikit-learn 
+scipy
+tini
