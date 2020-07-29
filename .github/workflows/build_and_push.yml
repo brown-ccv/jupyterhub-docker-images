@@ -15,7 +15,7 @@ jobs:
       - uses: satackey/action-docker-layer-caching@v0.0.4
       - name: Create and Upload Environment Files
         run: |
-          docker-compose up conda_build
+          sudo docker-compose up conda_build
         env:
           CLASS: apma0360
       - uses: actions/upload-artifact@v2
