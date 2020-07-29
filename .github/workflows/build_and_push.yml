@@ -8,10 +8,11 @@ on:
       - 'scripts/**'
       - '.github/**'
 jobs:
-  build:
+  apma0360:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
+      - uses: satackey/action-docker-layer-caching@v0.0.4
       - name: Create and Upload Environment Files
         run: |
           docker-compose up conda_build
