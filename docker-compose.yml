@@ -8,7 +8,7 @@ services:
     command: > 
       bash -c "conda create --name ${CLASS} python=3.8 &&
       conda install -y --name ${CLASS} -c conda-forge --file /tmp/requirements.txt &&
-      sudo --preserve-env=CLASS conda env export --name ${CLASS} > /tmp/environment.yml &&
+      conda env export --name ${CLASS} > /tmp/environment.yml &&
       conda env export --name ${CLASS} --no-build > /tmp/environment.nb.yml
       "
     environment: 
