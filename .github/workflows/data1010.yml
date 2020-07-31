@@ -3,7 +3,7 @@ on:
   push:
     paths:
       - 'classes/data1010/**'
-      - 'Dokerfile'
+      - 'Dockerfile'
       - 'docker-compose.yml'
       - 'scripts/**'
       - '.github/workflows/data1010.yml'
