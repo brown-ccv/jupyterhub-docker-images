@@ -1,4 +1,4 @@
-name: Build and Publish Docker Image
+name: Build Image for data1010
 on: 
   push:
     paths:

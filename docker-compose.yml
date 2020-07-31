@@ -18,3 +18,4 @@ services:
       context: .
       args: 
         CLASS: ${CLASS}
+        WITH_R: ${WITH_R}

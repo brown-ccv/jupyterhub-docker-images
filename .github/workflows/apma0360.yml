@@ -1,4 +1,4 @@
-name: Build and Publish Docker Image
+name: Build Image for apma0360
 on: 
   push:
     paths:
@@ -39,3 +39,4 @@ jobs:
         env:
           CLASS: apma0360
           TARGET: base
+          WITH_R: false
