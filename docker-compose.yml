@@ -21,7 +21,7 @@ services:
         CLASS: ${CLASS}
   tag_ref:
     <<: *jh_image
-    image:  gcr.io/jupyterhub-docker-images/${CLASS}:${TAG_REF}
+    image: gcr.io/jupyterhub-docker-images/${CLASS}:${TAG_REF}
   tag_sha:
     <<: *jh_image
     image: gcr.io/jupyterhub-docker-images/${CLASS}:${TAG_SHA}

@@ -32,10 +32,10 @@ jobs:
       - name: Build and Push apma0360 image
         run: |
           docker-compose build jh_image
-          docker-compose push tag_ref
-          docker-compose push tag_sha
+          docker tag jupyterhub-conda-envs_jh_image:latest gcr.io/jupyterhub-docker-images/${CLASS}:${GITHUB_REF##*/}
+          docker tag jupyterhub-conda-envs_jh_image:latest gcr.io/jupyterhub-docker-images/${CLASS}:${GITHUB_SHA}
+          docekr push gcr.io/jupyterhub-docker-images/${CLASS}:${GITHUB_REF##*/}
+          docker push gcr.io/jupyterhub-docker-images/${CLASS}:${GITHUB_SHA}
         env:
           CLASS: apma0360
           TARGET: base
-          TAG_REF: ${{ github.ref }}
-          TAG_SHA: ${{ github.sha }}
