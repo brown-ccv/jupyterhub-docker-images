@@ -118,6 +118,7 @@ USER $NB_UID
 ####################################################################
 # Add Julia pre-requisites
 FROM r_lang as r_julia
+ARG CLASS
 
 USER root
 # Julia dependencies
