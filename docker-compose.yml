@@ -13,15 +13,15 @@ services:
       "
     environment: 
       - CLASS=${CLASS}
-  jh_image:
+  jh_image: &jh_image
     build:
       context: .
       target: ${TARGET}
       args: 
         CLASS: ${CLASS}
   tag_ref:
-    extends: jh_image
+    <<: *jh_image
     image:  gcr.io/jupyterhub-docker-images/${CLASS}:${TAG_REF}
   tag_sha:
-    extends: jh_image
+    <<: *jh_image
     image: gcr.io/jupyterhub-docker-images/${CLASS}:${TAG_SHA}
