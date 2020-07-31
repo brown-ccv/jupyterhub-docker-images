@@ -64,3 +64,12 @@ r-knitr
 r-leaflet
 r-gridextra
 r-mlr
+jupyter_contrib_nbextensions
+jupyterlab-git
+jupyter-server-proxy
+nbdime
+nbgitpuller
+nodejs>10
+RISE
+seaborn 
+tini

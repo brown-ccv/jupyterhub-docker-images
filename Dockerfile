@@ -1,6 +1,8 @@
-FROM buildpack-deps:bionic-scm as base
+FROM buildpack-deps:bionic-scm
 
 ARG CLASS
+ARG WITH_R
+ARG WITH_JULIA
 
 # Set up common env variables
 ENV TZ=America/New_York
@@ -46,6 +48,20 @@ RUN apt-get update -qq --yes && \
         wkhtmltopdf # for pdf export \
         > /dev/null
 
+####################################################################
+# R requisites
+RUN if [ "${WITH_R}" = "true" ]; then \
+  apt-get update && \
+    apt-get install -y --no-install-recommends \
+    fonts-dejavu \
+    unixodbc \
+    unixodbc-dev \
+    r-cran-rodbc \
+    gfortran \
+    gcc && \
+    rm -rf /var/lib/apt/lists/* && \
+    ln -s /bin/tar /bin/gtar \
+  fi
 
 ENV CONDA_PREFIX /srv/conda
 ENV PATH ${CONDA_PREFIX}/bin:$PATH

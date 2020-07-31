@@ -39,3 +39,4 @@ jobs:
         env:
           CLASS: data1010
           TARGET: base
+          WITH_R: true

@@ -16,6 +16,5 @@ services:
   jh_image: &jh_image
     build:
       context: .
-      target: ${TARGET}
       args: 
         CLASS: ${CLASS}
