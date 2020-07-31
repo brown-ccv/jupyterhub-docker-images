@@ -60,8 +60,7 @@ RUN if [ "${WITH_R}" = "true" ]; then \
     gfortran \
     gcc && \
     rm -rf /var/lib/apt/lists/* && \
-    ln -s /bin/tar /bin/gtar \
-  fi
+    ln -s /bin/tar /bin/gtar ; fi
 
 ENV CONDA_PREFIX /srv/conda
 ENV PATH ${CONDA_PREFIX}/bin:$PATH
