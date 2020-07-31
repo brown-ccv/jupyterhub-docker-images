@@ -3,7 +3,7 @@ on:
   push:
     paths:
       - 'classes/apma0360/**'
-      - 'Dokerfile'
+      - 'Dockerfile'
       - 'docker-compose.yml'
       - 'scripts/**'
       - '.github/workflows/apma0360.yml'
@@ -39,4 +39,3 @@ jobs:
         env:
           CLASS: apma0360
           TARGET: base
-          WITH_R: false

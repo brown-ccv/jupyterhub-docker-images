@@ -38,5 +38,4 @@ jobs:
           docker push gcr.io/jupyterhub-docker-images/${CLASS}:${GITHUB_SHA}
         env:
           CLASS: data1010
-          TARGET: base
-          WITH_R: true
+          TARGET: r_julia

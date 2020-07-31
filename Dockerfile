@@ -1,8 +1,6 @@
-FROM buildpack-deps:bionic-scm
+FROM buildpack-deps:bionic-scm as base
 
 ARG CLASS
-ARG WITH_R
-ARG WITH_JULIA
 
 # Set up common env variables
 ENV TZ=America/New_York
@@ -47,20 +45,6 @@ RUN apt-get update -qq --yes && \
         texlive-generic-recommended \
         wkhtmltopdf # for pdf export \
         > /dev/null
-
-####################################################################
-# R requisites
-RUN if [ "${WITH_R}" = "true" ]; then \
-  apt-get update && \
-    apt-get install -y --no-install-recommends \
-    fonts-dejavu \
-    unixodbc \
-    unixodbc-dev \
-    r-cran-rodbc \
-    gfortran \
-    gcc && \
-    rm -rf /var/lib/apt/lists/* && \
-    ln -s /bin/tar /bin/gtar ; fi
 
 ENV CONDA_PREFIX /srv/conda
 ENV PATH ${CONDA_PREFIX}/bin:$PATH
@@ -110,3 +94,76 @@ RUN jupyter lab build --dev-build=False --minimize=False
 
 # Make JupyterHub ports visible
 EXPOSE 8888
+
+####################################################################
+# Add R pre-requisites
+FROM base as r_lang
+USER root
+
+RUN apt-get update && \
+    apt-get install -y --no-install-recommends \
+    fonts-dejavu \
+    unixodbc \
+    unixodbc-dev \
+    r-cran-rodbc \
+    gfortran \
+    gcc && \
+    rm -rf /var/lib/apt/lists/*
+
+# Fix for devtools https://github.com/conda-forge/r-devtools-feedstock/issues/4
+RUN ln -s /bin/tar /bin/gtar
+
+USER $NB_UID
+
+####################################################################
+# Add Julia pre-requisites
+FROM r_lang as r_julia
+
+USER root
+# Julia dependencies
+# install Julia packages in /opt/julia instead of $HOME
+ENV JULIA_DEPOT_PATH=/opt/julia
+ENV JULIA_PKGDIR=/opt/julia
+ENV JULIA_VERSION=1.4.1
+
+WORKDIR /tmp
+
+# hadolint ignore=SC2046
+RUN mkdir "/opt/julia-${JULIA_VERSION}" && \
+    wget -q https://julialang-s3.julialang.org/bin/linux/x64/$(echo "${JULIA_VERSION}" | cut -d. -f 1,2)"/julia-${JULIA_VERSION}-linux-x86_64.tar.gz" && \
+    echo "fd6d8cadaed678174c3caefb92207a3b0e8da9f926af6703fb4d1e4e4f50610a *julia-${JULIA_VERSION}-linux-x86_64.tar.gz" | sha256sum -c - && \
+    tar xzf "julia-${JULIA_VERSION}-linux-x86_64.tar.gz" -C "/opt/julia-${JULIA_VERSION}" --strip-components=1 && \
+    rm "/tmp/julia-${JULIA_VERSION}-linux-x86_64.tar.gz"
+RUN ln -fs /opt/julia-*/bin/julia /usr/local/bin/julia
+
+# Show Julia where conda libraries are \
+RUN mkdir /etc/julia && \
+    echo "push!(Libdl.DL_LOAD_PATH, \"$CONDA_DIR/lib\")" >> /etc/julia/juliarc.jl && \
+    # Create JULIA_PKGDIR \
+    mkdir "${JULIA_PKGDIR}" && \
+    chown "${NB_USER}" "${JULIA_PKGDIR}" && \
+    fix-permissions "${JULIA_PKGDIR}"
+
+USER $NB_UID
+
+COPY classes/${CLASS}/requirements.jl /tmp/
+COPY scripts/install_julia_packages.jl /tmp/
+
+# Add Julia packages. Only add HDF5 if this is not a test-only build since
+# it takes roughly half the entire build time of all of the images on Travis
+# to add this one package and often causes Travis to timeout.
+#
+# Install IJulia as jovyan and then move the kernelspec out
+# to the system share location. Avoids problems with runtime UID change not
+# taking effect properly on the .local folder in the jovyan home dir.
+RUN julia -e 'import Pkg; Pkg.update()' && \
+    julia -e "using Pkg; pkg\"add IJulia\"; pkg\"precompile\"" && \
+    # move kernelspec out of home \
+    mv "${HOME}/.local/share/jupyter/kernels/julia"* "${CONDA_DIR}/share/jupyter/kernels/" && \
+    chmod -R go+rx "${CONDA_DIR}/share/jupyter" && \
+    rm -rf "${HOME}/.local" && \
+    fix-permissions "${JULIA_PKGDIR}" "${CONDA_DIR}/share/jupyter"
+
+# ENV JULIA_DEPOT_PATH="$HOME/.julia:$JULIA_DEPOT_PATH"
+# RUN julia -e 'using Pkg; popfirst!(DEPOT_PATH); include(expanduser("/tmp/install_julia_packages.jl")); include(expanduser("/tmp/requirements.jl")); install(julia_packages);'
+# RUN julia -e 'popfirst!(DEPOT_PATH); include(expanduser("/tmp/install_julia_packages.jl")); precompile();'
