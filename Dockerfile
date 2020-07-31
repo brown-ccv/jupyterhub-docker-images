@@ -1,4 +1,4 @@
-FROM buildpack-deps:bionic-scm
+FROM buildpack-deps:bionic-scm as base
 
 ARG CLASS
 

@@ -16,6 +16,12 @@ services:
   jh_image:
     build:
       context: .
+      target: ${TARGET}
       args: 
         CLASS: ${CLASS}
-    image: gcr.io/jupyterhub-docker-images/${CLASS}
+  tag_ref:
+    extends: jh_image
+    image:  gcr.io/jupyterhub-docker-images/${CLASS}:${TAG_REF}
+  tag_sha:
+    extends: jh_image
+    image: gcr.io/jupyterhub-docker-images/${CLASS}:${TAG_SHA}

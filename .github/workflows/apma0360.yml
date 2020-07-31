@@ -6,7 +6,7 @@ on:
       - 'Dokerfile'
       - 'docker-compose.yml'
       - 'scripts/**'
-      - '.github/**'
+      - '.github/workflows/apma0360.yml'
 jobs:
   apma0360:
     runs-on: ubuntu-latest
@@ -32,6 +32,10 @@ jobs:
       - name: Build and Push apma0360 image
         run: |
           docker-compose build jh_image
-          docker-compose push jh_image
+          docker-compose push tag_ref
+          docker-compose push tag_sha
         env:
           CLASS: apma0360
+          TARGET: base
+          TAG_REF: ${GITHUB_REF##*/}
+          TAG_SHA: ${GITHUB_SHA}
