@@ -141,8 +141,7 @@ RUN mkdir /etc/julia && \
     echo "push!(Libdl.DL_LOAD_PATH, \"$CONDA_DIR/lib\")" >> /etc/julia/juliarc.jl && \
     # Create JULIA_PKGDIR \
     mkdir "${JULIA_PKGDIR}" && \
-    chown "${NB_USER}" "${JULIA_PKGDIR}" && \
-    fix-permissions "${JULIA_PKGDIR}"
+    chown "${NB_USER}" "${JULIA_PKGDIR}" 
 
 USER $NB_UID
 
@@ -161,8 +160,7 @@ RUN julia -e 'import Pkg; Pkg.update()' && \
     # move kernelspec out of home \
     mv "${HOME}/.local/share/jupyter/kernels/julia"* "${CONDA_DIR}/share/jupyter/kernels/" && \
     chmod -R go+rx "${CONDA_DIR}/share/jupyter" && \
-    rm -rf "${HOME}/.local" && \
-    fix-permissions "${JULIA_PKGDIR}" "${CONDA_DIR}/share/jupyter"
+    rm -rf "${HOME}/.local"
 
 # ENV JULIA_DEPOT_PATH="$HOME/.julia:$JULIA_DEPOT_PATH"
 # RUN julia -e 'using Pkg; popfirst!(DEPOT_PATH); include(expanduser("/tmp/install_julia_packages.jl")); include(expanduser("/tmp/requirements.jl")); install(julia_packages);'
