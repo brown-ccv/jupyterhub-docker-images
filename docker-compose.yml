@@ -4,7 +4,7 @@ services:
     image: brownccv/jh_sandbox:0.1.0
     user: root
     volumes:
-      - ./${CLASS}:/tmp/
+      - ./classes/${CLASS}:/tmp/
     command: > 
       bash -c "conda create --name ${CLASS} python=3.8 &&
       conda install -y --name ${CLASS} -c conda-forge --file /tmp/requirements.txt &&
@@ -19,9 +19,3 @@ services:
       target: ${TARGET}
       args: 
         CLASS: ${CLASS}
-  tag_ref:
-    <<: *jh_image
-    image: gcr.io/jupyterhub-docker-images/${CLASS}:${TAG_REF}
-  tag_sha:
-    <<: *jh_image
-    image: gcr.io/jupyterhub-docker-images/${CLASS}:${TAG_SHA}

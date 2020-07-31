@@ -2,13 +2,13 @@ name: Build and Publish Docker Image
 on: 
   push:
     paths:
-      - 'classes/apma0360/**'
+      - 'classes/data1010/**'
       - 'Dokerfile'
       - 'docker-compose.yml'
       - 'scripts/**'
-      - '.github/workflows/apma0360.yml'
+      - '.github/workflows/data1010.yml'
 jobs:
-  apma0360:
+  data1010:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
@@ -16,11 +16,11 @@ jobs:
         run: |
           sudo --preserve-env=CLASS docker-compose up conda_build
         env:
-          CLASS: apma0360
+          CLASS: data1010
       - uses: actions/upload-artifact@v2
         with:
           name: conda-environment-files
-          path: classes/apma0360
+          path: classes/data1010
       - uses: GoogleCloudPlatform/github-actions/setup-gcloud@master
         with:
           version: '290.0.1'
@@ -29,7 +29,7 @@ jobs:
           export_default_credentials: true
       - name: Configure Docker
         run: gcloud auth configure-docker
-      - name: Build and Push apma0360 image
+      - name: Build and Push data1010 image
         run: |
           docker-compose build jh_image
           docker tag jupyterhub-conda-envs_jh_image:latest gcr.io/jupyterhub-docker-images/${CLASS}:${GITHUB_REF##*/}
@@ -37,5 +37,5 @@ jobs:
           docker push gcr.io/jupyterhub-docker-images/${CLASS}:${GITHUB_REF##*/}
           docker push gcr.io/jupyterhub-docker-images/${CLASS}:${GITHUB_SHA}
         env:
-          CLASS: apma0360
+          CLASS: data1010
           TARGET: base
