@@ -37,5 +37,5 @@ jobs:
         env:
           CLASS: apma0360
           TARGET: base
-          TAG_REF: ${GITHUB_REF##*/}
-          TAG_SHA: ${GITHUB_SHA}
+          TAG_REF: ${{ github.ref }}
+          TAG_SHA: ${{ github.sha }}
