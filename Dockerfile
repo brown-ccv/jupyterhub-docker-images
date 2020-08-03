@@ -125,7 +125,7 @@ USER root
 # install Julia packages in /opt/julia instead of $HOME
 ENV JULIA_DEPOT_PATH=/opt/julia
 ENV JULIA_PKGDIR=/opt/julia
-ENV JULIA_VERSION=1.5
+ENV JULIA_VERSION=1.5.0
 
 COPY classes/${CLASS}/julia_env/Project.toml /opt/julia/
 COPY classes/${CLASS}/julia_env/Manifest.toml /opt/julia/
