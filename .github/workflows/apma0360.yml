@@ -12,16 +12,18 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
-      - name: Create Environment Files
+      - name: Create Conda Environment Files
         run: |
           sudo --preserve-env=CLASS docker-compose up conda_build
         env:
           CLASS: apma0360
-      - uses: actions/upload-artifact@v2
+      - name: Upload Conda Env Files
+        uses: actions/upload-artifact@v2
         with:
           name: conda-environment-files
           path: classes/apma0360
-      - uses: GoogleCloudPlatform/github-actions/setup-gcloud@master
+      - name: Set Up GCloud
+        uses: GoogleCloudPlatform/github-actions/setup-gcloud@master
         with:
           version: '290.0.1'
           project_id: ${{ secrets.GCP_PROJECT_ID_JH_DOCKER }}

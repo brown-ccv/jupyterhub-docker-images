@@ -1,4 +1,6 @@
-const julia_packages = ["CSV",
+const julia_packages = [
+                    "IJulia",
+                    "CSV",
                     "DataFrames",
                     "DataFramesMeta",
                     "Distributions",

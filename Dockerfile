@@ -125,7 +125,10 @@ USER root
 # install Julia packages in /opt/julia instead of $HOME
 ENV JULIA_DEPOT_PATH=/opt/julia
 ENV JULIA_PKGDIR=/opt/julia
-ENV JULIA_VERSION=1.4.1
+ENV JULIA_VERSION=1.4.2
+
+COPY classes/${CLASS}/julia_env/Project.toml /opt/julia/
+COPY classes/${CLASS}/julia_env/Manifest.toml /opt/julia/
 
 WORKDIR /tmp
 
@@ -146,23 +149,13 @@ RUN mkdir /etc/julia && \
 
 USER $NB_UID
 
-COPY classes/${CLASS}/requirements.jl /tmp/
-COPY scripts/install_julia_packages.jl /tmp/
-
-# Add Julia packages. Only add HDF5 if this is not a test-only build since
-# it takes roughly half the entire build time of all of the images on Travis
-# to add this one package and often causes Travis to timeout.
+# Add Julia packages. Instantiate Julia env from files.
 #
 # Install IJulia as jovyan and then move the kernelspec out
 # to the system share location. Avoids problems with runtime UID change not
 # taking effect properly on the .local folder in the jovyan home dir.
-RUN julia -e 'import Pkg; Pkg.update()' && \
-    julia -e "using Pkg; pkg\"add IJulia\"; pkg\"precompile\"" && \
+RUN julia -e 'import Pkg; Pkg.update(); Pkg.instantiate(); Pkg.precompile();' && \
     # move kernelspec out of home \
     mv "${HOME}/.local/share/jupyter/kernels/julia"* "${CONDA_DIR}/share/jupyter/kernels/" && \
     chmod -R go+rx "${CONDA_DIR}/share/jupyter" && \
     rm -rf "${HOME}/.local"
-
-# ENV JULIA_DEPOT_PATH="$HOME/.julia:$JULIA_DEPOT_PATH"
-# RUN julia -e 'using Pkg; popfirst!(DEPOT_PATH); include(expanduser("/tmp/install_julia_packages.jl")); include(expanduser("/tmp/requirements.jl")); install(julia_packages);'
-# RUN julia -e 'popfirst!(DEPOT_PATH); include(expanduser("/tmp/install_julia_packages.jl")); precompile();'

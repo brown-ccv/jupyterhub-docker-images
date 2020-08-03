@@ -13,6 +13,20 @@ services:
       "
     environment: 
       - CLASS=${CLASS}
+
+  julia_build:
+    image: julia:1.4.2-buster
+    volumes:
+      - ./classes/${CLASS}:/tmp/env/
+      - ./scripts:/tmp/scripts/
+    working_dir: /tmp/env
+    command: >
+      bash -c "julia -e 'import Pkg; Pkg.activate(\"julia_env\"); 
+      include(expanduser(\"/tmp/scripts/install_julia_packages.jl\"));
+      include(expanduser(\"/tmp/env/requirements.jl\"));
+      install(julia_packages);
+      '"
+
   jh_image: &jh_image
     build:
       context: .
