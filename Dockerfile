@@ -127,6 +127,9 @@ ENV JULIA_DEPOT_PATH=/opt/julia
 ENV JULIA_PKGDIR=/opt/julia
 ENV JULIA_VERSION=1.5.0
 
+COPY classes/${CLASS}/julia_env/Project.toml /opt/julia/environments/v1.5/
+COPY classes/${CLASS}/julia_env/Manifest.toml /opt/julia/environments/v1.5/
+
 WORKDIR /tmp
 
 # hadolint ignore=SC2046
@@ -143,9 +146,6 @@ RUN mkdir /etc/julia && \
     chown "${NB_USER}" "${JULIA_PKGDIR}" 
 
 USER $NB_UID
-
-COPY classes/${CLASS}/julia_env/Project.toml /opt/julia/environments/v1.5/
-COPY classes/${CLASS}/julia_env/Manifest.toml /opt/julia/environments/v1.5/
 
 # Add Julia packages. Instantiate Julia env from files.
 #
