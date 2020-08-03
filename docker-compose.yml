@@ -15,7 +15,7 @@ services:
       - CLASS=${CLASS}
 
   julia_build:
-    image: julia:1.4.2-buster
+    image: julia:1.5-buster
     volumes:
       - ./classes/${CLASS}:/tmp/env/
       - ./scripts:/tmp/scripts/
