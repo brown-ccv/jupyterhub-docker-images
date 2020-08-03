@@ -127,9 +127,6 @@ ENV JULIA_DEPOT_PATH=/opt/julia
 ENV JULIA_PKGDIR=/opt/julia
 ENV JULIA_VERSION=1.5.0
 
-COPY classes/${CLASS}/julia_env/Project.toml /opt/julia/
-COPY classes/${CLASS}/julia_env/Manifest.toml /opt/julia/
-
 WORKDIR /tmp
 
 # hadolint ignore=SC2046
@@ -143,19 +140,18 @@ RUN ln -fs /opt/julia-*/bin/julia /usr/local/bin/julia
 # Show Julia where conda libraries are \
 RUN mkdir /etc/julia && \
     echo "push!(Libdl.DL_LOAD_PATH, \"$CONDA_DIR/lib\")" >> /etc/julia/juliarc.jl && \
-    # Create JULIA_PKGDIR \
-    mkdir "${JULIA_PKGDIR}" && \
     chown "${NB_USER}" "${JULIA_PKGDIR}" 
 
 USER $NB_UID
+
+COPY classes/${CLASS}/julia_env/Project.toml /opt/julia/environments/v1.5/
+COPY classes/${CLASS}/julia_env/Manifest.toml /opt/julia/environments/v1.5/
 
 # Add Julia packages. Instantiate Julia env from files.
 #
 # Install IJulia as jovyan and then move the kernelspec out
 # to the system share location. Avoids problems with runtime UID change not
 # taking effect properly on the .local folder in the jovyan home dir.
-RUN julia -e 'import Pkg; Pkg.update(); Pkg.instantiate(); Pkg.precompile();' && \
-    # move kernelspec out of home \
-    mv "${HOME}/.local/share/jupyter/kernels/julia"* "${CONDA_DIR}/share/jupyter/kernels/" && \
-    chmod -R go+rx "${CONDA_DIR}/share/jupyter" && \
-    rm -rf "${HOME}/.local"
+RUN julia -e 'import Pkg; Pkg.update(); Pkg.instantiate(); Pkg.precompile();'
+
+WORKDIR /home/jovyan
