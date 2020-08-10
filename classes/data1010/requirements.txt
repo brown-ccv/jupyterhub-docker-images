@@ -71,5 +71,4 @@ nbdime
 nbgitpuller
 nodejs>10
 RISE
-seaborn 
-tini
+seaborn

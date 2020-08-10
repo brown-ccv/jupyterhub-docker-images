@@ -42,6 +42,5 @@ const julia_packages = [
                     "DataVoyager",
                     "Interact",
                     "VegaDatasets", 
-                    "RDatasets",
-                    "Pluto"
+                    "RDatasets"
                     ]
