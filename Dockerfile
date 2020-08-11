@@ -29,6 +29,7 @@ RUN apt-get update \
     locales \
     fonts-liberation \
     run-one \
+    git \
  && apt-get clean && rm -rf /var/lib/apt/lists/*
 
 RUN echo "en_US.UTF-8 UTF-8" > /etc/locale.gen && \
@@ -65,17 +66,24 @@ RUN echo "auth requisite pam_deny.so" >> /etc/pam.d/su && \
     fix-permissions $HOME && \
     fix-permissions $CONDA_DIR
 
+##### VSCODE ######################################################################
+ENV VS_CODE_VERSION=3.4.1
+
+RUN mkdir /opt/code-server 
+WORKDIR /opt/code-server 
+RUN wget -qO- https://github.com/cdr/code-server/releases/download/${VS_CODE_VERSION}/code-server-${VS_CODE_VERSION}-linux-x86_64.tar.gz | tar zxvf - --strip-components=1
+ENV	PATH=/opt/code-server:$PATH
+
+#####################################################################################
+
 USER $NB_UID
 WORKDIR $HOME
+
 ARG PYTHON_VERSION=default
 
 # Setup work directory for backward-compatibility
 RUN mkdir /home/$NB_USER/work && \
     fix-permissions /home/$NB_USER
-
-# Encapsulate the environment info into its own yml file (which carries
-# the name `${CLASS}` in it
-COPY classes/${CLASS}/environment.yml /tmp/
 
 ####################################################################
 # Download, install and configure the Conda environment
@@ -89,7 +97,7 @@ RUN bash /tmp/miniconda.sh -b -u -p $CONDA_DIR
 # Encapsulate the environment info into its own yml file (which carries
 # the name `${CLASS}` in it
 
-COPY classes/${CLASS}/environment.yml /tmp/
+COPY requirements/out/environment.yml /tmp/
 RUN conda config --set always_yes yes --set changeps1 no && \
     conda update -q conda && \
     conda config --add channels conda-forge && \
@@ -97,9 +105,9 @@ RUN conda config --set always_yes yes --set changeps1 no && \
     conda clean --all -f -y && \
     rm -rf /home/$NB_USER/.cache/yarn && \
     fix-permissions $CONDA_DIR && \
-    fix-permissions /home/$NB_USER
+    fix-permissions /home/$NB_USER 
 
-# We modify the path directly since the `source activate ${CLASS}`
+# Modify the path directly since the `source activate ${CLASS}`
 # environment won't be preserved here.
 ENV PATH ${CONDA_DIR}/envs/${CLASS}/bin:$PATH
 
@@ -109,8 +117,9 @@ ADD scripts/jupyter_notebook_config.py  ${CONDA_DIR}/envs/${CLASS}/etc/jupyter/
 # Disable history.
 ADD scripts/ipython_config.py ${CONDA_DIR}/envs/${CLASS}/etc/ipython/
 
+RUN jupyter labextension install @jupyterlab/server-proxy 
 RUN jupyter lab build --dev-build=False --minimize=False
-
+ 
 EXPOSE 8888
 
 # Configure container startup
@@ -173,14 +182,14 @@ ARG CLASS
 
 USER root
 # Julia dependencies
-# install Julia packages in /opt/julia instead of $HOME
+
 ENV JULIA_DEPOT_PATH=$HOME/.julia/
 ENV JULIA_PKGDIR=$HOME/.julia/
 ENV JULIA_VERSION=1.5.0
 
 RUN mkdir $HOME/.julia/
-COPY classes/${CLASS}/julia_env/Project.toml $HOME/.julia/environments/v1.5/
-COPY classes/${CLASS}/julia_env/Manifest.toml $HOME/.julia/environments/v1.5/
+COPY requirements/classes/${CLASS}/julia_env/Project.toml $HOME/.julia/environments/v1.5/
+COPY requirements/classes/${CLASS}/julia_env/Manifest.toml $HOME/.julia/environments/v1.5/
 RUN fix-permissions ${JULIA_PKGDIR}
 
 WORKDIR /tmp
@@ -211,3 +220,4 @@ RUN julia -e 'import Pkg; Pkg.update(); Pkg.instantiate(); Pkg.precompile();'
 
 USER $NB_UID
 WORKDIR $HOME
+
