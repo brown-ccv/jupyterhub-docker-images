@@ -36,8 +36,9 @@ services:
     build:
       context: .
       target: ${TARGET}
+      cache_from: 
+        - gcr.io/jupyterhub-docker-images/${CLASS}:latest
       args: 
         CLASS: ${CLASS}
         WITH_MYSQL: ${WITH_MYSQL}
-    environment: 
-      MYSQL_ROOT_PASSWORD: example
+

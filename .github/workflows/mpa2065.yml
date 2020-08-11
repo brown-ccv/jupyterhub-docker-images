@@ -47,9 +47,11 @@ jobs:
         run: gcloud auth configure-docker
       - name: Build and Push mpa2065 image
         run: |
-          docker-compose build jh_image
+          COMPOSE_DOCKER_CLI_BUILD=1 DOCKER_BUILDKIT=1 docker-compose build jh_image
           docker tag jupyterhub-conda-envs_jh_image:latest gcr.io/jupyterhub-docker-images/${CLASS}:${GITHUB_REF##*/}
           docker tag jupyterhub-conda-envs_jh_image:latest gcr.io/jupyterhub-docker-images/${CLASS}:${GITHUB_SHA}
+          docker tag jupyterhub-conda-envs_jh_image:latest gcr.io/jupyterhub-docker-images/${CLASS}:latest
+          docker push gcr.io/jupyterhub-docker-images/${CLASS}:latest
           docker push gcr.io/jupyterhub-docker-images/${CLASS}:${GITHUB_REF##*/}
           docker push gcr.io/jupyterhub-docker-images/${CLASS}:${GITHUB_SHA}
         env:
