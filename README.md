@@ -23,7 +23,7 @@ Each class has the following exclusive components:
 > Note: The production image will be created in CI.
 
 To add a new class:
-- Use the provided script in `dev/add_class.sh` to create a workflow file and scafold the requirements directory. The script takes three arguments class name (string): `-c`, target in docker file (string): `-t` and wheter to install mysql `-m` (ommit the `-m` tag if mysql is not required).
+- Use the provided script in `dev/add_class.sh` to create a workflow file and scafold the requirements directory. The script takes three arguments: class name (string): `-c`, target in docker file (string): `-t` and wheter to install mysql `-m` (ommit the `-m` tag if mysql is not required).
 
 ```bash
 # e.g
