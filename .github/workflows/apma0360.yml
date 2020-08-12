@@ -2,7 +2,7 @@ name: Build Image for apma0360
 on: 
   push:
     paths:
-      - 'classes/apma0360/**'
+      - 'requirements/classes/apma0360/**'
       - 'Dockerfile'
       - 'docker-compose.yml'
       - 'scripts/**'

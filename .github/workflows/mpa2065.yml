@@ -2,7 +2,7 @@ name: Build Image for mpa2065
 on: 
   push:
     paths:
-      - 'classes/mpa2065/**'
+      - 'requirements/classes/mpa2065/**'
       - 'Dockerfile'
       - 'docker-compose.yml'
       - 'scripts/**'
