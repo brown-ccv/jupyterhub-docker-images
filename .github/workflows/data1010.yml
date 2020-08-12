@@ -7,16 +7,20 @@ on:
       - 'docker-compose.yml'
       - 'scripts/**'
       - '.github/workflows/data1010.yml'
+
+env:
+  CLASS: data1010
+  TARGET: r_julia 
+      
 jobs:
-  data1010:
+  build:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
       - name: Create Conda Environment Files
         run: |
           sudo --preserve-env=CLASS docker-compose up conda_build
-        env:
-          CLASS: data1010
+
       - name: Upload Cond Env Files
         uses: actions/upload-artifact@v2
         with:
@@ -26,14 +30,12 @@ jobs:
       - name: Create Julia Environment Files
         run: |
           sudo --preserve-env=CLASS docker-compose up julia_build
-        env:
-          CLASS: data1010
 
       - name: Upload Julia Env Files
         uses: actions/upload-artifact@v2
         with:
           name: julia-environment-files
-          path: classes/data1010/julia_env
+          path: requirements/classes/data1010/julia_env
 
       - name: Set Up GCloud
         uses: GoogleCloudPlatform/github-actions/setup-gcloud@master
@@ -45,7 +47,7 @@ jobs:
 
       - name: Configure Docker
         run: gcloud auth configure-docker
-      - name: Build and Push data1010 image
+      - name: Build and Push JH Image
         run: |
           COMPOSE_DOCKER_CLI_BUILD=1 DOCKER_BUILDKIT=1 docker-compose build jh_image
           docker tag jupyterhub-conda-envs_jh_image:latest gcr.io/jupyterhub-docker-images/${CLASS}:${GITHUB_REF##*/}
@@ -54,6 +56,3 @@ jobs:
           docker push gcr.io/jupyterhub-docker-images/${CLASS}:latest
           docker push gcr.io/jupyterhub-docker-images/${CLASS}:${GITHUB_REF##*/}
           docker push gcr.io/jupyterhub-docker-images/${CLASS}:${GITHUB_SHA}
-        env:
-          CLASS: data1010
-          TARGET: r_julia

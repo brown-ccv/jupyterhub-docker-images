@@ -7,6 +7,12 @@ on:
       - 'docker-compose.yml'
       - 'scripts/**'
       - '.github/workflows/mpa2065.yml'
+
+env:
+  CLASS: mpa2065
+  TARGET: r_julia 
+  WITH_MYSQL: true
+      
 jobs:
   mpa2065:
     runs-on: ubuntu-latest
@@ -15,8 +21,7 @@ jobs:
       - name: Create Conda Environment Files
         run: |
           sudo --preserve-env=CLASS docker-compose up conda_build
-        env:
-          CLASS: mpa2065
+
       - name: Upload Cond Env Files
         uses: actions/upload-artifact@v2
         with:
@@ -26,14 +31,12 @@ jobs:
       - name: Create Julia Environment Files
         run: |
           sudo --preserve-env=CLASS docker-compose up julia_build
-        env:
-          CLASS: mpa2065
 
       - name: Upload Julia Env Files
         uses: actions/upload-artifact@v2
         with:
           name: julia-environment-files
-          path: classes/mpa2065/julia_env
+          path: requirements/classes/mpa2065/julia_env
 
       - name: Set Up GCloud
         uses: GoogleCloudPlatform/github-actions/setup-gcloud@master
@@ -45,7 +48,7 @@ jobs:
 
       - name: Configure Docker
         run: gcloud auth configure-docker
-      - name: Build and Push mpa2065 image
+      - name: Build and Push JH Image
         run: |
           COMPOSE_DOCKER_CLI_BUILD=1 DOCKER_BUILDKIT=1 docker-compose build jh_image
           docker tag jupyterhub-conda-envs_jh_image:latest gcr.io/jupyterhub-docker-images/${CLASS}:${GITHUB_REF##*/}
@@ -54,7 +57,3 @@ jobs:
           docker push gcr.io/jupyterhub-docker-images/${CLASS}:latest
           docker push gcr.io/jupyterhub-docker-images/${CLASS}:${GITHUB_REF##*/}
           docker push gcr.io/jupyterhub-docker-images/${CLASS}:${GITHUB_SHA}
-        env:
-          CLASS: mpa2065
-          TARGET: r_julia
-          WITH_MYSQL: true

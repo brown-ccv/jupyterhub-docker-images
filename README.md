@@ -24,7 +24,7 @@ Each class has the following exclusive components:
 
 To add a new class:
 - Create a directory with the class code under `requirements/classes/` and add the requirements file(s). See options above.
-- Create a workflow file `className.yml` in `.github/workflows`. Use one of the workflows as an example and replace all occurrences of the class name. Make sure the environment variables at the last step are set up correctly (see above).
+- Create a workflow file `className.yml` in `.github/workflows`. Use one of the workflows as an example and replace the environment variables.
 
 To build the images locally:
 
