@@ -2,11 +2,11 @@ name: Build Image for ${{ env.CLASS }}
 on: 
   push:
     paths:
-      - 'classes/${{ env.CLASS }}/**'
+      - 'classes/apma0360/**'
       - 'Dockerfile'
       - 'docker-compose.yml'
       - 'scripts/**'
-      - '.github/workflows/${{ env.CLASS }}.yml'
+      - '.github/workflows/apma0360.yml'
 
 env:
   CLASS: apma0360
