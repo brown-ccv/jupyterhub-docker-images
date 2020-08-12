@@ -28,6 +28,7 @@ To add a new class:
 
 ```bash
 # e.g
+cd dev/
 ./generate-wrokflow.sh -c data1010 -t r_julia
 ```
 

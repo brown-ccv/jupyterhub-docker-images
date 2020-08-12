@@ -84,6 +84,8 @@ jobs:
           docker push gcr.io/jupyterhub-docker-images/\${CLASS}:latest
           docker push gcr.io/jupyterhub-docker-images/\${CLASS}:\${GITHUB_REF##*/}
           docker push gcr.io/jupyterhub-docker-images/\${CLASS}:\${GITHUB_SHA}
-    """ >> ${CLASS}.yml
+    """ >> ../.github/workflows/${CLASS}.yml
+    
+    echo "Created workflow file at .github/workflows/${CLASS}.yml"
 
 fi
