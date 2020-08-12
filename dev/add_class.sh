@@ -29,7 +29,7 @@ name: Build Image for ${CLASS}
 on: 
 push:
     paths:
-    - 'classes/${CLASS}/**'
+    - 'requirements/classes/${CLASS}/**'
     - 'Dockerfile'
     - 'docker-compose.yml'
     - 'scripts/**'
@@ -84,8 +84,13 @@ jobs:
           docker push gcr.io/jupyterhub-docker-images/\${CLASS}:latest
           docker push gcr.io/jupyterhub-docker-images/\${CLASS}:\${GITHUB_REF##*/}
           docker push gcr.io/jupyterhub-docker-images/\${CLASS}:\${GITHUB_SHA}
-    """ >> ../.github/workflows/${CLASS}.yml
-    
-    echo "Created workflow file at .github/workflows/${CLASS}.yml"
+    """ >> ../.github/workflows/${CLASS}.yml &&
+
+    mkdir ../requirements/classes/${CLASS}/ &&
+    cd ../requirements/classes/${CLASS}/ &&
+    touch requirements.txt  &&
+    touch requirement.jl  &&
+    touch requirements.pip.txt  &&
+    echo "Created workflow file at .github/workflows/${CLASS}.yml and /requirements/classes/${CLASS}/ directory with requirement files. "
 
 fi
