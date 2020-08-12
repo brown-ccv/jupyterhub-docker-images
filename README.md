@@ -24,7 +24,12 @@ Each class has the following exclusive components:
 
 To add a new class:
 - Create a directory with the class code under `requirements/classes/` and add the requirements file(s). See options above.
-- Create a workflow file `className.yml` in `.github/workflows`. Use one of the workflows as an example and replace the environment variables.
+- Create a workflow file `className.yml` in `.github/workflows`. Use the provided script in `dev/generate_workflow.sh`. The script takes three arguments class name (string): `-c`, target in docker file (string): `-t` and wheter to install mysql `-m` (ommit the `-m` tag if mysql is not required).
+
+```bash
+# e.g
+./generate-wrokflow.sh -c data1010 -t r_julia
+```
 
 To build the images locally:
 

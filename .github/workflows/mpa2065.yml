@@ -14,7 +14,7 @@ env:
   WITH_MYSQL: true
       
 jobs:
-  mpa2065:
+  build:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
@@ -36,7 +36,7 @@ jobs:
         uses: actions/upload-artifact@v2
         with:
           name: julia-environment-files
-          path: requirements/classes/mpa2065/julia_env
+          path: requirements/classes/${{ env.CLASS }}/julia_env
 
       - name: Set Up GCloud
         uses: GoogleCloudPlatform/github-actions/setup-gcloud@master

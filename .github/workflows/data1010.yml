@@ -10,8 +10,8 @@ on:
 
 env:
   CLASS: data1010
-  TARGET: r_julia 
-      
+  TARGET: r_julia
+
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -35,7 +35,7 @@ jobs:
         uses: actions/upload-artifact@v2
         with:
           name: julia-environment-files
-          path: requirements/classes/data1010/julia_env
+          path: requirements/classes/${{ env.CLASS }}/julia_env
 
       - name: Set Up GCloud
         uses: GoogleCloudPlatform/github-actions/setup-gcloud@master
