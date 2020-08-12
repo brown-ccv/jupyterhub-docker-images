@@ -1,12 +1,12 @@
-name: Build Image for apma0360
+name: Build Image for ${{ env.CLASS }}
 on: 
   push:
     paths:
-      - 'classes/apma0360/**'
+      - 'classes/${{ env.CLASS }}/**'
       - 'Dockerfile'
       - 'docker-compose.yml'
       - 'scripts/**'
-      - '.github/workflows/apma0360.yml'
+      - '.github/workflows/${{ env.CLASS }}.yml'
 
 env:
   CLASS: apma0360
@@ -35,7 +35,7 @@ jobs:
           export_default_credentials: true
       - name: Configure Docker
         run: gcloud auth configure-docker
-      - name: Build and Push apma0360 image
+      - name: Build and Push ${{ env.CLASS }} image
         run: |
           COMPOSE_DOCKER_CLI_BUILD=1 DOCKER_BUILDKIT=1 docker-compose build jh_image
           docker tag jupyterhub-conda-envs_jh_image:latest gcr.io/jupyterhub-docker-images/${CLASS}:${GITHUB_REF##*/}
