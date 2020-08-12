@@ -1,4 +1,4 @@
-name: Build Image for ${{ env.CLASS }}
+name: Build Image for apma0360
 on: 
   push:
     paths:
