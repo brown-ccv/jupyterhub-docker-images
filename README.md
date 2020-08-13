@@ -44,7 +44,7 @@ COMPOSE_DOCKER_CLI_BUILD=1 DOCKER_BUILDKIT=1 CLASS=apma0360 TARGET=base docker-c
 ```
 - Run the image
 ```
-docker run -it --rm -p 8888:8888 jupyterhub-conda-envs_jh_image start-notebook.sh --ip 0.0.0.0
+docker run -it --rm -p 8888:8888 jupyterhub-docker-images_jh_image start-notebook.sh --ip 0.0.0.0
 ```
 
 ### General Notes
