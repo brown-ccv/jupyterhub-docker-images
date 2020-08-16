@@ -35,6 +35,8 @@ jobs:
           export_default_credentials: true
       - name: Configure Docker
         run: gcloud auth configure-docker
+      - name: Set current YEAR as env variable
+        run: echo "::set-env name=YEAR::$(date +'%Y')"
       - name: Build and Push JH Image
         run: |
           COMPOSE_DOCKER_CLI_BUILD=1 DOCKER_BUILDKIT=1 docker-compose build jh_image
@@ -42,5 +44,6 @@ jobs:
           docker tag jupyterhub-conda-envs_jh_image:latest gcr.io/jupyterhub-docker-images/${CLASS}:${GITHUB_SHA}
           docker tag jupyterhub-conda-envs_jh_image:latest gcr.io/jupyterhub-docker-images/${CLASS}:latest
           docker push gcr.io/jupyterhub-docker-images/${CLASS}:latest
+          docker push gcr.io/jupyterhub-docker-images/${CLASS}:fall-${YEAR}
           docker push gcr.io/jupyterhub-docker-images/${CLASS}:${GITHUB_REF##*/}
           docker push gcr.io/jupyterhub-docker-images/${CLASS}:${GITHUB_SHA}
