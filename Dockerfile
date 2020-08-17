@@ -66,6 +66,10 @@ RUN echo "auth requisite pam_deny.so" >> /etc/pam.d/su && \
     fix-permissions $HOME && \
     fix-permissions $CONDA_DIR
 
+# Add .ssh path
+RUN mkdir /home/$NB_USER/.ssh && \
+    touch  /home/$NB_USER/.ssh/id_rsa
+
 ##### VSCODE ######################################################################
 ENV VS_CODE_VERSION=3.4.1
 
