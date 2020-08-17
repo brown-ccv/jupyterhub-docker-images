@@ -30,6 +30,7 @@ WORKDIR $HOME
 # Create Conda environment
 
 # COPY requirements/out/environment.yml /home/$NB_USER/tmp/
+
 COPY requirements/classes/${CLASS} /home/$NB_USER/tmp/
 
 RUN conda create --name ${CLASS} python=3.8 && \
@@ -50,7 +51,8 @@ ENV CONDA_DEFAULT_ENV ${CLASS}
 # Link conda environment to Jupyter
 RUN $CONDA_DIR/envs/${CLASS}/bin/python -m ipykernel install --user --name=${CLASS} && \
     fix-permissions $CONDA_DIR && \
-    fix-permissions /home/$NB_USER
+    fix-permissions /home/$NB_USER && \
+    fix-permissions /home/$NB_USER/.local/share/jupyter/kernels/${CLASS}
 
 RUN jupyter labextension install @jupyterlab/server-proxy 
 RUN jupyter lab build --dev-build=False --minimize=False

@@ -16,10 +16,7 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
-      - name: Create Conda Environment Files
-        run: |
-          sudo --preserve-env=CLASS docker-compose up conda_build        
+      - uses: actions/checkout@v2     
       - name: Set Up GCloud
         uses: GoogleCloudPlatform/github-actions/setup-gcloud@master
         with:
