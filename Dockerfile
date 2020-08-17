@@ -139,10 +139,6 @@ COPY scripts/jupyter_notebook_config.py /etc/jupyter/
 
 # Fix permissions on /etc/jupyter as root
 USER root
-RUN chmod +x /usr/local/bin/start-notebook.sh && \
-    chmod +x /usr/local/bin/start-singleuser.sh && \
-    chmod +x /usr/local/bin/start.sh
-
 RUN fix-permissions /etc/jupyter/
 
 # Switch back to jovyan to avoid accidental container runs as root
