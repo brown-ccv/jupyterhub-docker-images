@@ -113,6 +113,11 @@ RUN conda config --set always_yes yes --set changeps1 no && \
 ENV PATH ${CONDA_DIR}/envs/${CLASS}/bin:$PATH
 ENV CONDA_DEFAULT_ENV ${CLASS}
 
+# Link conda environment to Jupyter
+RUN $CONDA_DIR/envs/${CLASS}/bin/python -m ipykernel install --user --name=${CLASS} && \
+    fix-permissions $CONDA_DIR && \
+    fix-permissions /home/$NB_USER
+
 # Set bash as shell in terminado.
 ADD scripts/jupyter_notebook_config.py  ${CONDA_DIR}/envs/${CLASS}/etc/jupyter/
 
