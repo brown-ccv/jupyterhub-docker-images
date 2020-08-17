@@ -7,8 +7,6 @@ services:
       - ./requirements:/tmp
     command: > 
       bash -c "
-      cat /tmp/common/requirements.txt >> /tmp/classes/${CLASS}/requirements.txt &&
-      cat /tmp/common/requirements.pip.txt >> /tmp/classes/${CLASS}/requirements.pip.txt &&
       conda create --name ${CLASS} python=3.8 &&
       conda install -y --name ${CLASS} -c conda-forge --file /tmp/classes/${CLASS}/requirements.txt &&
       source activate ${CLASS} &&
