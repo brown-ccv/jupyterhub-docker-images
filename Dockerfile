@@ -30,6 +30,7 @@ RUN apt-get update \
     fonts-liberation \
     run-one \
     git \
+    openssh-client \
  && apt-get clean && rm -rf /var/lib/apt/lists/*
 
 RUN echo "en_US.UTF-8 UTF-8" > /etc/locale.gen && \
@@ -65,10 +66,6 @@ RUN echo "auth requisite pam_deny.so" >> /etc/pam.d/su && \
     chmod g+w /etc/passwd && \
     fix-permissions $HOME && \
     fix-permissions $CONDA_DIR
-
-# Add .ssh path
-RUN mkdir /home/$NB_USER/.ssh && \
-    touch  /home/$NB_USER/.ssh/id_rsa
 
 ##### VSCODE ######################################################################
 ENV VS_CODE_VERSION=3.4.1
@@ -114,6 +111,7 @@ RUN conda config --set always_yes yes --set changeps1 no && \
 # Modify the path directly since the `source activate ${CLASS}`
 # environment won't be preserved here.
 ENV PATH ${CONDA_DIR}/envs/${CLASS}/bin:$PATH
+ENV CONDA_DEFAULT_ENV ${CLASS}
 
 # Set bash as shell in terminado.
 ADD scripts/jupyter_notebook_config.py  ${CONDA_DIR}/envs/${CLASS}/etc/jupyter/

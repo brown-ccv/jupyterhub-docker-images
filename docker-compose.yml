@@ -41,4 +41,3 @@ services:
       args: 
         CLASS: ${CLASS}
         WITH_MYSQL: ${WITH_MYSQL}
-
