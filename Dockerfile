@@ -33,7 +33,7 @@ WORKDIR $HOME
 
 COPY requirements/classes/${CLASS} /home/$NB_USER/tmp/
 
-RUN conda create --name ${CLASS} -p ${CONDA_DIR}/envs/${CLASS} python=3.8 && \
+RUN conda create --quiet --yes -p ${CONDA_DIR}/envs/${CLASS} python=3.8 && \
     conda install -y --name ${CLASS} -c conda-forge --file /home/$NB_USER/tmp/requirements.txt && \
     conda clean --all -f -y
 
