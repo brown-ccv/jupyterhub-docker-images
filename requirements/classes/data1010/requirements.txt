@@ -1,5 +1,4 @@
 # add class-specific packages here:
-altair
 blas
 feather-format
 h5py
@@ -8,7 +7,6 @@ matplotlib-base
 plotnine
 rpy2
 unixodbc
-vega_datasets
 xgboost
 
 # these are the scipy base packages ( YOU PROBABLY DON'T WANT TO REMOVE THESE )
