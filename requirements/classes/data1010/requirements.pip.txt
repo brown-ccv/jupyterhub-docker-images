@@ -1,11 +1,5 @@
 # add class-specific classes here:
 jupyterlab-dash
-altair
-vega_datasets
-dash
-dash-core-components 
-dash-html-components 
-dash-renderer 
-plotly
 plotly_express
+rpy2
 git+https://github.com/sswatson/voyager-launch 

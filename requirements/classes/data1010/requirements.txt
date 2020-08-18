@@ -5,9 +5,15 @@ h5py
 lime
 matplotlib-base
 plotnine
-rpy2
 unixodbc
 xgboost
+altair
+vega_datasets
+dash
+dash-core-components 
+dash-html-components 
+dash-renderer 
+plotly
 
 # these are the scipy base packages ( YOU PROBABLY DON'T WANT TO REMOVE THESE )
 # dask
