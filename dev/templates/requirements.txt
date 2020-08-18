@@ -1,7 +1,7 @@
 # add class-specific packages here:
 
 # these are the scipy base packages ( YOU PROBABLY DON'T WANT TO REMOVE THESE )
-dask
+dask 
 pandas
 numexpr
 matplotlib
@@ -12,7 +12,7 @@ scikit-image
 sympy
 cython
 patsy
-statsmodel
+statsmodels
 cloudpickle
 dill
 numba
@@ -20,7 +20,7 @@ bokeh
 sqlalchemy
 hdf5
 vincent
-beautifulsoup
+beautifulsoup4
 protobuf
 xlrd
 bottleneck
