@@ -6,7 +6,7 @@ FROM ${ROOT_CONTAINER} as base
 
 ARG CLASS
 
-##### VSCODE ######################################################################
+#------------ Install VSCode Server a Root----------------------------
 USER root
 RUN apt-get update \
  && apt-get install -yq --no-install-recommends \
@@ -21,11 +21,41 @@ WORKDIR /opt/code-server
 RUN wget -qO- https://github.com/cdr/code-server/releases/download/${VS_CODE_VERSION}/code-server-${VS_CODE_VERSION}-linux-x86_64.tar.gz | tar zxvf - --strip-components=1
 ENV	PATH=/opt/code-server:$PATH
 
-#####################################################################################
+#------------ Install Lab Extensions in base environment as NB_USER----------------------------
+
 
 USER $NB_UID
 WORKDIR $HOME
 
+# Install Git extension
+RUN jupyter labextension install @jupyterlab/git && \
+    pip install --upgrade jupyterlab-git && \
+    jupyter serverextension enable --py jupyterlab_git --sys-prefix &&\
+    npm cache clean --force
+
+# Install nbgitpuller extension
+RUN pip install nbgitpuller && \
+    jupyter serverextension enable --py nbgitpuller --sys-prefix && \
+    npm cache clean --force
+
+# Install RISE extension
+RUN pip install RISE && \
+    jupyter nbextension install rise --py --sys-prefix &&\
+    jupyter nbextension enable rise --py --sys-prefix &&\
+    npm cache clean --force
+
+
+# Do we need any of these? Seems too much...
+# # Install JupyterLab extensions 
+# RUN jupyter labextension install \
+#             @jupyterlab/vega2-extension \
+#             @jupyterlab/vega3-extension \
+#             @jupyter-widgets/jupyterlab-manager \
+#             jupyter-matplotlib \
+#             @jupyterlab/plotly-extension \
+#             @jupyterlab/geojson-extension \
+#             @jupyterlab/mathjax3-extension \
+#             @jupyterlab/katex-extension
 
 #Install VS Code
 RUN pip install jupyter-server-proxy
@@ -36,7 +66,7 @@ RUN pip install git+https://github.com/betatim/vscode-binder
 
 
 ####################################################################
-# Create Conda environment
+# Create Class Conda environment
 
 # COPY requirements/out/environment.yml /home/$NB_USER/tmp/
 
@@ -56,8 +86,7 @@ USER $NB_USER
 ENV PATH ${CONDA_DIR}/envs/${CLASS}/bin:$PATH
 
 
-
-# pip installs 
+# Class-specific pip installs 
 RUN $CONDA_DIR/envs/${CLASS}/bin/pip install -r /home/$NB_USER/tmp/requirements.pip.txt  && \
     fix-permissions $CONDA_DIR && \
     fix-permissions /home/$NB_USER
