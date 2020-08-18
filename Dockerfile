@@ -26,6 +26,11 @@ ENV	PATH=/opt/code-server:$PATH
 USER $NB_UID
 WORKDIR $HOME
 
+RUN jupyter serverextension enable --sys-prefix --py jupyter_server_proxy
+RUN jupyter labextension install @jupyterlab/server-proxy 
+RUN jupyter lab build --dev-build=False --minimize=False
+
+
 ####################################################################
 # Create Conda environment
 
@@ -42,18 +47,16 @@ USER root
 RUN $CONDA_DIR/envs/${CLASS}/bin/python -m ipykernel install --name=${CLASS}
 USER $NB_USER
 
-# pip installs 
-RUN $CONDA_DIR/envs/${CLASS}/bin/pip install -r /home/$NB_USER/tmp/requirements.pip.txt  && \
-    fix-permissions $CONDA_DIR && \
-    fix-permissions /home/$NB_USER
-
-
 # Modify the path directly since the `source activate ${CLASS}`
 # environment won't be preserved here.
 ENV PATH ${CONDA_DIR}/envs/${CLASS}/bin:$PATH
 
-RUN $CONDA_DIR/envs/${CLASS}/bin/jupyter labextension install @jupyterlab/server-proxy 
-RUN $CONDA_DIR/envs/${CLASS}/bin/jupyter lab build --dev-build=False --minimize=False
+
+
+# pip installs 
+RUN $CONDA_DIR/envs/${CLASS}/bin/pip install -r /home/$NB_USER/tmp/requirements.pip.txt  && \
+    fix-permissions $CONDA_DIR && \
+    fix-permissions /home/$NB_USER
 
 # make class environment to be the default one
 ENV CONDA_DEFAULT_ENV ${CLASS}
