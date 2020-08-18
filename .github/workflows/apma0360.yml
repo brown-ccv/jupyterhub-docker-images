@@ -1,12 +1,12 @@
 name: Build Image for apma0360
 on: 
-push:
-    paths:
-    - 'requirements/classes/apma0360/**'
-    - 'Dockerfile'
-    - 'docker-compose.yml'
-    - 'scripts/**'
-    - '.github/workflows/apma0360.yml'
+  push:
+      paths:
+      - 'requirements/classes/apma0360/**'
+      - 'Dockerfile'
+      - 'docker-compose.yml'
+      - 'scripts/**'
+      - '.github/workflows/apma0360.yml'
 
 env:
   CLASS: apma0360
