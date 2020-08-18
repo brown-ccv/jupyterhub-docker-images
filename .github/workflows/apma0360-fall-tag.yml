@@ -1,19 +1,16 @@
-name: Tag Fall Production Image for apma0360
+name: Tag production image for apma0360
 on: [workflow_dispatch]
-
 
 env:
   CLASS: apma0360
   TARGET: base
-  SEASON: fall
-  YEAR: '2020'
 
 jobs:
   build:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
-          
+
       - name: Set Up GCloud
         uses: GoogleCloudPlatform/github-actions/setup-gcloud@master
         with:
@@ -28,16 +25,16 @@ jobs:
       - name: Build and Push JH Image
         run: |
           COMPOSE_DOCKER_CLI_BUILD=1 DOCKER_BUILDKIT=1 docker-compose up jh_image
-          docker tag jupyterhub-docker-images_jh_image:latest gcr.io/jupyterhub-docker-images/${CLASS}:${GITHUB_REF##*/}
-          docker tag jupyterhub-docker-images_jh_image:latest gcr.io/jupyterhub-docker-images/${CLASS}:${GITHUB_SHA}
-          docker tag jupyterhub-docker-images_jh_image:latest gcr.io/jupyterhub-docker-images/${CLASS}:latest
-          docker tag jupyterhub-docker-images_jh_image:latest gcr.io/jupyterhub-docker-images/${CLASS}:${SEASON}-${YEAR}
-          docker push gcr.io/jupyterhub-docker-images/${CLASS}:latest
-          docker push gcr.io/jupyterhub-docker-images/${CLASS}:${SEASON}-${YEAR}
-          docker push gcr.io/jupyterhub-docker-images/${CLASS}:${GITHUB_REF##*/}
-          docker push gcr.io/jupyterhub-docker-images/${CLASS}:${GITHUB_SHA}
+          docker tag jupyterhub-docker-images_jh_image:latest gcr.io/jupyterhub-docker-images/apma0360:${GITHUB_REF##*/}
+          docker tag jupyterhub-docker-images_jh_image:latest gcr.io/jupyterhub-docker-images/apma0360:
+          docker tag jupyterhub-docker-images_jh_image:latest gcr.io/jupyterhub-docker-images/apma0360:latest
+          docker tag jupyterhub-docker-images_jh_image:latest gcr.io/jupyterhub-docker-images/apma0360:fall-2020
+          docker push gcr.io/jupyterhub-docker-images/apma0360:latest
+          docker push gcr.io/jupyterhub-docker-images/apma0360:fall-2020
+          docker push gcr.io/jupyterhub-docker-images/apma0360:${GITHUB_REF##*/}
+          docker push gcr.io/jupyterhub-docker-images/apma0360:
 
-      - name: Upload Conda Env Files
+      - name: Upload Cond Env Files
         uses: actions/upload-artifact@v2
         with:
           name: conda-environment-files
