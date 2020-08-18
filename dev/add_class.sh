@@ -30,6 +30,7 @@ else
     export CLASS=$CLASS
     export TARGET=$TARGET
     export SEASON=$SEASON
+    export GITHUB_SHA="\${GITHUB_SHA}"
     envsubst < ./templates/class_workflow.yml > ../.github/workflows/${CLASS}.yml &&
     envsubst < ./templates/class_tag.yml > ../.github/workflows/${CLASS}-${SEASON}-tag.yml &&
     mkdir ../requirements/classes/${CLASS}/ &&
