@@ -38,7 +38,7 @@ RUN conda create --quiet --yes -p ${CONDA_DIR}/envs/${CLASS} python=3.8 && \
     conda clean --all -f -y
 
 # Link conda environment to Jupyter
-RUN $CONDA_DIR/envs/${CLASS}/bin/python -m ipykernel install --user --name=${CLASS} && \
+RUN $CONDA_DIR/envs/${CLASS}/bin/python -m ipykernel install --name=${CLASS} && \
     fix-permissions $CONDA_DIR && \
     fix-permissions /home/$NB_USER
 
