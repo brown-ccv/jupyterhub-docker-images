@@ -23,12 +23,12 @@ Each class has the following exclusive components:
 > Note: The production image will be created in CI.
 
 To add a new class:
-- Use the provided script in `dev/add_class.sh` to create a workflow file and scafold the requirements directory. The script takes three arguments: class name (string): `-c`, target in docker file (string): `-t` and wheter to install mysql `-m` (ommit the `-m` tag if mysql is not required).
+- Use the provided script in `dev/add_class.sh` to create a workflow file and scafold the requirements directory. The script takes three arguments: class name (string): `-c`, class season/semester `-s` (fall, summer, spring), target in docker file (string): `-t` and wheter to install mysql `-m` (ommit the `-m` tag if mysql is not required).
 
 ```bash
 # e.g
 cd dev/
-./add_class.sh -c data1010 -t r_julia
+./add_class.sh -c data1010 -t r_julia -s fall
 ```
 
 To build the images locally:
@@ -40,15 +40,15 @@ CLASS=apma0360 docker-compose up julia_build
 ```
 - Build JH Image
 ```
-COMPOSE_DOCKER_CLI_BUILD=1 DOCKER_BUILDKIT=1 CLASS=apma0360 TARGET=base docker-compose build jh_image
+COMPOSE_DOCKER_CLI_BUILD=1 DOCKER_BUILDKIT=1 CLASS=apma0360 TARGET=base docker-compose up jh_image
 ```
 - Run the image
 ```
-docker run -it --rm -p 8888:8888 jupyterhub-docker-images_jh_image start-notebook.sh --ip 0.0.0.0
+docker run -it --rm -p 8888:8888 jupyterhub-docker-images_jh_image
 ```
 
 ### General Notes
-The actions running on push will allow for a streamlined development, however, I would suggest that we tag releases for the images that are officially being used in production. The release workflow is not part of this PR and still needs to be created.
+The actions running on push will allow for a streamlined development, however, I would suggest that we tag releases for the images that are officially being used in production. 
 
 This process also can be moved to the same repo as the actual JupyterHub deployment code.
 

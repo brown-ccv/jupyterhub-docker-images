@@ -1,1 +1,7 @@
+# required for environment and plugins 
+jupyter-server-proxy
+jupyterlab-git
+nbdime
+nbgitpuller
+RISE
 git+https://github.com/betatim/vscode-binder 

@@ -1,31 +1,22 @@
-name: Build Image for data1010
+name: Build Image for ${CLASS}
 on: 
   push:
-    paths:
-      - 'requirements/classes/data1010/**'
+      paths:
+      - 'requirements/classes/${CLASS}/**'
       - 'Dockerfile'
       - 'docker-compose.yml'
       - 'scripts/**'
-      - '.github/workflows/data1010.yml'
+      - '.github/workflows/${CLASS}.yml'
 
 env:
-  CLASS: data1010
-  TARGET: r_julia
+  CLASS: ${CLASS}
+  TARGET: ${TARGET}
 
 jobs:
   build:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
-      - name: Create Conda Environment Files
-        run: |
-          sudo --preserve-env=CLASS docker-compose up conda_build
-
-      - name: Upload Cond Env Files
-        uses: actions/upload-artifact@v2
-        with:
-          name: conda-environment-files
-          path: requirements/out
 
       - name: Create Julia Environment Files
         run: |
@@ -49,10 +40,10 @@ jobs:
         run: gcloud auth configure-docker
       - name: Build and Push JH Image
         run: |
-          COMPOSE_DOCKER_CLI_BUILD=1 DOCKER_BUILDKIT=1 docker-compose build jh_image
-          docker tag jupyterhub-conda-envs_jh_image:latest gcr.io/jupyterhub-docker-images/${CLASS}:${GITHUB_REF##*/}
-          docker tag jupyterhub-conda-envs_jh_image:latest gcr.io/jupyterhub-docker-images/${CLASS}:${GITHUB_SHA}
-          docker tag jupyterhub-conda-envs_jh_image:latest gcr.io/jupyterhub-docker-images/${CLASS}:latest
+          COMPOSE_DOCKER_CLI_BUILD=1 DOCKER_BUILDKIT=1 docker-compose up jh_image
+          docker tag jupyterhub-docker-images_jh_image:latest gcr.io/jupyterhub-docker-images/${CLASS}:${GITHUB_REF##*/}
+          docker tag jupyterhub-docker-images_jh_image:latest gcr.io/jupyterhub-docker-images/${CLASS}:${GITHUB_SHA}
+          docker tag jupyterhub-docker-images_jh_image:latest gcr.io/jupyterhub-docker-images/${CLASS}:latest
           docker push gcr.io/jupyterhub-docker-images/${CLASS}:latest
           docker push gcr.io/jupyterhub-docker-images/${CLASS}:${GITHUB_REF##*/}
           docker push gcr.io/jupyterhub-docker-images/${CLASS}:${GITHUB_SHA}

@@ -1,23 +1,5 @@
 version: '3.4'
 services:
-  conda_build:
-    image: brownccv/jh_sandbox:0.1.1
-    user: root
-    volumes:
-      - ./requirements:/tmp
-    command: > 
-      bash -c "
-      cat /tmp/common/requirements.txt >> /tmp/classes/${CLASS}/requirements.txt &&
-      cat /tmp/common/requirements.pip.txt >> /tmp/classes/${CLASS}/requirements.pip.txt &&
-      conda create --name ${CLASS} python=3.8 &&
-      conda install -y --name ${CLASS} -c conda-forge --file /tmp/classes/${CLASS}/requirements.txt &&
-      source activate ${CLASS} &&
-      pip install -r /tmp/classes/${CLASS}/requirements.pip.txt &&
-      conda env export --name ${CLASS} > /tmp/out/environment.yml &&
-      conda env export --name ${CLASS} --no-build > /tmp/out/environment.nb.yml
-      "
-    environment: 
-      - CLASS=${CLASS}
 
   julia_build:
     image: julia:1.5-buster
@@ -32,7 +14,7 @@ services:
       install(julia_packages);
       '"
 
-  jh_image: &jh_image
+  jh_image:
     build:
       context: .
       target: ${TARGET}
@@ -41,4 +23,10 @@ services:
       args: 
         CLASS: ${CLASS}
         WITH_MYSQL: ${WITH_MYSQL}
-
+    volumes:
+      - ./requirements/out:/home/jovyan/tmp/out
+    command: > 
+      bash -c "
+      conda env export --name ${CLASS} > /home/jovyan/tmp/out/environment.yml &&
+      conda env export --name ${CLASS} --no-build > /home/jovyan/tmp/out/environment.nb.yml
+      "
