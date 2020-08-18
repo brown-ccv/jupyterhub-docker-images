@@ -5,13 +5,11 @@ feather-format
 h5py
 lime
 matplotlib-base
-plotly
 plotnine
 rpy2
 unixodbc
 vega_datasets
 xgboost
-xeus-sqlite
 
 # these are the scipy base packages ( YOU PROBABLY DON'T WANT TO REMOVE THESE )
 # dask

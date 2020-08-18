@@ -4,5 +4,6 @@ dash
 dash-core-components 
 dash-html-components 
 dash-renderer 
+plotly
 plotly_express
 git+https://github.com/sswatson/voyager-launch 
