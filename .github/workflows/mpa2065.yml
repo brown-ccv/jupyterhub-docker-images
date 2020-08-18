@@ -50,7 +50,7 @@ jobs:
           docker push gcr.io/jupyterhub-docker-images/${CLASS}:${GITHUB_SHA}
 
       - name: Upload Cond Env Files
-          uses: actions/upload-artifact@v2
-          with:
-            name: conda-environment-files
-            path: requirements/out
+        uses: actions/upload-artifact@v2
+        with:
+          name: conda-environment-files
+          path: requirements/out
