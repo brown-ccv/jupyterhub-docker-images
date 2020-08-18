@@ -1,3 +1,5 @@
+#add extra pkgs here
+#basic scipy
 matplotlib 
 numpy 
 pandas 
@@ -5,6 +7,9 @@ pip
 scikit-learn 
 scipy
 seaborn
+#required for environment and plugins 
+ipython 
+ipykernel
 RISE
 ipympl
 ipywidgets

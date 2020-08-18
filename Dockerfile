@@ -33,30 +33,28 @@ WORKDIR $HOME
 
 COPY requirements/classes/${CLASS} /home/$NB_USER/tmp/
 
-RUN conda create --name ${CLASS} python=3.8 && \
+RUN conda create --name ${CLASS} -p ${CONDA_DIR}/envs/${CLASS} python=3.8 && \
     conda install -y --name ${CLASS} -c conda-forge --file /home/$NB_USER/tmp/requirements.txt && \
-    source activate ${CLASS} && \
-    pip install -r /home/$NB_USER/tmp/requirements.pip.txt && \
     conda clean --all -f -y
-
-# RUN cd /home/$NB_USER/tmp/ && \
-#     conda env create -p $CONDA_DIR/envs/${CLASS} -f environment.yml && \
-#     conda clean --all -f -y
-
-# Modify the path directly since the `source activate ${CLASS}`
-# environment won't be preserved here.
-ENV PATH ${CONDA_DIR}/envs/${CLASS}/bin:$PATH
-ENV CONDA_DEFAULT_ENV ${CLASS}
 
 # Link conda environment to Jupyter
 RUN $CONDA_DIR/envs/${CLASS}/bin/python -m ipykernel install --user --name=${CLASS} && \
     fix-permissions $CONDA_DIR && \
-    fix-permissions /home/$NB_USER && \
-    fix-permissions /home/$NB_USER/.local/share/jupyter/kernels/${CLASS}
+    fix-permissions /home/$NB_USER
+
+# pip installs 
+RUN $CONDA_DIR/envs/${CLASS}/bin/pip install -r /home/$NB_USER/tmp/requirements.pip.txt
+
+# Modify the path directly since the `source activate ${CLASS}`
+# environment won't be preserved here.
+ENV PATH ${CONDA_DIR}/envs/${CLASS}/bin:$PATH
 
 RUN jupyter labextension install @jupyterlab/server-proxy 
 RUN jupyter lab build --dev-build=False --minimize=False
- 
+
+# make class environment to be the default one
+ENV CONDA_DEFAULT_ENV ${CLASS}
+
 # Switch back to jovyan to avoid accidental container runs as root
 USER $NB_UID
 
