@@ -37,13 +37,16 @@ RUN conda create --quiet --yes -p ${CONDA_DIR}/envs/${CLASS} python=3.8 && \
     conda install -y --name ${CLASS} -c conda-forge --file /home/$NB_USER/tmp/requirements.txt && \
     conda clean --all -f -y
 
-# Link conda environment to Jupyter
-RUN $CONDA_DIR/envs/${CLASS}/bin/python -m ipykernel install --name=${CLASS} && \
+# Link conda environment to Jupyter system-wide
+USER root
+RUN $CONDA_DIR/envs/${CLASS}/bin/python -m ipykernel install --name=${CLASS}
+USER $NB_USER
+
+# pip installs 
+RUN $CONDA_DIR/envs/${CLASS}/bin/pip install -r /home/$NB_USER/tmp/requirements.pip.txt  && \
     fix-permissions $CONDA_DIR && \
     fix-permissions /home/$NB_USER
 
-# pip installs 
-RUN $CONDA_DIR/envs/${CLASS}/bin/pip install -r /home/$NB_USER/tmp/requirements.pip.txt
 
 # Modify the path directly since the `source activate ${CLASS}`
 # environment won't be preserved here.
