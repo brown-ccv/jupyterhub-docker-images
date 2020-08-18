@@ -26,9 +26,13 @@ ENV	PATH=/opt/code-server:$PATH
 USER $NB_UID
 WORKDIR $HOME
 
+
+#Install VS Code
+RUN pip install jupyter-server-proxy
 RUN jupyter serverextension enable --sys-prefix --py jupyter_server_proxy
 RUN jupyter labextension install @jupyterlab/server-proxy 
-RUN jupyter lab build --dev-build=False --minimize=False
+#Install VSCode Proxy
+RUN pip install git+https://github.com/betatim/vscode-binder
 
 
 ####################################################################
