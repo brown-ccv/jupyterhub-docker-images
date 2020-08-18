@@ -52,8 +52,8 @@ RUN $CONDA_DIR/envs/${CLASS}/bin/pip install -r /home/$NB_USER/tmp/requirements.
 # environment won't be preserved here.
 ENV PATH ${CONDA_DIR}/envs/${CLASS}/bin:$PATH
 
-RUN jupyter labextension install @jupyterlab/server-proxy 
-RUN jupyter lab build --dev-build=False --minimize=False
+RUN $CONDA_DIR/envs/${CLASS}/bin/jupyter labextension install @jupyterlab/server-proxy 
+RUN $CONDA_DIR/envs/${CLASS}/bin/jupyter lab build --dev-build=False --minimize=False
 
 # make class environment to be the default one
 ENV CONDA_DEFAULT_ENV ${CLASS}
