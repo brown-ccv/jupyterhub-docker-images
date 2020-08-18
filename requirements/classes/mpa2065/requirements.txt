@@ -1,7 +1,10 @@
 # add class-specific packages here:
+pymysql
+mysql
+sqlite3
 
 # these are the scipy base packages ( YOU PROBABLY DON'T WANT TO REMOVE THESE )
-dask
+# dask
 pandas
 numexpr
 matplotlib
