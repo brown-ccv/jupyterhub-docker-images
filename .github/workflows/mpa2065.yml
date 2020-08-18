@@ -18,15 +18,6 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
-      - name: Create Conda Environment Files
-        run: |
-          sudo --preserve-env=CLASS docker-compose up conda_build
-
-      - name: Upload Cond Env Files
-        uses: actions/upload-artifact@v2
-        with:
-          name: conda-environment-files
-          path: requirements/out
 
       - name: Create Julia Environment Files
         run: |
@@ -57,3 +48,9 @@ jobs:
           docker push gcr.io/jupyterhub-docker-images/${CLASS}:latest
           docker push gcr.io/jupyterhub-docker-images/${CLASS}:${GITHUB_REF##*/}
           docker push gcr.io/jupyterhub-docker-images/${CLASS}:${GITHUB_SHA}
+
+      - name: Upload Cond Env Files
+          uses: actions/upload-artifact@v2
+          with:
+            name: conda-environment-files
+            path: requirements/out

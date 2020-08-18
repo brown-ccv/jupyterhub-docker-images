@@ -1,15 +1,2 @@
-
-RISE
-ipympl
-ipywidgets
-jupyter-server-proxy
-jupyter_contrib_nbextensions
-jupyterlab-dash
-jupyterlab-git
-jupyterlab-latex 
-jupytext 
-nbdime
-nbgitpuller
+# required for environment and plugins 
 nodejs>10
-tini
-widgetsnbextension

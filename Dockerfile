@@ -6,7 +6,6 @@ FROM ${ROOT_CONTAINER} as base
 
 ARG CLASS
 
-#------------ Install VSCode Server a Root----------------------------
 USER root
 RUN apt-get update \
  && apt-get install -yq --no-install-recommends \
@@ -14,8 +13,9 @@ RUN apt-get update \
     openssh-client \
  && apt-get clean && rm -rf /var/lib/apt/lists/*
 
-ENV VS_CODE_VERSION=3.4.1
+#------------ Install VSCode Server a Root----------------------------
 
+ENV VS_CODE_VERSION=3.4.1
 RUN mkdir /opt/code-server 
 WORKDIR /opt/code-server 
 RUN wget -qO- https://github.com/cdr/code-server/releases/download/${VS_CODE_VERSION}/code-server-${VS_CODE_VERSION}-linux-x86_64.tar.gz | tar zxvf - --strip-components=1
@@ -27,42 +27,26 @@ ENV	PATH=/opt/code-server:$PATH
 USER $NB_UID
 WORKDIR $HOME
 
-# Install Git extension
-RUN jupyter labextension install @jupyterlab/git && \
-    pip install --upgrade jupyterlab-git && \
-    jupyter serverextension enable --py jupyterlab_git --sys-prefix &&\
+COPY requirements/common/ /tmp/
+RUN conda install -y -c conda-forge --file /tmp/requirements.txt && \
+    conda clean --all -f -y
+
+# Install jupyterlab git extension, this must come before installing extensions with pip (layer below)
+RUN jupyter labextension install '@jupyterlab/git' && \
     npm cache clean --force
 
-# Install nbgitpuller extension
-RUN pip install nbgitpuller && \
-    jupyter serverextension enable --py nbgitpuller --sys-prefix && \
+RUN pip install --upgrade -r /tmp/requirements.pip.txt && \
+    fix-permissions $CONDA_DIR && \
+    fix-permissions /home/$NB_USER
+
+# Install and Enable Extensions
+RUN jupyter serverextension enable --py 'jupyterlab_git' --sys-prefix && \
+    jupyter serverextension enable --py 'nbgitpuller' --sys-prefix && \
+    jupyter nbextension install 'rise' --py --sys-prefix && \
+    jupyter nbextension enable 'rise' --py --sys-prefix && \
+    jupyter serverextension enable --sys-prefix --py 'jupyter_server_proxy' && \
+    jupyter labextension install '@jupyterlab/server-proxy' && \
     npm cache clean --force
-
-# Install RISE extension
-RUN pip install RISE && \
-    jupyter nbextension install rise --py --sys-prefix &&\
-    jupyter nbextension enable rise --py --sys-prefix &&\
-    npm cache clean --force
-
-
-# Do we need any of these? Seems too much...
-# # Install JupyterLab extensions 
-# RUN jupyter labextension install \
-#             @jupyterlab/vega2-extension \
-#             @jupyterlab/vega3-extension \
-#             @jupyter-widgets/jupyterlab-manager \
-#             jupyter-matplotlib \
-#             @jupyterlab/plotly-extension \
-#             @jupyterlab/geojson-extension \
-#             @jupyterlab/mathjax3-extension \
-#             @jupyterlab/katex-extension
-
-#Install VS Code
-RUN pip install jupyter-server-proxy
-RUN jupyter serverextension enable --sys-prefix --py jupyter_server_proxy
-RUN jupyter labextension install @jupyterlab/server-proxy 
-#Install VSCode Proxy
-RUN pip install git+https://github.com/betatim/vscode-binder
 
 
 ####################################################################
@@ -84,7 +68,6 @@ USER $NB_USER
 # Modify the path directly since the `source activate ${CLASS}`
 # environment won't be preserved here.
 ENV PATH ${CONDA_DIR}/envs/${CLASS}/bin:$PATH
-
 
 # Class-specific pip installs 
 RUN $CONDA_DIR/envs/${CLASS}/bin/pip install -r /home/$NB_USER/tmp/requirements.pip.txt  && \

@@ -1,0 +1,14 @@
+# add class-specific classes here:
+
+# these are the scipy base packages ( YOU PROBABLY DON'T WANT TO REMOVE THESE )
+matplotlib 
+numpy 
+pandas 
+pip
+scikit-learn 
+scipy
+seaborn
+
+# required for environment and plugins ( DO NOT REMOVE THESE!!! )
+ipython 
+ipykernel

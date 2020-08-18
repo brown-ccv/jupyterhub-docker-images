@@ -7,17 +7,5 @@ pip
 scikit-learn 
 scipy
 seaborn
-#required for environment and plugins 
 ipython 
 ipykernel
-RISE
-ipympl
-ipywidgets
-jupyter_contrib_nbextensions
-jupyterlab-git
-jupyterlab-latex 
-jupytext 
-nbdime
-nbgitpuller
-nodejs>10
-widgetsnbextension
