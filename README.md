@@ -33,10 +33,9 @@ cd dev/
 
 To build the images locally:
 
-- Create the environment files:
+- Create the environment files (for Julia only):
 ```
-CLASS=apma0360 docker-compose up conda_build
-CLASS=apma0360 docker-compose up julia_build
+DOCKER_BUILDKIT=1 CLASS=apma0360 docker-compose up julia_build
 ```
 - Build JH Image
 ```

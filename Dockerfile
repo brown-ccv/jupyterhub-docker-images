@@ -7,11 +7,12 @@ FROM ${ROOT_CONTAINER} as base
 ARG CLASS
 
 USER root
-RUN apt-get update \
- && apt-get install -yq --no-install-recommends \
+RUN apt-get update && \
+    apt-get install -yq --no-install-recommends \
     git \
     openssh-client \
- && apt-get clean && rm -rf /var/lib/apt/lists/*
+    dvipng && \
+    apt-get clean && rm -rf /var/lib/apt/lists/*
 
 #------------ Install VSCode Server a Root----------------------------
 
@@ -46,8 +47,11 @@ RUN jupyter serverextension enable --py 'jupyterlab_git' --sys-prefix && \
     jupyter nbextension enable 'rise' --py --sys-prefix && \
     jupyter serverextension enable --sys-prefix --py 'jupyter_server_proxy' && \
     jupyter labextension install '@jupyterlab/server-proxy' && \
+    jupyter nbextension install jupytext --py --sys-prefix && \
+    jupyter nbextension enable jupytext --py --sys-prefix && \
+    jupyter serverextension enable --sys-prefix jupyterlab_latex && \
+    jupyter labextension install @jupyterlab/latex && \
     npm cache clean --force
-
 
 ####################################################################
 # Create Class Conda environment

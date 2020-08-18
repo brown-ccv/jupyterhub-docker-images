@@ -1,0 +1,4 @@
+# add class-specific classes here:
+jupyterlab-dash
+plotly_express
+git+https://github.com/sswatson/voyager-launch 
