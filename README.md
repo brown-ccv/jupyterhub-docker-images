@@ -28,7 +28,7 @@ To add a new class:
 ```bash
 # e.g
 cd dev/
-./add_class.sh -c data1010 -t r_julia -s fall
+./add_class.sh -c data1010 -t r_julia -s fall -q
 ```
 
 To build the images locally:
