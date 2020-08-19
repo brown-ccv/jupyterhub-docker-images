@@ -1,9 +1,2 @@
 # required for environment and plugins 
-<<<<<<< HEAD
 nodejs>10
-# kernels needs to be installed in the base env
-r-irkernel
-xeus-sqlite
-=======
-nodejs>10
->>>>>>> feat-mpa2065
