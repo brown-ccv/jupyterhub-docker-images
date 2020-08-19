@@ -21,7 +21,6 @@ jobs:
       - name: Create Julia Environment Files
         run: |
           sudo --preserve-env=CLASS docker-compose up julia_build
-
       - name: Upload Julia Env Files
         uses: actions/upload-artifact@v2
         with:
