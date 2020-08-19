@@ -11,6 +11,7 @@ on:
 env:
   CLASS: ${CLASS}
   TARGET: ${TARGET}
+  SQLITE: ${SQLITE}
 
 jobs:
   build:

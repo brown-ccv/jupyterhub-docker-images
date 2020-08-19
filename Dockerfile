@@ -5,6 +5,7 @@ ARG ROOT_CONTAINER="jupyter/base-notebook:latest"
 FROM ${ROOT_CONTAINER} as base
 
 ARG CLASS
+ARG SQLITE
 
 USER root
 RUN apt-get update \
@@ -31,6 +32,11 @@ COPY requirements/common/ /tmp/
 RUN conda install -y -c conda-forge --file /tmp/requirements.txt && \
     conda clean --all -f -y
 
+RUN if [ "$SQLITE" = "true" ] ; then \
+    conda install -y -c conda-forge xeus-sqlite && \
+    conda clean --all -f -y ; \
+    fi 
+    
 # Install jupyterlab git extension, this must come before installing extensions with pip (layer below)
 RUN jupyter labextension install '@jupyterlab/git' && \
     npm cache clean --force
@@ -51,8 +57,6 @@ RUN jupyter serverextension enable --py 'jupyterlab_git' --sys-prefix && \
 
 ####################################################################
 # Create Class Conda environment
-
-# COPY requirements/out/environment.yml /home/$NB_USER/tmp/
 
 COPY requirements/classes/${CLASS} /home/$NB_USER/tmp/
 
@@ -109,6 +113,12 @@ RUN ln -s /bin/tar /bin/gtar
 
 USER $NB_UID
 WORKDIR $HOME
+
+RUN conda install -y -p ${CONDA_DIR} -c conda-forge r-irkernel && \
+    conda clean --all -f -y && \
+    fix-permissions $CONDA_DIR && \
+    fix-permissions /home/$NB_USER
+
 
 ####################################################################
 # Add Julia pre-requisites

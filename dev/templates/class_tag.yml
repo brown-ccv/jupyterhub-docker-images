@@ -4,6 +4,7 @@ on: [workflow_dispatch]
 env:
   CLASS: ${CLASS}
   TARGET: ${TARGET}
+  SQLITE: ${SQLITE}
 
 jobs:
   build:
