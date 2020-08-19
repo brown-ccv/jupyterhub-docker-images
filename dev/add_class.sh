@@ -6,20 +6,20 @@ usage () { echo "Usage:"
            echo "     -c – Class name"
            echo "     -s - Season (fall, spring, recurring)"
            echo "     -t – Target stage in docker file (base, r_lang, or r_julia)"
-           echo "     -m – Whether to install MySQL"; }
+           echo "     -q – Whether to install SQLITE Kernel"; }
 
-while getopts c:s:t:ms:h option; do
+while getopts c:s:t:qh option; do
     case "${option}" in
         c) CLASS=${OPTARG};;
         s) SEASON=${OPTARG};;
         t) TARGET=${OPTARG};;
-        m) WITH_MYSQL=true;;
+        q) SQLITE=true;;
         h) usage; exit;;
     esac
 done
 
-if [ "$WITH_MYSQL" != "true" ]; then
-    WITH_MYSQL=false
+if [ "$SQLITE" != "true" ]; then
+    SQLITE=false
 fi
 
 if ((OPTIND < 6))
@@ -30,6 +30,7 @@ else
     export CLASS=$CLASS
     export TARGET=$TARGET
     export SEASON=$SEASON
+    export SQLITE=$SQLITE
     export GITHUB_SHA="\${GITHUB_SHA}"
     envsubst < ./templates/class_workflow.yml > ../.github/workflows/${CLASS}.yml &&
     envsubst < ./templates/class_tag.yml > ../.github/workflows/${CLASS}-${SEASON}-tag.yml &&
