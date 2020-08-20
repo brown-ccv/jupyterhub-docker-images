@@ -41,12 +41,12 @@ To create an image to be used in JupyterHub for a particular class, we need thes
 
 - `docker-compose.yml`: docker compose file with three services. The first two steps are used to create environment files for conda and julia respectively. This step will generate and write conda's and julia's environment files. These files will be uploaded as artifacts so students can use them to reproduce the JH environment. The third step uses the environment files generated in steps one and two to build the image and push to GCR (Google Container Registry). 
 - `scripts/`: contains the scripts needed by the image. Currently it has scripts needed by the Berkley image and the ones needed for the Jupyter official images.
-- `requirements/common/`: contains `requirements.txt` (list of packages to isntall from conda-forge) and `requirements.pip.txt` (list of packages to install using pip). Those files will be appended to the class-specific `requirement*` files.
+- `requirements/common/`: contains `requirements.txt` (list of packages to install from conda-forge) and `requirements.pip.txt` (list of packages to install using pip). Those files will get installed in the base environment.
 
 ### Class-specific components
 Each class has the following exclusive components:
 - `requirements/classes/${className}/`:  the requirement files with the class-specific packages needed to create the conda environment. The  `requirements.txt` (requirede) – list of packages to isntall from conda-forge. `requirements.pip.txt` (optional) – list of packages to install using pip. `requirements.jl` (optional) – julia file with `const julia_packages = []`, with an array of packages to install.
-- `.github/workflow/className.yml`: the github action workflow. One workflow per class will make the environment files artifacts easier to find. In addition, it allows us to run the workflow conditionally on changes related to a single class. The last step requires specific environment variables. At least `CLASS::str` and `TARGET::str` need to be passed, where CLASS is the class name (e.g. data1010) and target is the stage in the docker file to target: `base` (only python), `r_lang` (Python and R), `r_julia` (Python, R, and Julia). The variable `WITH_MYSQL::bool` will be used to conditionally run steps to install MySQL.
+- `.github/workflow/className.yml` and `.github/workflow/className-tag.yml` : the github action workflow. One workflow per class will make the environment files artifacts easier to find. In addition, it allows us to run the workflow conditionally on changes related to a single class. The last step requires specific environment variables. 
 
 > Note: The production image will be created in CI.
 
