@@ -4,22 +4,13 @@ on: [workflow_dispatch]
 env:
   CLASS: ${CLASS}
   TARGET: ${TARGET}
+  SQLITE: ${SQLITE}
 
 jobs:
   build:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
-
-      - name: Create Julia Environment Files
-        run: |
-          sudo --preserve-env=CLASS docker-compose up julia_build
-
-      - name: Upload Julia Env Files
-        uses: actions/upload-artifact@v2
-        with:
-          name: julia-environment-files
-          path: requirements/classes/${{ env.CLASS }}/julia_env
 
       - name: Set Up GCloud
         uses: GoogleCloudPlatform/github-actions/setup-gcloud@master
@@ -28,6 +19,15 @@ jobs:
           project_id: ${{ secrets.GCP_PROJECT_ID_JH_DOCKER }}
           service_account_key: ${{ secrets.GCP_SA_KEY_JH_DOCKER }}
           export_default_credentials: true
+
+      - name: Create Julia Environment Files
+        run: |
+          sudo --preserve-env=CLASS docker-compose up julia_build
+
+      - name: Upload Julia Env Files to Google Storage Bucket
+        run: |
+          gsutil cp -r requirements/classes/${CLASS}/julia_env gs://jupyterhub-environment-files/${SEASON}-${YEAR}/${CLASS}/past/${GITHUB_SHA}/julia
+          gsutil cp -r requirements/classes/${CLASS}/julia_env gs://jupyterhub-environment-files/${SEASON}-${YEAR}/${CLASS}/latest/julia
 
       - name: Configure Docker
         run: gcloud auth configure-docker
@@ -44,8 +44,7 @@ jobs:
           docker push gcr.io/jupyterhub-docker-images/${CLASS}:${GITHUB_REF##*/}
           docker push gcr.io/jupyterhub-docker-images/${CLASS}:${GITHUB_SHA}
 
-      - name: Upload Cond Env Files
-        uses: actions/upload-artifact@v2
-        with:
-          name: conda-environment-files
-          path: requirements/out
+      - name: Upload Conda Env Files to Google Storage Bucket
+        run: |
+          gsutil cp -r requirements/out gs://jupyterhub-environment-files/${SEASON}-${YEAR}/${CLASS}/past/${GITHUB_SHA}/conda
+          gsutil cp -r requirements/out gs://jupyterhub-environment-files/${SEASON}-${YEAR}/${CLASS}/latest/conda

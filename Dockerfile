@@ -5,13 +5,15 @@ ARG ROOT_CONTAINER="jupyter/base-notebook:latest"
 FROM ${ROOT_CONTAINER} as base
 
 ARG CLASS
+ARG SQLITE
 
 USER root
-RUN apt-get update \
- && apt-get install -yq --no-install-recommends \
+RUN apt-get update && \
+    apt-get install -yq --no-install-recommends \
     git \
     openssh-client \
- && apt-get clean && rm -rf /var/lib/apt/lists/*
+    dvipng && \
+    apt-get clean && rm -rf /var/lib/apt/lists/*
 
 #------------ Install VSCode Server a Root----------------------------
 
@@ -31,6 +33,11 @@ COPY requirements/common/ /tmp/
 RUN conda install -y -c conda-forge --file /tmp/requirements.txt && \
     conda clean --all -f -y
 
+RUN if [ "$SQLITE" = "true" ] ; then \
+    conda install -y -c conda-forge xeus-sqlite && \
+    conda clean --all -f -y ; \
+    fi 
+    
 # Install jupyterlab git extension, this must come before installing extensions with pip (layer below)
 RUN jupyter labextension install '@jupyterlab/git' && \
     npm cache clean --force
@@ -46,13 +53,14 @@ RUN jupyter serverextension enable --py 'jupyterlab_git' --sys-prefix && \
     jupyter nbextension enable 'rise' --py --sys-prefix && \
     jupyter serverextension enable --sys-prefix --py 'jupyter_server_proxy' && \
     jupyter labextension install '@jupyterlab/server-proxy' && \
+    jupyter nbextension install jupytext --py --sys-prefix && \
+    jupyter nbextension enable jupytext --py --sys-prefix && \
+    jupyter serverextension enable --sys-prefix jupyterlab_latex && \
+    jupyter labextension install @jupyterlab/latex && \
     npm cache clean --force
-
 
 ####################################################################
 # Create Class Conda environment
-
-# COPY requirements/out/environment.yml /home/$NB_USER/tmp/
 
 COPY requirements/classes/${CLASS} /home/$NB_USER/tmp/
 
@@ -110,6 +118,12 @@ RUN ln -s /bin/tar /bin/gtar
 USER $NB_UID
 WORKDIR $HOME
 
+RUN conda install -y -p ${CONDA_DIR} -c conda-forge r-irkernel && \
+    conda clean --all -f -y && \
+    fix-permissions $CONDA_DIR && \
+    fix-permissions /home/$NB_USER
+
+
 ####################################################################
 # Add Julia pre-requisites
 FROM r_lang as r_julia
@@ -154,6 +168,14 @@ USER $NB_UID
 # Install IJulia as jovyan and then move the kernelspec out
 # to the system share location. Avoids problems with runtime UID change not
 # taking effect properly on the .local folder in the jovyan home dir.
+RUN julia -e 'import Pkg; Pkg.update()' && \
+    julia -e "using Pkg; pkg\"add IJulia\"; pkg\"precompile\"" && \
+    # move kernelspec out of home \
+    mv "${HOME}/.local/share/jupyter/kernels/julia"* "${CONDA_DIR}/share/jupyter/kernels/" && \
+    chmod -R go+rx "${CONDA_DIR}/share/jupyter" && \
+    rm -rf "${HOME}/.local" && \
+    fix-permissions "${JULIA_PKGDIR}" "${CONDA_DIR}/share/jupyter"
+
 RUN julia -e 'import Pkg; Pkg.update(); Pkg.instantiate(); Pkg.precompile();'
 
 

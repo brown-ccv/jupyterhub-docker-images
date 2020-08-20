@@ -23,24 +23,23 @@ Each class has the following exclusive components:
 > Note: The production image will be created in CI.
 
 To add a new class:
-- Use the provided script in `dev/add_class.sh` to create a workflow file and scafold the requirements directory. The script takes three arguments: class name (string): `-c`, class season/semester `-s` (fall, summer, spring), target in docker file (string): `-t` and wheter to install mysql `-m` (ommit the `-m` tag if mysql is not required).
+- Use the provided script in `dev/add_class.sh` to create a workflow file and scafold the requirements directory. The script takes three arguments: class name (string): `-c`, class season/semester `-s` (fall, summer, spring), target in docker file (string): `-t` and wheter to install sqlite kernel `-q` (ommit the `-q` tag if sqlite kernel is not required).
 
 ```bash
 # e.g
 cd dev/
-./add_class.sh -c data1010 -t r_julia -s fall
+./add_class.sh -c data1010 -t r_julia -s fall -q
 ```
 
 To build the images locally:
 
-- Create the environment files:
+- Create the environment files (for Julia only):
 ```
-CLASS=apma0360 docker-compose up conda_build
-CLASS=apma0360 docker-compose up julia_build
+DOCKER_BUILDKIT=1 CLASS=apma0360 docker-compose up julia_build
 ```
 - Build JH Image
 ```
-COMPOSE_DOCKER_CLI_BUILD=1 DOCKER_BUILDKIT=1 CLASS=apma0360 TARGET=base docker-compose up jh_image
+COMPOSE_DOCKER_CLI_BUILD=1 DOCKER_BUILDKIT=1 CLASS=apma0360 TARGET=base SQLITE=false docker-compose up jh_image
 ```
 - Run the image
 ```

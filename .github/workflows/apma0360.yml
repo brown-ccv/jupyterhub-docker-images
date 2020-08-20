@@ -32,8 +32,10 @@ jobs:
         run: |
           COMPOSE_DOCKER_CLI_BUILD=1 DOCKER_BUILDKIT=1 docker-compose up jh_image
           docker tag jupyterhub-docker-images_jh_image:latest gcr.io/jupyterhub-docker-images/apma0360:${GITHUB_REF##*/}
-          docker tag jupyterhub-docker-images_jh_image:latest gcr.io/jupyterhub-docker-images/apma0360:${GITHUB_SHA}
           docker tag jupyterhub-docker-images_jh_image:latest gcr.io/jupyterhub-docker-images/apma0360:latest
           docker push gcr.io/jupyterhub-docker-images/apma0360:latest
           docker push gcr.io/jupyterhub-docker-images/apma0360:${GITHUB_REF##*/}
-          docker push gcr.io/jupyterhub-docker-images/apma0360:${GITHUB_SHA}
+
+
+
+          

@@ -22,9 +22,10 @@ services:
         - gcr.io/jupyterhub-docker-images/${CLASS}:latest
       args: 
         CLASS: ${CLASS}
-        WITH_MYSQL: ${WITH_MYSQL}
+        SQLITE: ${SQLITE}
     volumes:
       - ./requirements/out:/home/jovyan/tmp/out
+    user: root
     command: > 
       bash -c "
       conda env export --name ${CLASS} > /home/jovyan/tmp/out/environment.yml &&
