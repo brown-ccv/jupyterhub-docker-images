@@ -1,7 +1,7 @@
 # add class-specific packages here:
 
 # these are the scipy base packages ( YOU PROBABLY DON'T WANT TO REMOVE THESE )
-dask
+dask 
 pandas
 numexpr
 matplotlib
