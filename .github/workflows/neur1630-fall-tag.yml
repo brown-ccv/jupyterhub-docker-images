@@ -4,7 +4,7 @@ on: [workflow_dispatch]
 env:
   CLASS: neur1630
   TARGET: r_lang
-  SQLITE: true
+  SQLITE: false
 
 jobs:
   build:
