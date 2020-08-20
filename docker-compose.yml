@@ -18,6 +18,7 @@ services:
     build:
       context: .
       target: ${TARGET}
+      user: root
       cache_from: 
         - gcr.io/jupyterhub-docker-images/${CLASS}:latest
       args: 
