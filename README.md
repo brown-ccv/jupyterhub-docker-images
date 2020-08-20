@@ -1,13 +1,42 @@
 # Docker Images for Brown's JupyterHub
 
-## Overview
+---
+
+## For Users
+
+#### Docker Images
+
+[See a list of the Docker images here.](https://console.cloud.google.com/gcr/images/jupyterhub-docker-images)
+
+To use one of those images locally:
+- [Install Google Cloud SDK](https://cloud.google.com/sdk/docs/downloads-interactive)
+- Configure docker to use the gcloud command-line tool as a credential helper:
+```
+gcloud auth configure-docker
+```
+- Run the image locally:
+
+```
+# example
+docker run -it --rm -p 8888:8888 gcr.io/jupyterhub-docker-images/mpa2065:latest
+```
+
+#### Environment Files
+
+We provide Conda and Julia environemnt files if you wish to recreate the JupyterHub environment locally.
+These files are available for download [from this Google Storage Bucket](https://console.cloud.google.com/storage/browser/jupyterhub-environment-files).
+
+
+## For Developers
+
+### Overview
 This document outlines the process for creation of Docker images for JupyterHub at Brown. Every semester multiple courses request a JupyterHub, we build one image for each of those courses based on requirements specified in the request.
 We use Github Actions and Docker Compose to create the environments, build, and push the docker images. 
 
-## The GH Actions way
+### The GH Actions way
 To create an image to be used in JupyterHub for a particular class, we need these components:
 
-### Shared components
+#### Shared components
 - `Dockerfile`: the base dockerfile to create the image. [The file currently being is a modification of the official Jupyter `base-notebook` image.](https://github.com/jupyter/docker-stacks/blob/master/base-notebook/Dockerfile)
 
 - `docker-compose.yml`: docker compose file with three services. The first two steps are used to create environment files for conda and julia respectively. This step will generate and write conda's and julia's environment files. These files will be uploaded as artifacts so students can use them to reproduce the JH environment. The third step uses the environment files generated in steps one and two to build the image and push to GCR (Google Container Registry). 
@@ -19,11 +48,10 @@ Each class has the following exclusive components:
 - `requirements/classes/${className}/`:  the requirement files with the class-specific packages needed to create the conda environment. The  `requirements.txt` (requirede) – list of packages to isntall from conda-forge. `requirements.pip.txt` (optional) – list of packages to install using pip. `requirements.jl` (optional) – julia file with `const julia_packages = []`, with an array of packages to install.
 - `.github/workflow/className.yml`: the github action workflow. One workflow per class will make the environment files artifacts easier to find. In addition, it allows us to run the workflow conditionally on changes related to a single class. The last step requires specific environment variables. At least `CLASS::str` and `TARGET::str` need to be passed, where CLASS is the class name (e.g. data1010) and target is the stage in the docker file to target: `base` (only python), `r_lang` (Python and R), `r_julia` (Python, R, and Julia). The variable `WITH_MYSQL::bool` will be used to conditionally run steps to install MySQL.
 
-### Usage
 > Note: The production image will be created in CI.
 
 To add a new class:
-- Use the provided script in `dev/add_class.sh` to create a workflow file and scafold the requirements directory. The script takes three arguments: class name (string): `-c`, class season/semester `-s` (fall, summer, spring), target in docker file (string): `-t` and wheter to install sqlite kernel `-q` (ommit the `-q` tag if sqlite kernel is not required).
+- Use the provided script in `dev/add_class.sh` to create a workflow file and scafold the requirements directory. The script takes three arguments: class name (string): `-c`, class season/semester `-s` (fall, summer, spring), target in docker file (string  – `base`, `r_lang` or `r_julia`): `-t`, and wheter to install sqlite kernel `-q` (ommit the `-q` tag if sqlite is not required).
 
 ```bash
 # e.g
@@ -33,22 +61,17 @@ cd dev/
 
 To build the images locally:
 
-- Create the environment files (for Julia only):
+- Create the environment files:
 ```
-DOCKER_BUILDKIT=1 CLASS=apma0360 docker-compose up julia_build
+# if TARGET is `r_julia`
+CLASS=apma0360 docker-compose up julia_build
 ```
 - Build JH Image
 ```
-COMPOSE_DOCKER_CLI_BUILD=1 DOCKER_BUILDKIT=1 CLASS=apma0360 TARGET=base SQLITE=false docker-compose up jh_image
+COMPOSE_DOCKER_CLI_BUILD=1 DOCKER_BUILDKIT=1 CLASS=apma0360 TARGET=base docker-compose up jh_image
 ```
 - Run the image
 ```
 docker run -it --rm -p 8888:8888 jupyterhub-docker-images_jh_image
 ```
 
-### General Notes
-The actions running on push will allow for a streamlined development, however, I would suggest that we tag releases for the images that are officially being used in production. 
-
-This process also can be moved to the same repo as the actual JupyterHub deployment code.
-
-The secrets needed for this action were added to the Organization level, so they can easily be reused in case we create different repos.
