@@ -37,3 +37,11 @@ jobs:
           docker push gcr.io/jupyterhub-docker-images/apma0360:latest
           docker push gcr.io/jupyterhub-docker-images/apma0360:${GITHUB_REF##*/}
           docker push gcr.io/jupyterhub-docker-images/apma0360:${GITHUB_SHA}
+
+      - name: Upload Cond Env Files to Google Storage Bucket
+        run: |
+          gsutil cp -r requirements/out gs://jupyterhub-environment-files/fall2020/apma0360/past/${GITHUB_SHA}/conda
+          gsutil cp -r requirements/out gs://jupyterhub-environment-files/fall2020/apma0360/${GITHUB_REF##*/}/conda
+
+
+          
