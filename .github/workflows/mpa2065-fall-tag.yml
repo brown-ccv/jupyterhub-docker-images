@@ -4,6 +4,7 @@ on: [workflow_dispatch]
 env:
   CLASS: mpa2065
   TARGET: r_julia
+  SQLITE: true
 
 jobs:
   build:
