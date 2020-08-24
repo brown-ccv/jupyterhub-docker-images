@@ -9,7 +9,7 @@ ARG SQLITE
 
 ARG CANTERA
 RUN if [ "$CANTERA" = "true" ] ; then \
-    ENV PYTHON_VERSION=3.7
+    ENV PYTHON_VERSION=3.7 \
     conda install --name ${CLASS} -y -c cantera cantera && \ 
     conda clean --all -f -y ; \
     fi 
