@@ -7,6 +7,12 @@ FROM ${ROOT_CONTAINER} as base
 ARG CLASS
 ARG SQLITE
 
+ARG CANTERA
+RUN if [ "$CANTERA" = "true" ] ; then \
+    conda install --name ${CLASS} -y -c cantera cantera && \ 
+    conda clean --all -f -y ; \
+    fi 
+
 USER root
 RUN apt-get update && \
     apt-get install -yq --no-install-recommends \
