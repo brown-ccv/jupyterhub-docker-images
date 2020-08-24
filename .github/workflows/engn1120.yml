@@ -11,7 +11,7 @@ on:
 env:
   CLASS: engn1120
   TARGET: base
-  SQLITE: true
+  SQLITE: false
   CANTERA: true
 
 jobs:
