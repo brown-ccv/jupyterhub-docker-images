@@ -9,6 +9,7 @@ ARG SQLITE
 
 ARG CANTERA
 RUN if [ "$CANTERA" = "true" ] ; then \
+    ENV PYTHON_VERSION=3.7
     conda install --name ${CLASS} -y -c cantera cantera && \ 
     conda clean --all -f -y ; \
     fi 
@@ -70,7 +71,7 @@ RUN jupyter serverextension enable --py 'jupyterlab_git' --sys-prefix && \
 
 COPY requirements/classes/${CLASS} /home/$NB_USER/tmp/
 
-RUN conda create --quiet --yes -p ${CONDA_DIR}/envs/${CLASS} python=3.8 && \
+RUN conda create --quiet --yes -p ${CONDA_DIR}/envs/${CLASS} python=${PYTHON_VERSION} && \
     conda install -y --name ${CLASS} -c conda-forge --file /home/$NB_USER/tmp/requirements.txt && \
     conda clean --all -f -y
 
