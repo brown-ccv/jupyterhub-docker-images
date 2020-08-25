@@ -1,4 +1,9 @@
 # add class-specific packages here:
+# for geol1430
+netCDF4
+metpy
+cartopy
+iris
 
 # these are the scipy base packages ( YOU PROBABLY DON'T WANT TO REMOVE THESE )
 dask 
@@ -25,11 +30,6 @@ protobuf
 xlrd
 bottleneck
 pytables
-# for geol1430
-netCDF4
-metpy
-cartopy
-iris
 
 # required for environment and plugins ( DO NOT REMOVE THESE!!! )
 ipython 
