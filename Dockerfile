@@ -151,11 +151,6 @@ ENV JULIA_DEPOT_PATH=/opt/julia
 ENV JULIA_PKGDIR=/opt/julia
 ENV JULIA_VERSION=1.5.0
 
-# ENV JULIA_DEPOT_PATH=$HOME/.julia/
-# ENV JULIA_PKGDIR=$HOME/.julia/
-# ENV JULIA_VERSION=1.5.0
-
-# RUN mkdir $HOME/.julia/
 COPY requirements/classes/${CLASS}/julia_env/Project.toml $JULIA_PKGDIR/environments/v1.5/
 COPY requirements/classes/${CLASS}/julia_env/Manifest.toml $JULIA_PKGDIR/environments/v1.5/
 RUN fix-permissions ${JULIA_PKGDIR}
@@ -193,6 +188,7 @@ RUN julia -e 'import Pkg; Pkg.update()' && \
 
 RUN julia -e 'import Pkg; Pkg.update(); Pkg.instantiate(); Pkg.precompile();'
 
+ENV JULIA_DEPOT_PATH="$HOME/.julia:$JULIA_DEPOT_PATH"
 
 USER $NB_UID
 WORKDIR $HOME
