@@ -7,3 +7,5 @@ RISE
 git+https://github.com/betatim/vscode-binder 
 jupytext
 jupyterlab_latex
+pyppeteer
+nbconvert
