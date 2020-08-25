@@ -136,14 +136,18 @@ ARG CLASS
 USER root
 # Julia dependencies
 
-ENV JULIA_DEPOT_PATH=$HOME/.julia/
-ENV JULIA_PKGDIR=$HOME/.julia/
+ENV JULIA_DEPOT_PATH=/opt/julia
+ENV JULIA_PKGDIR=/opt/julia
 ENV JULIA_VERSION=1.5.0
 
-RUN mkdir $HOME/.julia/
-COPY requirements/classes/${CLASS}/julia_env/Project.toml $HOME/.julia/environments/v1.5/
-COPY requirements/classes/${CLASS}/julia_env/Manifest.toml $HOME/.julia/environments/v1.5/
-RUN fix-permissions ${JULIA_PKGDIR}
+# ENV JULIA_DEPOT_PATH=$HOME/.julia/
+# ENV JULIA_PKGDIR=$HOME/.julia/
+# ENV JULIA_VERSION=1.5.0
+
+# RUN mkdir $HOME/.julia/
+COPY requirements/classes/${CLASS}/julia_env/Project.toml $JULIA_PKGDIR/environments/v1.5/
+COPY requirements/classes/${CLASS}/julia_env/Manifest.toml $JULIA_PKGDIR/environments/v1.5/
+# RUN fix-permissions ${JULIA_PKGDIR}
 
 WORKDIR /tmp
 

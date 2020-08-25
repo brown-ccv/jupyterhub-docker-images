@@ -3,7 +3,7 @@ on: [workflow_dispatch]
 
 env:
   CLASS: econ2070
-  TARGET: base
+  TARGET: r_julia
   SQLITE: true
 
 jobs:
