@@ -9,10 +9,17 @@ ARG SQLITE
 
 USER root
 RUN apt-get update && \
+    apt-get install -y software-properties-common && \
+    add-apt-repository universe && \
+    add-apt-repository multiverse && \
+    apt update
+
+RUN apt-get update && \
     apt-get install -yq --no-install-recommends \
     git \
     openssh-client \
     texlive-xetex \ 
+    texlive-latex-recommended \
     texlive-fonts-recommended \
     pandoc \
     dvipng && \
