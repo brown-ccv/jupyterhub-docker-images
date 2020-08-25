@@ -21,6 +21,7 @@ RUN apt-get update && \
     texlive-xetex \ 
     texlive-latex-recommended \
     texlive-fonts-recommended \
+    texlive-plain-generic \
     pandoc \
     dvipng && \
     apt-get clean && rm -rf /var/lib/apt/lists/*
