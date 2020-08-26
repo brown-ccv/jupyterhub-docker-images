@@ -12,7 +12,7 @@ env:
   CLASS: engn1120
   TARGET: base
   SQLITE: false
-  CANTERA: true
+  PYTHON_VERSION: 3.7
 
 jobs:
   build:
