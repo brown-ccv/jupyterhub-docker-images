@@ -147,12 +147,13 @@ ARG CLASS
 USER root
 # Julia dependencies
 
-ENV JULIA_DEPOT_PATH=:/opt/julia
+ENV JULIA_DEPOT_PATH=/opt/julia
 ENV JULIA_PKGDIR=/opt/julia
 ENV JULIA_VERSION=1.5.0
+ENV JULIA_TAG=v${JULIA_VERSION/.0/}
 
-COPY requirements/classes/${CLASS}/julia_env/Project.toml $JULIA_PKGDIR/environments/v1.5/
-COPY requirements/classes/${CLASS}/julia_env/Manifest.toml $JULIA_PKGDIR/environments/v1.5/
+COPY requirements/classes/${CLASS}/julia_env/Project.toml $JULIA_PKGDIR/environments/$JULIA_TAG/
+COPY requirements/classes/${CLASS}/julia_env/Manifest.toml $JULIA_PKGDIR/environments/$JULIA_TAG/
 RUN fix-permissions ${JULIA_PKGDIR}
 
 WORKDIR /tmp
@@ -180,7 +181,7 @@ USER $NB_UID
 # taking effect properly on the .local folder in the jovyan home dir.
 RUN julia -e 'import Pkg; Pkg.update()' && \
     julia -e "using Pkg; pkg\"add IJulia\"; pkg\"precompile\"" && \
-    julia -e "using IJulia; installkernel(\"Julia User\", \"--project=./julia/environments/v1.5\")" && \
+    julia -e "using IJulia; installkernel(\"Julia User\", \"--project=${HOME}/.julia/environments/${JULIA_TAG}\")" && \
     # move kernelspec out of home \
     mv "${HOME}/.local/share/jupyter/kernels/julia"* "${CONDA_DIR}/share/jupyter/kernels/" && \
     chmod -R go+rx "${CONDA_DIR}/share/jupyter" && \
@@ -190,7 +191,7 @@ RUN julia -e 'import Pkg; Pkg.update()' && \
 RUN julia -e 'import Pkg; Pkg.update(); Pkg.instantiate(); Pkg.precompile();'
 
 ENV JULIA_DEPOT_PATH="$HOME/.julia:$JULIA_DEPOT_PATH"
-ENV JULIA_PROJECT="$HOME/.julia/environments/v1.5"
+ENV JULIA_PROJECT="$HOME/.julia/environments/$JULIA_TAG"
 
 USER $NB_UID
 WORKDIR $HOME
