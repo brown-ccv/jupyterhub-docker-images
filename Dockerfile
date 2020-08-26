@@ -1,12 +1,11 @@
 # Copyright (c) Jupyter Development Team.
 # Distributed under the terms of the Modified BSD License.
-
 ARG ROOT_CONTAINER="jupyter/base-notebook:latest"
 FROM ${ROOT_CONTAINER} as base
 
 ARG CLASS
 ARG SQLITE
-ARG PYTHON_VERSION=3.8
+ARG PYTHON_VERSION
 
 USER root
 RUN apt-get update && \
