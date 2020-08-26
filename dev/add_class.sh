@@ -13,13 +13,13 @@ while getopts c:s:t:qh option; do
         c) CLASS=${OPTARG};;
         s) SEASON=${OPTARG};;
         t) TARGET=${OPTARG};;
-        q) SQLITE=true;;
+        q) ADD_SQLITE=true;;
         h) usage; exit;;
     esac
 done
 
-if [ "$SQLITE" != "true" ]; then
-    SQLITE=false
+if [ "$ADD_SQLITE" != "true" ]; then
+    ADD_SQLITE=false
 fi
 
 if ((OPTIND < 6))
@@ -30,7 +30,7 @@ else
     export CLASS=$CLASS
     export TARGET=$TARGET
     export SEASON=$SEASON
-    export SQLITE=$SQLITE
+    export SQLITE=$ADD_SQLITE
     export GITHUB_SHA="\${GITHUB_SHA}"
     envsubst < ./templates/class_workflow.yml > ../.github/workflows/${CLASS}.yml &&
     envsubst < ./templates/class_tag.yml > ../.github/workflows/${CLASS}-${SEASON}-tag.yml &&
