@@ -1,18 +1,18 @@
-name: Build Image for ${CLASS}
+name: Build Image for engn1120
 on: 
   push:
       paths:
-      - 'requirements/classes/${CLASS}/**'
+      - 'requirements/classes/engn1120/**'
       - 'Dockerfile'
       - 'docker-compose.yml'
       - 'scripts/**'
-      - '.github/workflows/${CLASS}.yml'
+      - '.github/workflows/engn1120.yml'
 
 env:
-  CLASS: ${CLASS}
-  TARGET: ${TARGET}
-  SQLITE: ${SQLITE}
-  PYTHON_VERSION: ${PYTHON_VERSION}
+  CLASS: engn1120
+  TARGET: base
+  SQLITE: false
+  PYTHON_VERSION: 3.7
 
 jobs:
   build:
@@ -38,7 +38,7 @@ jobs:
       - name: Build and Push JH Image
         run: |
           COMPOSE_DOCKER_CLI_BUILD=1 DOCKER_BUILDKIT=1 docker-compose up jh_image
-          docker tag jupyterhub-docker-images_jh_image:latest gcr.io/jupyterhub-docker-images/${CLASS}:${GITHUB_REF##*/}
-          docker tag jupyterhub-docker-images_jh_image:latest gcr.io/jupyterhub-docker-images/${CLASS}:latest
-          docker push gcr.io/jupyterhub-docker-images/${CLASS}:latest
-          docker push gcr.io/jupyterhub-docker-images/${CLASS}:${GITHUB_REF##*/}
+          docker tag jupyterhub-docker-images_jh_image:latest gcr.io/jupyterhub-docker-images/engn1120:${GITHUB_REF##*/}
+          docker tag jupyterhub-docker-images_jh_image:latest gcr.io/jupyterhub-docker-images/engn1120:latest
+          docker push gcr.io/jupyterhub-docker-images/engn1120:latest
+          docker push gcr.io/jupyterhub-docker-images/engn1120:${GITHUB_REF##*/}

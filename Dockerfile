@@ -1,11 +1,11 @@
 # Copyright (c) Jupyter Development Team.
 # Distributed under the terms of the Modified BSD License.
-
 ARG ROOT_CONTAINER="jupyter/base-notebook:latest"
 FROM ${ROOT_CONTAINER} as base
 
 ARG CLASS
 ARG SQLITE
+ARG PYTHON_VERSION
 
 USER root
 RUN apt-get update && \
@@ -63,9 +63,10 @@ RUN jupyter serverextension enable --py 'jupyterlab_git' --sys-prefix && \
 # Create Class Conda environment
 
 COPY requirements/classes/${CLASS} /home/$NB_USER/tmp/
+COPY requirements/classes/${CLASS}/condarc /home/$NB_USER/.condarc
 
-RUN conda create --quiet --yes -p ${CONDA_DIR}/envs/${CLASS} python=3.8 && \
-    conda install -y --name ${CLASS} -c conda-forge --file /home/$NB_USER/tmp/requirements.txt && \
+RUN conda create --quiet --yes -p ${CONDA_DIR}/envs/${CLASS} python=${PYTHON_VERSION} && \
+    conda install -y --name ${CLASS} --file /home/$NB_USER/tmp/requirements.txt && \
     conda clean --all -f -y
 
 # Link conda environment to Jupyter system-wide
