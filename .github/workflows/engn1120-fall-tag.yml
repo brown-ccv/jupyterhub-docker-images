@@ -5,6 +5,7 @@ env:
   CLASS: engn1120
   TARGET: base
   SQLITE: true
+  PYTHON_VERSION: 3.7
 
 jobs:
   build:
