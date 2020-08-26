@@ -64,7 +64,7 @@ RUN jupyter serverextension enable --py 'jupyterlab_git' --sys-prefix && \
 # Create Class Conda environment
 
 COPY requirements/classes/${CLASS} /home/$NB_USER/tmp/
-RUN mv /home/$NB_USER/tmp/condarc /home/$NB_USER/.condarc
+COPY requirements/classes/${CLASS}/condarc /home/$NB_USER/.condarc
 
 RUN conda create --quiet --yes -p ${CONDA_DIR}/envs/${CLASS} python=${PYTHON_VERSION} && \
     conda install -y --name ${CLASS} --file /home/$NB_USER/tmp/requirements.txt && \
