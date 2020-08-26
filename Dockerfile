@@ -189,7 +189,7 @@ RUN julia -e 'import Pkg; Pkg.update()' && \
 RUN julia -e 'import Pkg; Pkg.update(); Pkg.instantiate(); Pkg.precompile();'
 
 ENV JULIA_DEPOT_PATH="$HOME/.julia:$JULIA_DEPOT_PATH"
-ENV JULIA_PROJECT=$HOME/.julia/environments/v1.5
+ENV JULIA_PROJECT="$HOME/.julia/environments/v1.5"
 
 USER $NB_UID
 WORKDIR $HOME
