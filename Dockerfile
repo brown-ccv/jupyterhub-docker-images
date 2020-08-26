@@ -147,7 +147,7 @@ ARG CLASS
 USER root
 # Julia dependencies
 
-ENV JULIA_DEPOT_PATH=/opt/julia
+ENV JULIA_DEPOT_PATH=:/opt/julia
 ENV JULIA_PKGDIR=/opt/julia
 ENV JULIA_VERSION=1.5.0
 
@@ -180,6 +180,7 @@ USER $NB_UID
 # taking effect properly on the .local folder in the jovyan home dir.
 RUN julia -e 'import Pkg; Pkg.update()' && \
     julia -e "using Pkg; pkg\"add IJulia\"; pkg\"precompile\"" && \
+    julia -e "using IJulia; installkernel(\"Julia User\", \"--project=./julia/environments/v1.5\")" && \
     # move kernelspec out of home \
     mv "${HOME}/.local/share/jupyter/kernels/julia"* "${CONDA_DIR}/share/jupyter/kernels/" && \
     chmod -R go+rx "${CONDA_DIR}/share/jupyter" && \
