@@ -150,7 +150,7 @@ USER root
 ENV JULIA_DEPOT_PATH=/opt/julia
 ENV JULIA_PKGDIR=/opt/julia
 ENV JULIA_VERSION=1.5.0
-ENV JULIA_TAG=v${JULIA_VERSION/.0/}
+ENV JULIA_TAG=v1.5
 
 COPY requirements/classes/${CLASS}/julia_env/Project.toml $JULIA_PKGDIR/environments/$JULIA_TAG/
 COPY requirements/classes/${CLASS}/julia_env/Manifest.toml $JULIA_PKGDIR/environments/$JULIA_TAG/
