@@ -45,25 +45,33 @@ To create an image to be used in JupyterHub for a particular class, we need thes
 
 ### Class-specific components
 Each class has the following exclusive components:
-- `requirements/classes/${className}/`:  the requirement files with the class-specific packages needed to create the conda environment. The  `requirements.txt` (requirede) – list of packages to isntall from conda-forge. `requirements.pip.txt` (optional) – list of packages to install using pip. `requirements.jl` (optional) – julia file with `const julia_packages = []`, with an array of packages to install.
-- `.github/workflow/className.yml` and `.github/workflow/className-tag.yml` : the github action workflow. One workflow per class will make the environment files artifacts easier to find. In addition, it allows us to run the workflow conditionally on changes related to a single class. The last step requires specific environment variables. 
+- `requirements/classes/${className}/`:  the requirement files with the class-specific packages needed to create the conda environment. 
+    - `requirements.txt` (requiered) – list of packages to isntall from conda-forge. 
+    - `requirements.pip.txt` (optional) – list of packages to install using pip. 
+    - `requirements.jl` (optional) – julia file with `const julia_packages = []`, with an array of packages to install.
+    - `condarc` (required) - conda configuration file listing channels for installation. By default the only channel is `conda-forge`
+- `.github/workflow/className.yml` and `.github/workflow/className-tag.yml` : the github action workflow. One workflow per class will make the environment files artifacts easier to find. In addition, it allows us to run the workflow conditionally on changes related to a single class. The last step requires the followign environment variables to be set accondingly. 
 
 > Note: The production image will be created in CI.
 
 To add a new class:
-- Use the provided script in `dev/add_class.sh` to create a workflow file and scafold the requirements directory. The script takes three arguments: class name (string): `-c`, class season/semester `-s` (fall, summer, spring), target in docker file (string  – `base`, `r_lang` or `r_julia`): `-t`, and wheter to install sqlite kernel `-q` (ommit the `-q` tag if sqlite is not required).
+- Use the provided script in `dev/add_class.sh` to create a workflow file and scafold the requirements directory. The script takes the following arguments: 
+ - `-c`: class name (string) 
+ - `-s`: class season/semester (fall, summer, spring) 
+ - `-t`: target in docker file (string  – `base`, `r_lang` or `r_julia`) 
+ - `-p`: python version (i.e 3.7 if ommited defaults to 3.8)
+ - `-q`: wheter to install sqlite kernel (ommit the `-q` tag if sqlite is not required)
 
 ```bash
 # e.g
 cd dev/
-./add_class.sh -c data1010 -t r_julia -s fall -q
+./add_class.sh -c data1010 -t r_julia -s fall -p 3.7 -q
 ```
 
 To build the images locally:
 
-- Create the environment files:
+- Create the environment files (only required if if TARGET is `r_julia`):
 ```
-# if TARGET is `r_julia`
 CLASS=apma0360 docker-compose up julia_build
 ```
 - Build JH Image
