@@ -9,9 +9,20 @@ ARG PYTHON_VERSION
 
 USER root
 RUN apt-get update && \
+    apt-get install -y software-properties-common && \
+    add-apt-repository universe && \
+    add-apt-repository multiverse && \
+    apt update
+
+RUN apt-get update && \
     apt-get install -yq --no-install-recommends \
     git \
     openssh-client \
+    texlive-xetex \ 
+    texlive-latex-recommended \
+    texlive-fonts-recommended \
+    texlive-plain-generic \
+    pandoc \
     dvipng && \
     apt-get clean && rm -rf /var/lib/apt/lists/*
 
@@ -137,13 +148,13 @@ ARG CLASS
 USER root
 # Julia dependencies
 
-ENV JULIA_DEPOT_PATH=$HOME/.julia/
-ENV JULIA_PKGDIR=$HOME/.julia/
+ENV JULIA_DEPOT_PATH=/opt/julia
+ENV JULIA_PKGDIR=/opt/julia
 ENV JULIA_VERSION=1.5.0
+ENV JULIA_TAG=v1.5
 
-RUN mkdir $HOME/.julia/
-COPY requirements/classes/${CLASS}/julia_env/Project.toml $HOME/.julia/environments/v1.5/
-COPY requirements/classes/${CLASS}/julia_env/Manifest.toml $HOME/.julia/environments/v1.5/
+COPY requirements/classes/${CLASS}/julia_env/Project.toml $JULIA_PKGDIR/environments/$JULIA_TAG/
+COPY requirements/classes/${CLASS}/julia_env/Manifest.toml $JULIA_PKGDIR/environments/$JULIA_TAG/
 RUN fix-permissions ${JULIA_PKGDIR}
 
 WORKDIR /tmp
@@ -179,6 +190,7 @@ RUN julia -e 'import Pkg; Pkg.update()' && \
 
 RUN julia -e 'import Pkg; Pkg.update(); Pkg.instantiate(); Pkg.precompile();'
 
+ENV JULIA_DEPOT_PATH="$HOME/.julia:$JULIA_DEPOT_PATH"
 
 USER $NB_UID
 WORKDIR $HOME
