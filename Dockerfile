@@ -11,7 +11,7 @@ USER root
 RUN apt-get update && \
     apt-get install -y software-properties-common && \
     add-apt-repository universe && \
-    add-apt-repository multiverse && \
+    add-apt-repository ppa:git-core/ppa && \
     apt update
 
 RUN apt-get update && \
