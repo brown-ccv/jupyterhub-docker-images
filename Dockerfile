@@ -20,6 +20,8 @@ RUN apt-get update && \
     emacs \
     ripgrep \
     fd-find \
+    nano \
+    less \
     git \
     openssh-client \
     texlive-xetex \ 
