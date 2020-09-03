@@ -23,6 +23,8 @@ RUN apt-get update && \
     nano \
     less \
     git \
+    wget \
+    unzip \
     openssh-client \
     texlive-xetex \ 
     texlive-latex-recommended \
@@ -31,6 +33,19 @@ RUN apt-get update && \
     pandoc \
     dvipng && \
     apt-get clean && rm -rf /var/lib/apt/lists/*
+
+# Install missing fonts
+RUN cd /usr/share/fonts && \
+    wget http://mirrors.ctan.org/fonts/tex-gyre/opentype/texgyrepagella-bold.otf && \
+    wget http://mirrors.ctan.org/fonts/tex-gyre/opentype/texgyrepagella-bolditalic.otf && \
+    wget http://mirrors.ctan.org/fonts/tex-gyre/opentype/texgyrepagella-italic.otf && \
+    wget http://mirrors.ctan.org/fonts/tex-gyre/opentype/texgyrepagella-regular.otf && \
+    wget https://noto-website-2.storage.googleapis.com/pkgs/NotoSansMono-unhinted.zip && \
+    unzip NotoSansMono-unhinted.zip && \
+    chmod +r -R /usr/share/fonts
+    
+RUN fc-cache -fsv 
+RUN mktexlsr
 
 #------------ Install VSCode Server a Root----------------------------
 
@@ -75,6 +90,10 @@ RUN jupyter serverextension enable --py 'jupyterlab_git' --sys-prefix && \
     jupyter serverextension enable --sys-prefix jupyterlab_latex && \
     jupyter labextension install @jupyterlab/latex && \
     npm cache clean --force
+
+# Overwrite default latex/jupyter template to include above fonts    
+RUN rm /opt/conda/lib/python3.7/site-packages/nbconvert/templates/latex/style_jupyter.tplx
+COPY ./scripts/style_jupyter.tplx /opt/conda/lib/python${PYTHON_VERSION}/site-packages/nbconvert/templates/latex/style_jupyter.tplx
 
 ####################################################################
 # Create Class Conda environment
