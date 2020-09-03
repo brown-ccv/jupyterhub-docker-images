@@ -16,6 +16,10 @@ RUN apt-get update && \
 
 RUN apt-get update && \
     apt-get install -yq --no-install-recommends \
+    vim \
+    emacs \
+    ripgrep \
+    fd-find \
     git \
     openssh-client \
     texlive-xetex \ 
