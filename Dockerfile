@@ -92,8 +92,8 @@ RUN jupyter serverextension enable --py 'jupyterlab_git' --sys-prefix && \
     npm cache clean --force
 
 # Overwrite default latex/jupyter template to include above fonts    
-RUN rm /opt/conda/lib/python${PYTHON_VERSION}/site-packages/nbconvert/templates/latex/style_jupyter.tplx
-COPY ./scripts/style_jupyter.tplx /opt/conda/lib/python${PYTHON_VERSION}/site-packages/nbconvert/templates/latex/style_jupyter.tplx
+RUN rm /opt/conda/lib/python*/site-packages/nbconvert/templates/latex/style_jupyter.tplx
+COPY ./scripts/style_jupyter.tplx /opt/conda/lib/python*/site-packages/nbconvert/templates/latex/style_jupyter.tplx
 
 ####################################################################
 # Create Class Conda environment
