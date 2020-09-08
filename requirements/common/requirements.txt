@@ -1,3 +1,2 @@
 # required for environment and plugins 
 nodejs>10
-ipympl
