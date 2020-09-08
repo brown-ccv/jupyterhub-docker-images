@@ -89,10 +89,14 @@ RUN jupyter serverextension enable --py 'jupyterlab_git' --sys-prefix && \
     jupyter nbextension enable jupytext --py --sys-prefix && \
     jupyter serverextension enable --sys-prefix jupyterlab_latex && \
     jupyter labextension install @jupyterlab/latex && \
-    jupyter labextension install @jupyter-widgets/jupyterlab-manager && \
-    jupyter nbextension install --py --symlink --sys-prefix ipympl && \
-    jupyter nbextension enable --py --sys-prefix ipympl && \
+    # jupyter labextension install @jupyter-widgets/jupyterlab-manager && \
+    # jupyter nbextension install ipympl --py --sys-prefix  && \
+    # jupyter nbextension enable ipympl --py --sys-prefix  && \
     npm cache clean --force
+
+RUN jupyter labextension install @jupyter-widgets/jupyterlab-manager 
+# RUN jupyter nbextension install ipympl --py --sys-prefix
+# RUN jupyter nbextension enable ipympl --py --sys-prefix
 
 # Overwrite default latex/jupyter template to include above fonts    
 COPY scripts/style_jupyter.tplx /opt/conda/lib/python3.8/site-packages/nbconvert/templates/latex/style_jupyter.tplx
