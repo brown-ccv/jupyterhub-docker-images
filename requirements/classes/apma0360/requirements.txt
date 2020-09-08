@@ -9,3 +9,4 @@ scipy
 seaborn
 ipython 
 ipykernel
+ipympl

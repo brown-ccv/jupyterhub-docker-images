@@ -89,6 +89,9 @@ RUN jupyter serverextension enable --py 'jupyterlab_git' --sys-prefix && \
     jupyter nbextension enable jupytext --py --sys-prefix && \
     jupyter serverextension enable --sys-prefix jupyterlab_latex && \
     jupyter labextension install @jupyterlab/latex && \
+    jupyter labextension install @jupyter-widgets/jupyterlab-manager && \
+    jupyter nbextension install --py --symlink --sys-prefix ipympl && \
+    jupyter nbextension enable --py --sys-prefix ipympl && \
     npm cache clean --force
 
 # Overwrite default latex/jupyter template to include above fonts    
