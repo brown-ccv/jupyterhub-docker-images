@@ -83,15 +83,20 @@ RUN jupyter serverextension enable --py 'jupyterlab_git' --sys-prefix && \
     jupyter serverextension enable --py 'nbgitpuller' --sys-prefix && \
     jupyter nbextension install 'rise' --py --sys-prefix && \
     jupyter nbextension enable 'rise' --py --sys-prefix && \
-    jupyter serverextension enable --sys-prefix --py 'jupyter_server_proxy' --no-build && \
-    jupyter labextension install '@jupyterlab/server-proxy' && \
+    jupyter serverextension enable --sys-prefix --py 'jupyter_server_proxy' && \
+    jupyter labextension install '@jupyterlab/server-proxy' --no-build && \
     jupyter nbextension install 'jupytext' --py --sys-prefix && \
     jupyter nbextension enable 'jupytext' --py --sys-prefix && \
     jupyter serverextension enable --sys-prefix 'jupyterlab_latex' && \
     jupyter labextension install '@jupyterlab/latex' --no-build && \
     jupyter labextension install '@jupyter-widgets/jupyterlab-manager@2.0' 'jupyter-matplotlib@0.7.3' --no-build && \
     jupyter lab build && \
-    npm cache clean --force
+    jupyter lab clean -y && \
+    npm cache clean --force && \
+    rm -rf "/home/${NB_USER}/.cache/yarn" && \
+    rm -rf "/home/${NB_USER}/.node-gyp" && \
+    fix-permissions "${CONDA_DIR}"  && \
+    fix-permissions "/home/${NB_USER}"
 
 
 # Overwrite default latex/jupyter template to include above fonts    
