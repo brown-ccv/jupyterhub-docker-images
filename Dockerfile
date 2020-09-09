@@ -71,7 +71,7 @@ RUN if [ "$SQLITE" = "true" ] ; then \
     fi 
     
 # Install jupyterlab git extension, this must come before installing extensions with pip (layer below)
-RUN jupyter labextension install '@jupyterlab/git' && \
+RUN jupyter labextension install '@jupyterlab/git' --no-build && \
     npm cache clean --force
 
 RUN pip install --upgrade -r /tmp/requirements.pip.txt && \
@@ -83,13 +83,14 @@ RUN jupyter serverextension enable --py 'jupyterlab_git' --sys-prefix && \
     jupyter serverextension enable --py 'nbgitpuller' --sys-prefix && \
     jupyter nbextension install 'rise' --py --sys-prefix && \
     jupyter nbextension enable 'rise' --py --sys-prefix && \
-    jupyter serverextension enable --sys-prefix --py 'jupyter_server_proxy' && \
+    jupyter serverextension enable --sys-prefix --py 'jupyter_server_proxy' --no-build && \
     jupyter labextension install '@jupyterlab/server-proxy' && \
     jupyter nbextension install 'jupytext' --py --sys-prefix && \
     jupyter nbextension enable 'jupytext' --py --sys-prefix && \
     jupyter serverextension enable --sys-prefix 'jupyterlab_latex' && \
-    jupyter labextension install '@jupyterlab/latex' && \
-    jupyter labextension install '@jupyter-widgets/jupyterlab-manager@2.0' 'jupyter-matplotlib@0.7.3' && \
+    jupyter labextension install '@jupyterlab/latex' --no-build && \
+    jupyter labextension install '@jupyter-widgets/jupyterlab-manager@2.0' 'jupyter-matplotlib@0.7.3' --no-build && \
+    jupyter lab build && \
     npm cache clean --force
 
 
