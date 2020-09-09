@@ -1,11 +1,13 @@
 #add extra pkgs here
 #basic scipy
-matplotlib 
+matplotlib-base 
 numpy 
 pandas 
 pip
 scikit-learn 
 scipy
 seaborn
+sympy
 ipython 
 ipykernel
+ipympl

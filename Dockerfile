@@ -71,7 +71,7 @@ RUN if [ "$SQLITE" = "true" ] ; then \
     fi 
     
 # Install jupyterlab git extension, this must come before installing extensions with pip (layer below)
-RUN jupyter labextension install '@jupyterlab/git' && \
+RUN jupyter labextension install '@jupyterlab/git' --no-build && \
     npm cache clean --force
 
 RUN pip install --upgrade -r /tmp/requirements.pip.txt && \
@@ -84,12 +84,20 @@ RUN jupyter serverextension enable --py 'jupyterlab_git' --sys-prefix && \
     jupyter nbextension install 'rise' --py --sys-prefix && \
     jupyter nbextension enable 'rise' --py --sys-prefix && \
     jupyter serverextension enable --sys-prefix --py 'jupyter_server_proxy' && \
-    jupyter labextension install '@jupyterlab/server-proxy' && \
-    jupyter nbextension install jupytext --py --sys-prefix && \
-    jupyter nbextension enable jupytext --py --sys-prefix && \
-    jupyter serverextension enable --sys-prefix jupyterlab_latex && \
-    jupyter labextension install @jupyterlab/latex && \
-    npm cache clean --force
+    jupyter labextension install '@jupyterlab/server-proxy' --no-build && \
+    jupyter nbextension install 'jupytext' --py --sys-prefix && \
+    jupyter nbextension enable 'jupytext' --py --sys-prefix && \
+    jupyter serverextension enable --sys-prefix 'jupyterlab_latex' && \
+    jupyter labextension install '@jupyterlab/latex' --no-build && \
+    jupyter labextension install '@jupyter-widgets/jupyterlab-manager@2.0' 'jupyter-matplotlib@0.7.3' --no-build && \
+    jupyter lab build && \
+    jupyter lab clean -y && \
+    npm cache clean --force && \
+    rm -rf "/home/${NB_USER}/.cache/yarn" && \
+    rm -rf "/home/${NB_USER}/.node-gyp" && \
+    fix-permissions "${CONDA_DIR}"  && \
+    fix-permissions "/home/${NB_USER}"
+
 
 # Overwrite default latex/jupyter template to include above fonts    
 COPY scripts/style_jupyter.tplx /opt/conda/lib/python3.8/site-packages/nbconvert/templates/latex/style_jupyter.tplx
