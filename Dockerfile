@@ -221,7 +221,7 @@ RUN julia -e 'import Pkg; Pkg.update()' && \
     fix-permissions "${JULIA_PKGDIR}" "${CONDA_DIR}/share/jupyter"
 
 RUN julia -e 'import Pkg; Pkg.update(); Pkg.instantiate(); Pkg.precompile();' && \
-    julia -e 'using Pkg; pkg\"add WebIO\"'; && \
+    julia -e 'using Pkg; pkg\"add WebIO\";' && \
     julia -e 'using WebIO; WebIO.install_jupyter_nbextension();'
 
 ENV JULIA_DEPOT_PATH="$HOME/.julia:$JULIA_DEPOT_PATH"
