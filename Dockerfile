@@ -221,8 +221,12 @@ RUN julia -e 'import Pkg; Pkg.update()' && \
     fix-permissions "${JULIA_PKGDIR}" "${CONDA_DIR}/share/jupyter"
 
 RUN julia -e 'import Pkg; Pkg.update(); Pkg.instantiate(); Pkg.precompile();' && \
-    julia -e "using Pkg; pkg\"add WebIO\"" && \
-    julia -e 'using WebIO; WebIO.install_jupyter_nbextension();'
+    julia -e "using Pkg; pkg\"add WebIO\"" 
+
+USER root
+RUN /opt/conda/bin/jupyter nbextension install /opt/julia/packages/WebIO/*/deps/bundles/webio-jupyter-notebook.js
+RUN /opt/conda/bin/jupyter nbextension enable --sys-prefix 'webio-jupyter-notebook'
+USER $NB_UID
 
 ENV JULIA_DEPOT_PATH="$HOME/.julia:$JULIA_DEPOT_PATH"
 
