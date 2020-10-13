@@ -29,6 +29,8 @@ protobuf
 xlrd
 bottleneck
 pytables
+scanpy
+
 
 # these are the base r packages in the r-notebook image ( YOU PROBABLY WANT THESE IF YOUR TARGET IN DOCKER IS r_lang OR r_julia )
 r-base=4.0.0
