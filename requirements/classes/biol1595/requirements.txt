@@ -1,4 +1,11 @@
 # add class-specific packages here:
+Whoosh
+nltk
+spacy
+scikit-learn
+tensorflow
+keras
+imbalanced-learn
 
 # these are the scipy base packages ( YOU PROBABLY DON'T WANT TO REMOVE THESE )
 dask 
