@@ -4,8 +4,8 @@ on: [workflow_dispatch]
 env:
   CLASS: biol1595
   TARGET: base
-  SQLITE: true
-  PYTHON_VERSION: 3.7
+  SQLITE: false
+  PYTHON_VERSION: 3.8
 
 jobs:
   build:

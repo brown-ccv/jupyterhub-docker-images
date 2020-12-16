@@ -1,2 +1,4 @@
 # add class-specific classes here:
-
+Whoosh
+nltk
+spacy
