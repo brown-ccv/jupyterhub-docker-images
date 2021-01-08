@@ -12,7 +12,6 @@ matplotlib
 scipy
 seaborn
 scikit-learn
-scikit-image
 sympy
 statsmodels
 cloudpickle
