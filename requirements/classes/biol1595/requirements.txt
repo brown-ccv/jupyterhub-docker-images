@@ -1,6 +1,5 @@
 # add class-specific packages here:
 nltk
-spacy
 tensorflow
 keras
 imbalanced-learn
