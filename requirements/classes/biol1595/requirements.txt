@@ -1,5 +1,4 @@
 # add class-specific packages here:
-Whoosh
 nltk
 spacy
 tensorflow
