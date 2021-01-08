@@ -1,4 +1,14 @@
 # add class-specific packages here:
+blas
+feather-format
+h5py
+lime
+matplotlib-base
+plotnine
+unixodbc
+xgboost
+altair
+vega_datasets
 
 # these are the scipy base packages ( YOU PROBABLY DON'T WANT TO REMOVE THESE )
 dask 
