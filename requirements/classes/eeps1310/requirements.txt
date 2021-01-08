@@ -1,0 +1,36 @@
+# add class-specific packages here:
+netCDF4
+metpy
+cartopy
+iris
+siphon
+
+# these are the scipy base packages ( YOU PROBABLY DON'T WANT TO REMOVE THESE ) 
+#scipy
+numpy
+scipy
+matplotlib
+scikit-learn
+scikit-image
+sympy
+pandas
+pytables
+
+#plotting
+seaborn
+bokeh
+vincent
+
+#stats
+statsmodels
+
+#fileformats -io
+dill
+hdf5
+xlrd
+sqlalchemy
+
+
+# required for environment and plugins ( DO NOT REMOVE THESE!!! )
+ipython 
+ipykernel
