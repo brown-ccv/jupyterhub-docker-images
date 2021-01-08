@@ -2,7 +2,6 @@
 Whoosh
 nltk
 spacy
-scikit-learn
 tensorflow
 keras
 imbalanced-learn
@@ -17,20 +16,15 @@ seaborn
 scikit-learn
 scikit-image
 sympy
-cython
-patsy
 statsmodels
 cloudpickle
 dill
-numba
 bokeh
 sqlalchemy
 hdf5
 vincent
-beautifulsoup4
 protobuf
 xlrd
-bottleneck
 pytables
 
 # these are the base r packages in the r-notebook image ( YOU PROBABLY WANT THESE IF YOUR TARGET IN DOCKER IS r_lang OR r_julia )
