@@ -1,8 +1,4 @@
 # add class-specific packages here:
-nltk
-# tensorflow
-keras
-imbalanced-learn
 
 # these are the scipy base packages ( YOU PROBABLY DON'T WANT TO REMOVE THESE )
 dask 
