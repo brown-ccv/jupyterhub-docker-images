@@ -1,1 +1,5 @@
 # add class-specific classes here:
+tensorflow
+keras
+imbalanced-learn
+spacy
