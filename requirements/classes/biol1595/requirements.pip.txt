@@ -4,3 +4,5 @@ tensorflow
 keras
 imbalanced-learn
 spacy
+Whoosh
+gensim
