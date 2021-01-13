@@ -1,0 +1,27 @@
+# add class-specific packages here:
+
+# these are the scipy base packages ( YOU PROBABLY DON'T WANT TO REMOVE THESE )
+dask 
+pandas
+numexpr
+matplotlib
+scipy
+seaborn
+scikit-learn
+sympy
+statsmodels
+cloudpickle
+dill
+bokeh
+sqlalchemy
+hdf5
+vincent
+protobuf
+xlrd
+pytables
+
+# these are the base r packages in the r-notebook image ( YOU PROBABLY WANT THESE IF YOUR TARGET IN DOCKER IS r_lang OR r_julia )
+
+# required for environment and plugins ( DO NOT REMOVE THESE!!! )
+ipython 
+ipykernel
