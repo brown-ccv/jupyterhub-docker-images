@@ -1,4 +1,4 @@
-name: Tag production image for data2080
+name: spring-data2080-tag
 on: [workflow_dispatch]
 
 env:

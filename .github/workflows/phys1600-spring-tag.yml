@@ -1,4 +1,4 @@
-name: Tag production image for phys1600
+name: spring-phys1600-tag
 on: [workflow_dispatch]
 
 env:
