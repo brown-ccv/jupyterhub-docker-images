@@ -1,4 +1,4 @@
-name: Tag production image for eeps1310
+name: spring-eeps1310-tag
 on: [workflow_dispatch]
 
 env:
