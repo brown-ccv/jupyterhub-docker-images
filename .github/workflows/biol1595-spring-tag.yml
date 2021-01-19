@@ -1,4 +1,4 @@
-name: Tag production image for biol1595
+name: spring-biol1595-tag
 on: [workflow_dispatch]
 
 env:
@@ -43,7 +43,7 @@ jobs:
           docker tag jupyterhub-docker-images_jh_image:latest gcr.io/jupyterhub-docker-images/biol1595:latest
           docker tag jupyterhub-docker-images_jh_image:latest gcr.io/jupyterhub-docker-images/biol1595:spring-2020
           docker push gcr.io/jupyterhub-docker-images/biol1595:latest
-          docker push gcr.io/jupyterhub-docker-images/biol1595:spring-2020
+          docker push gcr.io/jupyterhub-docker-images/biol1595:spring-2021
           docker push gcr.io/jupyterhub-docker-images/biol1595:${GITHUB_REF##*/}
           docker push gcr.io/jupyterhub-docker-images/biol1595:${GITHUB_SHA}
 
