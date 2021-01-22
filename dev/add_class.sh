@@ -45,5 +45,6 @@ else
     cat templates/requirements.jl >> ../requirements/classes/${CLASS}/requirements.jl  &&
     cat templates/requirements.pip.txt >> ../requirements/classes/${CLASS}/requirements.pip.txt  &&
     cat templates/condarc >> ../requirements/classes/${CLASS}/condarc  &&
+    cat templates/packages.R >> ../requirements/classes/${CLASS}/packages.R  &&
     echo "Created workflow file at .github/workflows/${CLASS}.yml, .github/workflows/${CLASS}-${SEASON}-tag.yml and ./requirements/classes/${CLASS}/ directory with requirement files. "
 fi
