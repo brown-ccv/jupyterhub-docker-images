@@ -167,6 +167,10 @@ RUN conda install -y -p ${CONDA_DIR} -c conda-forge r-irkernel && \
     fix-permissions $CONDA_DIR && \
     fix-permissions /home/$NB_USER
 
+# Install necessary R packages along with their dependencies
+COPY ./scripts/r_rnaseq_packages.R r_rnaseq_packages.R
+RUN Rscript r_rnaseq_packages.R
+
 
 ####################################################################
 # Add Julia pre-requisites
