@@ -29,8 +29,8 @@ jobs:
       - name: Upload Julia Env Files to Google Storage Bucket
         if: env.TARGET == 'r_julia'
         run: |
-          gsutil cp -r requirements/classes/biol1595/julia_env gs://jupyterhub-environment-files/spring-2020/biol1595/past/${GITHUB_SHA}/julia
-          gsutil cp -r requirements/classes/biol1595/julia_env gs://jupyterhub-environment-files/spring-2020/biol1595/latest/julia
+          gsutil cp -r requirements/classes/biol1595/julia_env gs://jupyterhub-environment-files/spring-2021/biol1595/past/${GITHUB_SHA}/julia
+          gsutil cp -r requirements/classes/biol1595/julia_env gs://jupyterhub-environment-files/spring-2021/biol1595/latest/julia
 
       - name: Configure Docker
         run: gcloud auth configure-docker
@@ -41,7 +41,7 @@ jobs:
           docker tag jupyterhub-docker-images_jh_image:latest gcr.io/jupyterhub-docker-images/biol1595:${GITHUB_REF##*/}
           docker tag jupyterhub-docker-images_jh_image:latest gcr.io/jupyterhub-docker-images/biol1595:${GITHUB_SHA}
           docker tag jupyterhub-docker-images_jh_image:latest gcr.io/jupyterhub-docker-images/biol1595:latest
-          docker tag jupyterhub-docker-images_jh_image:latest gcr.io/jupyterhub-docker-images/biol1595:spring-2020
+          docker tag jupyterhub-docker-images_jh_image:latest gcr.io/jupyterhub-docker-images/biol1595:spring-2021
           docker push gcr.io/jupyterhub-docker-images/biol1595:latest
           docker push gcr.io/jupyterhub-docker-images/biol1595:spring-2021
           docker push gcr.io/jupyterhub-docker-images/biol1595:${GITHUB_REF##*/}
@@ -49,5 +49,5 @@ jobs:
 
       - name: Upload Conda Env Files to Google Storage Bucket
         run: |
-          gsutil cp -r requirements/out gs://jupyterhub-environment-files/spring-2020/biol1595/past/${GITHUB_SHA}/conda
-          gsutil cp -r requirements/out gs://jupyterhub-environment-files/spring-2020/biol1595/latest/conda
+          gsutil cp -r requirements/out gs://jupyterhub-environment-files/spring-2021/biol1595/past/${GITHUB_SHA}/conda
+          gsutil cp -r requirements/out gs://jupyterhub-environment-files/spring-2021/biol1595/latest/conda
