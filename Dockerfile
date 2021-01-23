@@ -168,7 +168,7 @@ RUN conda install -y -p ${CONDA_DIR} -c conda-forge r-irkernel && \
     fix-permissions /home/$NB_USER
 
 # Install necessary R packages along with their dependencies
-RUN Rscript packages.R /home/$NB_USER/tmp/packages.R
+RUN Rscript /home/$NB_USER/tmp/packages.R
 
 
 ####################################################################
