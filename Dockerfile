@@ -1,6 +1,6 @@
 # Copyright (c) Jupyter Development Team.
 # Distributed under the terms of the Modified BSD License.
-ARG ROOT_CONTAINER="jupyter/base-notebook:latest"
+ARG ROOT_CONTAINER="jupyter/base-notebook:lab-2.2.9"
 FROM ${ROOT_CONTAINER} as base
 
 ARG CLASS
@@ -166,6 +166,9 @@ RUN conda install -y -p ${CONDA_DIR} -c conda-forge r-irkernel && \
     conda clean --all -f -y && \
     fix-permissions $CONDA_DIR && \
     fix-permissions /home/$NB_USER
+
+# Install necessary R packages along with their dependencies
+RUN Rscript /home/$NB_USER/tmp/packages.R
 
 
 ####################################################################
