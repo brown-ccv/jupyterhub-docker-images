@@ -104,7 +104,7 @@ COPY scripts/style_jupyter.tplx /opt/conda/lib/python3.8/site-packages/nbconvert
 
 # De-activate the default kernel spec
 COPY scripts/jupyter_config.py /etc/jupyter/jupyter_config.py
-
+RUN jupyter kernelspec remove python3
 ####################################################################
 # Create Class Conda environment
 
