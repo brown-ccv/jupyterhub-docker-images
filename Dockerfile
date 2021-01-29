@@ -102,6 +102,9 @@ RUN jupyter serverextension enable --py 'jupyterlab_git' --sys-prefix && \
 # Overwrite default latex/jupyter template to include above fonts    
 COPY scripts/style_jupyter.tplx /opt/conda/lib/python3.8/site-packages/nbconvert/templates/latex/style_jupyter.tplx
 
+# De-activate the default kernel spec
+COPY scripts/jupyter_config.py /etc/jupyter/jupyter_config.py
+
 ####################################################################
 # Create Class Conda environment
 
