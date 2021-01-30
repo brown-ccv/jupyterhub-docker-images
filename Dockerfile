@@ -102,6 +102,9 @@ RUN jupyter serverextension enable --py 'jupyterlab_git' --sys-prefix && \
 # Overwrite default latex/jupyter template to include above fonts    
 COPY scripts/style_jupyter.tplx /opt/conda/lib/python3.8/site-packages/nbconvert/templates/latex/style_jupyter.tplx
 
+# De-activate the default kernel spec
+COPY scripts/jupyter_config.py /etc/jupyter/jupyter_config.py
+RUN jupyter kernelspec remove -f python3
 ####################################################################
 # Create Class Conda environment
 
@@ -114,7 +117,7 @@ RUN conda create --quiet --yes -p ${CONDA_DIR}/envs/${CLASS} python=${PYTHON_VER
 
 # Link conda environment to Jupyter system-wide
 USER root
-RUN $CONDA_DIR/envs/${CLASS}/bin/python -m ipykernel install --name=python3
+RUN $CONDA_DIR/envs/${CLASS}/bin/python -m ipykernel install --name=${CLASS} --display-name "Python 3"
 USER $NB_USER
 
 # Modify the path directly since the `source activate ${CLASS}`
