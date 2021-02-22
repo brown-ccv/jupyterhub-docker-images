@@ -9,4 +9,4 @@
                     "patchwork", "tidyr", "GGally"), dependencies=TRUE, 
                   repos='http://cran.rstudio.com/')
  BiocManager::install(c("airway", "DESeq2", "vsn", "biomaRt",
-                        "AnnotationHub", "SummarizedExperiment", "WGCNA", "clusterProfiler", "enrichplot"))
+                        "AnnotationHub", "SummarizedExperiment", "WGCNA", "clusterProfiler", "enrichplot", "apeglm"))
