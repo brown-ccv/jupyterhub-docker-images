@@ -81,8 +81,8 @@ RUN pip install --upgrade -r /tmp/requirements.pip.txt && \
 # Install and Enable Extensions
 RUN jupyter serverextension enable --py 'jupyterlab_git' --sys-prefix && \
     jupyter serverextension enable --py 'nbgitpuller' --sys-prefix && \
-    jupyter nbextension install 'rise' --py --sys-prefix && \
-    jupyter nbextension enable 'rise' --py --sys-prefix && \
+    # jupyter nbextension install 'rise' --py --sys-prefix && \
+    # jupyter nbextension enable 'rise' --py --sys-prefix && \
     jupyter serverextension enable --sys-prefix --py 'jupyter_server_proxy' && \
     jupyter labextension install '@jupyterlab/server-proxy' --no-build && \
     jupyter nbextension install 'jupytext' --py --sys-prefix && \
