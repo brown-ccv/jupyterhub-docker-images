@@ -3,7 +3,7 @@ jupyter-server-proxy <= v1.6.0
 jupyterlab-git <= v0.24.0
 nbdime
 nbgitpuller
-# RISE
+RISE
 git+https://github.com/betatim/vscode-binder 
 jupytext
 jupyterlab_latex
