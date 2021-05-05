@@ -1,0 +1,3 @@
+# add class-specific classes here:
+jupyter-server-proxy <= v1.6.0
+jupyterlab-git <= v0.24.0

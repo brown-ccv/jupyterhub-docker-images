@@ -2,7 +2,7 @@ version: '3.4'
 services:
 
   julia_build:
-    image: julia:1.5-buster
+    image: julia:1.6.1-buster
     volumes:
       - ./requirements/classes/${CLASS}:/tmp/env/
       - ./scripts:/tmp/scripts/
