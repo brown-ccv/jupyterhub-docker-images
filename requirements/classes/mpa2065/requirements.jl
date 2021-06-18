@@ -10,7 +10,6 @@ const julia_packages = [
                    "DecisionTree",
                    "Flux",
                    "GLM",
-                   "GLMNet",
                    "HypothesisTests",
                    "Ipopt",
                    "JuMP",
@@ -36,8 +35,6 @@ const julia_packages = [
                    "Plots",
                    "VegaLite",
                    "StatsPlots",
-                   "DataVoyager",
                    "Interact",
-                   "VegaDatasets", 
                    "RDatasets"
                     ]
