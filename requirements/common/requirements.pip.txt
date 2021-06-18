@@ -9,3 +9,4 @@ jupytext
 jupyterlab_latex
 pyppeteer
 nbconvert
+jupyterlab_widgets

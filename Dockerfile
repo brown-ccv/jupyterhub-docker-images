@@ -89,7 +89,7 @@ RUN jupyter serverextension enable --py 'jupyterlab_git' --sys-prefix && \
     jupyter nbextension enable 'jupytext' --py --sys-prefix && \
     # jupyter serverextension enable --sys-prefix 'jupyterlab_latex' && \
     # jupyter labextension install '@jupyterlab/latex' --no-build && \
-    jupyter labextension install '@jupyter-widgets/jupyterlab-manager@2.0' 'jupyter-matplotlib@0.7.3' --no-build && \
+    # jupyter labextension install '@jupyter-widgets/jupyterlab-manager@2.0' 'jupyter-matplotlib@0.7.3' --no-build && \
     jupyter lab build && \
     jupyter lab clean -y && \
     npm cache clean --force && \
