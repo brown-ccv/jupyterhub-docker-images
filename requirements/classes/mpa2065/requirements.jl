@@ -23,7 +23,6 @@ const julia_packages = [
                    "ProgressMeter",
                    "TableView",
                    "Query",
-                   "Weave",
                    "QuadGK",
                    "NLopt",
                    "LaTeXStrings",
@@ -32,7 +31,5 @@ const julia_packages = [
                    "GR",
                    "Plots",
                    "VegaLite",
-                   "StatsPlots",
-                   "Interact",
                    "RDatasets"
                     ]
