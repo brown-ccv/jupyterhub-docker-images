@@ -1,4 +1,6 @@
 #add extra pkgs here
+ipywidgets
+
 #basic scipy
 matplotlib-base 
 numpy 
