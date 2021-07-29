@@ -1,0 +1,40 @@
+name: Tag production image for apma0350
+on: [workflow_dispatch]
+
+env:
+  CLASS: apma0350
+  TARGET: base
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Set Up GCloud
+        uses: GoogleCloudPlatform/github-actions/setup-gcloud@master
+        with:
+          version: '290.0.1'
+          project_id: ${{ secrets.GCP_PROJECT_ID_JH_DOCKER }}
+          service_account_key: ${{ secrets.GCP_SA_KEY_JH_DOCKER }}
+          export_default_credentials: true
+
+      - name: Configure Docker
+        run: gcloud auth configure-docker
+
+      - name: Build and Push JH Image
+        run: |
+          COMPOSE_DOCKER_CLI_BUILD=1 DOCKER_BUILDKIT=1 docker-compose up jh_image
+          docker tag jupyterhub-docker-images_jh_image:latest gcr.io/jupyterhub-docker-images/apma0350:${GITHUB_REF##*/}
+          docker tag jupyterhub-docker-images_jh_image:latest gcr.io/jupyterhub-docker-images/apma0350:${GITHUB_SHA}
+          docker tag jupyterhub-docker-images_jh_image:latest gcr.io/jupyterhub-docker-images/apma0350:latest
+          docker tag jupyterhub-docker-images_jh_image:latest gcr.io/jupyterhub-docker-images/apma0350:fall-2020
+          docker push gcr.io/jupyterhub-docker-images/apma0350:latest
+          docker push gcr.io/jupyterhub-docker-images/apma0350:fall-2020
+          docker push gcr.io/jupyterhub-docker-images/apma0350:${GITHUB_REF##*/}
+          docker push gcr.io/jupyterhub-docker-images/apma0350:${GITHUB_SHA}
+
+      - name: Upload Cond Env Files to Google Storage Bucket
+        run: |
+          gsutil cp -r requirements/out gs://jupyterhub-environment-files/fall-2020/apma0350/past/${GITHUB_SHA}/conda
+          gsutil cp -r requirements/out gs://jupyterhub-environment-files/fall-2020/apma0350/latest/conda

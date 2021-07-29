@@ -1,15 +1,15 @@
-name: Build Image for apma0360
+name: Build Image for apma0350
 on: 
   push:
       paths:
-      - 'requirements/classes/apma0360/**'
+      - 'requirements/classes/apma0350/**'
       - 'Dockerfile'
       - 'docker-compose.yml'
       - 'scripts/**'
-      - '.github/workflows/apma0360.yml'
+      - '.github/workflows/apma0350.yml'
 
 env:
-  CLASS: apma0360
+  CLASS: apma0350
   TARGET: base
 
 jobs:
@@ -39,10 +39,10 @@ jobs:
       - name: Build and Push JH Image
         run: |
           COMPOSE_DOCKER_CLI_BUILD=1 DOCKER_BUILDKIT=1 docker-compose up jh_image
-          docker tag jupyterhub-docker-images_jh_image:latest gcr.io/jupyterhub-docker-images/apma0360:${GITHUB_REF##*/}
-          docker tag jupyterhub-docker-images_jh_image:latest gcr.io/jupyterhub-docker-images/apma0360:latest
-          docker push gcr.io/jupyterhub-docker-images/apma0360:latest
-          docker push gcr.io/jupyterhub-docker-images/apma0360:${GITHUB_REF##*/}
+          docker tag jupyterhub-docker-images_jh_image:latest gcr.io/jupyterhub-docker-images/apma0350:${GITHUB_REF##*/}
+          docker tag jupyterhub-docker-images_jh_image:latest gcr.io/jupyterhub-docker-images/apma0350:latest
+          docker push gcr.io/jupyterhub-docker-images/apma0350:latest
+          docker push gcr.io/jupyterhub-docker-images/apma0350:${GITHUB_REF##*/}
 
 
 
