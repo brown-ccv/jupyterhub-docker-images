@@ -1,4 +1,4 @@
-name: Tag production image for apma0350
+name: tag-image-apma0350
 on: [workflow_dispatch]
 
 env:
