@@ -1,4 +1,4 @@
-name: Tag production image for ${CLASS}
+name: tag-image-${CLASS}
 on: [workflow_dispatch]
 
 env:

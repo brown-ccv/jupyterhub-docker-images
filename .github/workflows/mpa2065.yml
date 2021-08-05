@@ -1,4 +1,4 @@
-name: Build Image for mpa2065
+name: build-image-mpa2065
 on: 
   push:
       paths:

@@ -1,4 +1,4 @@
-name: Tag production image for mpa2065
+name: tag-image-mpa2065
 on: [workflow_dispatch]
 
 env:

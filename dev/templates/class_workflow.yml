@@ -1,4 +1,4 @@
-name: Build Image for ${CLASS}
+name: build-image-${CLASS}
 on: 
   push:
       paths:

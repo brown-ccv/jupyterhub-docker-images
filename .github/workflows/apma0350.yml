@@ -1,4 +1,4 @@
-name: Build Image for apma0350
+name: build-image-apma0350
 on: 
   push:
       paths:
