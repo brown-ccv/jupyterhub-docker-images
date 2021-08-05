@@ -13,7 +13,7 @@ jobs:
       - uses: actions/checkout@v2
 
       - name: Set Up GCloud
-        uses: GoogleCloudPlatform/github-actions/setup-gcloud@master
+        uses: google-github-actions/setup-gcloud@master
         with:
           version: '290.0.1'
           project_id: ${{ secrets.GCP_PROJECT_ID_JH_DOCKER }}
@@ -26,8 +26,8 @@ jobs:
 
       - name: Upload Julia Env Files to Google Storage Bucket
         run: |
-          gsutil cp -r requirements/classes/mpa2065/julia_env gs://jupyterhub-environment-files/fall-2020/mpa2065/past/${GITHUB_SHA}/julia
-          gsutil cp -r requirements/classes/mpa2065/julia_env gs://jupyterhub-environment-files/fall-2020/mpa2065/latest/julia
+          gsutil cp -r requirements/classes/mpa2065/julia_env gs://jupyterhub-environment-files/fall-2021/mpa2065/past/${GITHUB_SHA}/julia
+          gsutil cp -r requirements/classes/mpa2065/julia_env gs://jupyterhub-environment-files/fall-2021/mpa2065/latest/julia
 
       - name: Configure Docker
         run: gcloud auth configure-docker
@@ -38,13 +38,13 @@ jobs:
           docker tag jupyterhub-docker-images_jh_image:latest gcr.io/jupyterhub-docker-images/mpa2065:${GITHUB_REF##*/}
           docker tag jupyterhub-docker-images_jh_image:latest gcr.io/jupyterhub-docker-images/mpa2065:${GITHUB_SHA}
           docker tag jupyterhub-docker-images_jh_image:latest gcr.io/jupyterhub-docker-images/mpa2065:latest
-          docker tag jupyterhub-docker-images_jh_image:latest gcr.io/jupyterhub-docker-images/mpa2065:fall-2020
+          docker tag jupyterhub-docker-images_jh_image:latest gcr.io/jupyterhub-docker-images/mpa2065:fall-2021
           docker push gcr.io/jupyterhub-docker-images/mpa2065:latest
-          docker push gcr.io/jupyterhub-docker-images/mpa2065:fall-2020
+          docker push gcr.io/jupyterhub-docker-images/mpa2065:fall-2021
           docker push gcr.io/jupyterhub-docker-images/mpa2065:${GITHUB_REF##*/}
           docker push gcr.io/jupyterhub-docker-images/mpa2065:${GITHUB_SHA}
 
       - name: Upload Conda Env Files to Google Storage Bucket
         run: |
-          gsutil cp -r requirements/out gs://jupyterhub-environment-files/fall-2020/mpa2065/past/${GITHUB_SHA}/conda
-          gsutil cp -r requirements/out gs://jupyterhub-environment-files/fall-2020/mpa2065/latest/conda
+          gsutil cp -r requirements/out gs://jupyterhub-environment-files/fall-2021/mpa2065/past/${GITHUB_SHA}/conda
+          gsutil cp -r requirements/out gs://jupyterhub-environment-files/fall-2021/mpa2065/latest/conda
