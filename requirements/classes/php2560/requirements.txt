@@ -27,14 +27,17 @@ bottleneck
 pytables
 
 # these are the base r packages in the r-notebook image ( YOU PROBABLY WANT THESE IF YOUR TARGET IN DOCKER IS r_lang OR r_julia )
-r-base=4.0.0
+r-base=4.0.5
 r-caret=6.*
 r-crayon=1.3*
 r-devtools=2.3*
+r-docstrings=1.0*
+r-fivethirtyeightdata=0.5*
 r-forecast=8.12*
 r-hexbin=1.28*
 r-htmltools=0.4*
 r-htmlwidgets=1.5*
+r-irdisplay=0.7*
 r-irkernel=1.1*
 r-nycflights13=1.0*
 r-randomforest=4.6*

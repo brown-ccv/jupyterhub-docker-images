@@ -4,11 +4,6 @@
 # the standard install.packages() function; for Bioconductor packages, however, you 
 # must first install BiocManager and then use that for installs. 
 
-install.packages(c("tidyverse",
-                   "docstrings",
-                   "knitr", 
-                   "IRdisplay", 
-                   "nycflights13", 
-                   "fivethirtyeightdata"), 
-                 dependencies = TRUE, 
-                 repos = 'http://cran.rstudio.com/')
+# install.packages(c("tidyverse", "arules"), 
+#                  dependencies = TRUE, 
+#                  repos = 'http://cran.rstudio.com/')
