@@ -4,7 +4,11 @@
 # the standard install.packages() function; for Bioconductor packages, however, you 
 # must first install BiocManager and then use that for installs. 
 
-install.packages(c("docstrings", 
-                   "fivethirtyeightdata"), 
+install.packages(c("docstring"), 
                  dependencies = TRUE, 
                  repos = 'http://cran.rstudio.com/')
+
+install.packages('fivethirtyeightdata', 
+                  dependencies = TRUE,
+                  repos = 'https://fivethirtyeightdata.github.io/drat/', 
+                  type = 'source')
