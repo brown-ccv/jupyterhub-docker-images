@@ -26,7 +26,7 @@ RUN apt-get update && \
     wget \
     unzip \
     openssh-client \
-    texlive-xetex \ 
+    texlive-xetex \
     texlive-latex-recommended \
     texlive-fonts-recommended \
     texlive-plain-generic \
@@ -43,7 +43,7 @@ RUN cd /usr/share/fonts && \
     wget https://noto-website-2.storage.googleapis.com/pkgs/NotoSansMono-unhinted.zip && \
     unzip NotoSansMono-unhinted.zip && \
     chmod +r -R /usr/share/fonts
-    
+
 RUN fc-cache -fsv 
 RUN mktexlsr
 
@@ -69,7 +69,7 @@ RUN if [ "$SQLITE" = "true" ] ; then \
     conda install -y -c conda-forge xeus-sqlite && \
     conda clean --all -f -y ; \
     fi 
-    
+
 # Install jupyterlab git extension, this must come before installing extensions with pip (layer below)
 RUN jupyter labextension install '@jupyterlab/git' --no-build && \
     npm cache clean --force
@@ -188,8 +188,8 @@ USER root
 
 ENV JULIA_DEPOT_PATH=/opt/julia
 ENV JULIA_PKGDIR=/opt/julia
-ENV JULIA_VERSION=1.6.1
-ENV JULIA_TAG=v1.6
+ENV JULIA_VERSION=1.7.1
+ENV JULIA_TAG=v1.7
 
 COPY requirements/classes/${CLASS}/julia_env/Project.toml $JULIA_PKGDIR/environments/$JULIA_TAG/
 COPY requirements/classes/${CLASS}/julia_env/Manifest.toml $JULIA_PKGDIR/environments/$JULIA_TAG/
@@ -200,7 +200,7 @@ WORKDIR /tmp
 # hadolint ignore=SC2046
 RUN mkdir "/opt/julia-${JULIA_VERSION}" && \
     wget -q https://julialang-s3.julialang.org/bin/linux/x64/$(echo "${JULIA_VERSION}" | cut -d. -f 1,2)"/julia-${JULIA_VERSION}-linux-x86_64.tar.gz" && \
-    echo "7c888adec3ea42afbfed2ce756ce1164a570d50fa7506c3f2e1e2cbc49d52506 *julia-${JULIA_VERSION}-linux-x86_64.tar.gz" | sha256sum -c - && \
+    echo "44658e9c7b45e2b9b5b59239d190cca42de05c175ea86bc346c294a8fe8d9f11 *julia-${JULIA_VERSION}-linux-x86_64.tar.gz" | sha256sum -c - && \
     tar xzf "julia-${JULIA_VERSION}-linux-x86_64.tar.gz" -C "/opt/julia-${JULIA_VERSION}" --strip-components=1 && \
     rm "/tmp/julia-${JULIA_VERSION}-linux-x86_64.tar.gz"
 RUN ln -fs /opt/julia-*/bin/julia /usr/local/bin/julia
