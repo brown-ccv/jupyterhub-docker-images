@@ -12,9 +12,3 @@ install.packages('fivethirtyeightdata',
                   dependencies = TRUE,
                   repos = 'https://fivethirtyeightdata.github.io/drat/', 
                   type = 'source')
-
-# Deskpro-286033, fall22
-install.packages(c( “tidyverse”, “nycflights13", “parallel”, “microbenchmark”, “foreach”,
-                   “doParallel”, “kernlab”, “ISLR”, “MASS”, “e1071", “pROC”, “tree”,
-                   “rpart”, “caret”, “doMC”, “randomForest”, “gbm”, “Metrics”, “keras”, “tfdatasets”) ,
-                   dependencies=TRUE, repos=‘http://cran.rstudio.com’)
