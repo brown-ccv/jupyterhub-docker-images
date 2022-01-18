@@ -10,3 +10,8 @@
 #                  repos='http://cran.rstudio.com/')
 # BiocManager::install(c("airway", "DESeq2", "vsn", "biomaRt",
 #                        "AnnotationHub", "SummarizedExperiment"))
+
+# Bandaid solution 
+install.packages(c("ISLR"), 
+                 dependencies = TRUE, 
+                 repos = 'http://cran.rstudio.com/')
