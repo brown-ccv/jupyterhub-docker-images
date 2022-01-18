@@ -62,7 +62,7 @@ r-gbm=2.1*
 r-Metrics=0.1*
 r-keras=2.7
 r-tfdatasets=2.7*
-r-islr=1.1*
+r-ISLR=1.2*
 
 # required for environment and plugins ( DO NOT REMOVE THESE!!! )
 ipython 
