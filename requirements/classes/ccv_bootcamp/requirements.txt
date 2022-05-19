@@ -1,4 +1,6 @@
 # add class-specific packages here:
+gofer
+numpy
 
 # these are the scipy base packages ( YOU PROBABLY DON'T WANT TO REMOVE THESE )
 dask 
