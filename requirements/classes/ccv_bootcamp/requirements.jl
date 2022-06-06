@@ -12,7 +12,7 @@ const julia_packages = [
                    "GLM",
                    "HypothesisTests",
                    "Ipopt",
-                   "JuMP",
+                   #"JuMP",
                    "Primes",
                    "Roots",
                    "Optim",
