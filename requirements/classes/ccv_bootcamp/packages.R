@@ -1,9 +1,83 @@
-# Use this script to install packages via CRAN, for example: 
-
-# NOTE: Code below shows how you install R packages from CRAN and Bioconductor. For CRAN packages, you can use 
-# the standard install.packages() function; for Bioconductor packages, however, you 
-# must first install BiocManager and then use that for installs. 
-
-install.packages("BiocManager", dependencies=TRUE, repos='http://cran.rstudio.com/')
-install.packages(c("pheatmap", "RColorBrewer", "PoiClaClu","patchwork","GGally", "maps", "rsvd", "devtools"), dependencies=TRUE, repos='http://cran.rstudio.com/')
-BiocManager::install(c("airway", "DESeq2", "vsn", "biomaRt","AnnotationHub", "SummarizedExperiment"))
+install.packages(c(
+"arrow",
+"BiocManager",
+"deldir",
+"devtools",
+"doMC",
+"doRNG",
+"DT",
+"GGally",
+"ggrepel",
+"hdf5r",
+"kableExtra",
+"knitr",
+"maps",
+"Matrix.utils",
+"metap",
+"mixtools",
+"NMF",
+"openxlsx",
+"parallel",
+"patchwork",
+"pdftools",
+"pheatmap",
+"plotly",
+"PoiClaClu",
+"R2HTML",
+"RColorBrewer",
+"RcppArmadillo",
+"rsvd",
+"Rtsne",
+"S4Vectors",
+"sctransform",
+"Seurat",
+"Signac",
+"stringr",
+"tidyverse",
+"viridis",
+"zoo"),
+ repos = "http://cran.rstudio.com/",
+ dependencies = TRUE)
+BiocManager::install(c(
+"airpart",
+"airway",
+"AnnotationHub",
+"AUCell",
+"batchelor",
+"BiocGenerics",
+"biomaRt",
+"BSgenome",
+"BSgenome.Hsapiens.UCSC.hg19",
+"clusterProfiler",
+"ComplexHeatmap",
+"DelayedArray",
+"DelayedMatrixStats",
+"DESeq2",
+"DOSE",
+"ensembldb",
+"GENIE3",
+"GenomicFeatures",
+"GenomeInfoDb",
+"glmGamPoi",
+"enrichplot",
+"JASPAR2018",
+"limma",
+"MAST",
+"multtest",
+"RcisTarget",
+"rhdf5",
+"scater",
+"SingleCellExperiment",
+"SummarizedExperiment",
+"TFBSTools",
+"vsn"))
+devtools::install_github("immunogenomics/harmony")
+devtools::install_github("aertslab/SCopeLoomR")
+devtools::install_github("aertslab/SCENIC")
+devtools::install_github("cole-trapnell-lab/leidenbase")
+devtools::install_github("cole-trapnell-lab/monocle3")
+devtools::install_github("mojaveazure/loomR")
+devtools::install_github("mojaveazure/seurat-disk")
+devtools::install_github("satijalab/seurat-data")
+devtools::install_github("xzhoulab/iDEA")
+devtools::install_github("lucylgao/clusterpval")

@@ -1,3 +1,29 @@
-# add class-specific classes here:
-jupyter-server-proxy <= v1.6.0
-jupyterlab-git <= v0.24.0
+# add class-specific packages here:
+gofer-grader
+numpy
+
+# these are the scipy base packages ( YOU PROBABLY DON'T WANT TO REMOVE THESE )
+dask 
+pandas
+numexpr
+matplotlib
+scipy
+seaborn
+scikit-learn
+scikit-image
+sympy
+cython
+patsy
+statsmodels
+cloudpickle
+dill
+numba
+bokeh
+sqlalchemy
+# hdf5
+vincent
+beautifulsoup4
+protobuf
+xlrd
+bottleneck
+# pytables
