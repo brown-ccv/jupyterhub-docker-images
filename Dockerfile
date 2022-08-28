@@ -74,9 +74,10 @@ RUN if [ "$SQLITE" = "true" ] ; then \
 RUN jupyter labextension install '@jupyterlab/git' --no-build && \
     npm cache clean --force
 
-RUN pip install --upgrade -r /tmp/requirements.pip.txt && \
-    fix-permissions $CONDA_DIR && \
-    fix-permissions /home/$NB_USER
+RUN pip install --upgrade -r /tmp/requirements.pip.txt
+
+RUN fix-permissions "${CONDA_DIR}" && \
+    fix-permissions "/home/${NB_USER}"
 
 # Install and Enable Extensions
 RUN jupyter serverextension enable --py 'jupyterlab_git' --sys-prefix && \
