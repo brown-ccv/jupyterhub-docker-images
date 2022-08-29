@@ -7,6 +7,14 @@ on:
       - 'docker-compose.yml'
       - 'scripts/**'
       - '.github/workflows/mpa2065.yml'
+  pull_request:
+      paths:
+      - 'requirements/classes/mpa2065/**'
+      - 'Dockerfile'
+      - 'docker-compose.yml'
+      - 'scripts/**'
+      - '.github/workflows/mpa2065.yml'
+  workflow_dispatch:
 
 env:
   CLASS: mpa2065
