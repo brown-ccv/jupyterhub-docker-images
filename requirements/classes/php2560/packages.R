@@ -8,3 +8,7 @@ install.packages('fivethirtyeightdata',
                   dependencies = TRUE,
                   repos = 'https://fivethirtyeightdata.github.io/drat/', 
                   type = 'source')
+
+install.packages(c("docstring"), 
+                 dependencies = TRUE, 
+                 repos = 'http://cran.rstudio.com/')

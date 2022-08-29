@@ -1,6 +1,5 @@
 # add class-specific packages here:
 r-gridextra
-r-docstring
 r-ggally
 r-knitr
 r-irdisplay
@@ -21,9 +20,10 @@ bokeh
 hdf5
 vincent
 pytables
+cython
 
 # these are the base r packages in the r-notebook image ( YOU PROBABLY WANT THESE IF YOUR TARGET IN DOCKER IS r_lang OR r_julia )
-r-base=4.2.1
+r-base
 r-caret
 r-crayon
 r-devtools

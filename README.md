@@ -59,7 +59,7 @@ To add a new class:
  - `-c`: class name (string) 
  - `-s`: class season/semester (fall, summer, spring) 
  - `-t`: target in docker file (string  – `base`, `r_lang` or `r_julia`) 
- - `-p`: python version (i.e 3.7 if ommited defaults to 3.8)
+ - `-p`: python version (i.e 3.7 if ommited defaults to 3.10)
  - `-q`: wheter to install sqlite kernel (ommit the `-q` tag if sqlite is not required)
 
 ```bash
