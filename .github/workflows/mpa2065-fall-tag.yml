@@ -5,6 +5,7 @@ env:
   CLASS: mpa2065
   TARGET: r_julia
   SQLITE: true
+  PYTHON_VERSION: "3.10"
 
 jobs:
   build:
