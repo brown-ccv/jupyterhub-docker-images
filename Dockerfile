@@ -156,7 +156,7 @@ USER root
 RUN $CONDA_DIR/envs/${CLASS}/bin/python -m ipykernel install --name=${CLASS} --display-name "Python 3"
 RUN fix-permissions $CONDA_DIR && \
     fix-permissions /home/$NB_USER
-    
+
 USER $NB_USER
 
 # Modify the path directly since the `source activate ${CLASS}`
@@ -272,8 +272,7 @@ RUN julia -e 'import Pkg; Pkg.update(); Pkg.instantiate(); Pkg.precompile();' &&
     julia -e "using Pkg; pkg\"add WebIO\"" 
 
 USER root
-RUN /opt/conda/bin/jupyter nbextension install /opt/julia/packages/WebIO/*/deps/bundles/webio-jupyter-notebook.js
-RUN /opt/conda/bin/jupyter nbextension enable --sys-prefix 'webio-jupyter-notebook'
+RUN /opt/conda/bin/python -m pip install webio_jupyter_extension
 USER $NB_UID
 
 ENV JULIA_DEPOT_PATH="$HOME/.julia:$JULIA_DEPOT_PATH"
