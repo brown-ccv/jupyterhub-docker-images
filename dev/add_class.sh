@@ -2,7 +2,7 @@
 set -e
 
 #default version of Python to use
-PYTHON_VERSION=3.8
+PYTHON_VERSION=3.10
 
 usage () { echo "Usage:"
            echo "     -h – help"

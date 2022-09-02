@@ -1,6 +1,6 @@
 # required for environment and plugins 
-jupyter-server-proxy <= v1.6.0
-jupyterlab-git <= v0.24.0
+jupyter-server-proxy
+jupyterlab-git
 nbdime
 nbgitpuller
 RISE

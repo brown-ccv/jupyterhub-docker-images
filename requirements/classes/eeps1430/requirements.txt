@@ -1,28 +1,35 @@
 # add class-specific packages here:
-ipywidgets
+# for eeps1430
+netCDF4
+metpy
+cartopy
+iris
 
 # these are the scipy base packages ( YOU PROBABLY DON'T WANT TO REMOVE THESE )
 dask 
-matplotlib
-numexpr
 pandas
-pytables
-scikit-learn
+numexpr
+matplotlib
 scipy
 seaborn
+scikit-learn
+scikit-image
 sympy
+cython
+patsy
 statsmodels
 cloudpickle
 dill
+numba
 bokeh
 sqlalchemy
 hdf5
 vincent
+beautifulsoup4
 protobuf
 xlrd
-
-
-# these are the base r packages in the r-notebook image ( YOU PROBABLY WANT THESE IF YOUR TARGET IN DOCKER IS r_lang OR r_julia )
+bottleneck
+pytables
 
 # required for environment and plugins ( DO NOT REMOVE THESE!!! )
 ipython 

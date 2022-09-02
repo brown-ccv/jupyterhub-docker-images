@@ -1,18 +1,19 @@
-name: build-image-php2650
+name: build-image-eeps1430
 on: 
   push:
       paths:
-      - 'requirements/classes/php2650/**'
+      - 'requirements/classes/eeps1430/**'
       - 'Dockerfile'
       - 'docker-compose.yml'
       - 'scripts/**'
-      - '.github/workflows/php2650.yml'
+      - '.github/workflows/eeps1430.yml'
+  workflow_dispatch:
 
 env:
-  CLASS: php2650
-  TARGET: r_julia
-  SQLITE: true
-  PYTHON_VERSION: 3.9
+  CLASS: eeps1430
+  TARGET: base
+  SQLITE: false
+  PYTHON_VERSION: "3.10"
 
 jobs:
   build:
@@ -21,9 +22,8 @@ jobs:
       - uses: actions/checkout@v2
 
       - name: Set Up GCloud
-        uses: google-github-actions/setup-gcloud@master
+        uses: google-github-actions/setup-gcloud@v0.6.0
         with:
-          version: '290.0.1'
           project_id: ${{ secrets.GCP_PROJECT_ID_JH_DOCKER }}
           service_account_key: ${{ secrets.GCP_SA_KEY_JH_DOCKER }}
           export_default_credentials: true
@@ -41,7 +41,7 @@ jobs:
       - name: Build and Push JH Image
         run: |
           COMPOSE_DOCKER_CLI_BUILD=1 DOCKER_BUILDKIT=1 docker-compose up jh_image
-          docker tag jupyterhub-docker-images_jh_image:latest gcr.io/jupyterhub-docker-images/php2650:${GITHUB_REF##*/}
-          docker tag jupyterhub-docker-images_jh_image:latest gcr.io/jupyterhub-docker-images/php2650:latest
-          docker push gcr.io/jupyterhub-docker-images/php2650:latest
-          docker push gcr.io/jupyterhub-docker-images/php2650:${GITHUB_REF##*/}
+          docker tag jupyterhub-docker-images_jh_image:latest gcr.io/jupyterhub-docker-images/eeps1430:${GITHUB_REF##*/}
+          docker tag jupyterhub-docker-images_jh_image:latest gcr.io/jupyterhub-docker-images/eeps1430:latest
+          docker push gcr.io/jupyterhub-docker-images/eeps1430:latest
+          docker push gcr.io/jupyterhub-docker-images/eeps1430:${GITHUB_REF##*/}

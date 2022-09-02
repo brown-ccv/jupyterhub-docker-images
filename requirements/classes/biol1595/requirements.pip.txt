@@ -1,8 +1,0 @@
-# add class-specific classes here:
-nltk
-tensorflow
-keras
-imbalanced-learn
-spacy
-Whoosh
-gensim

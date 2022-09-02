@@ -1,18 +1,28 @@
 # Copyright (c) Jupyter Development Team.
 # Distributed under the terms of the Modified BSD License.
-ARG ROOT_CONTAINER="jupyter/base-notebook:lab-3.0.16"
+ARG ROOT_CONTAINER="jupyter/base-notebook:lab-3.4.5"
 FROM ${ROOT_CONTAINER} as base
 
 ARG CLASS
 ARG SQLITE
 ARG PYTHON_VERSION
 
+USER ${NB_UID}
+RUN fix-permissions "${CONDA_DIR}" && \
+    fix-permissions "/home/${NB_USER}"
+
 USER root
-RUN apt-get update && \
-    apt-get install -y software-properties-common && \
-    add-apt-repository universe && \
-    add-apt-repository ppa:git-core/ppa && \
-    apt update
+# RUN apt-get update && \
+#     apt-get install -y software-properties-common && \
+#     add-apt-repository universe && \
+#     add-apt-repository ppa:git-core/ppa && \
+#     apt update
+
+USER ${NB_UID}
+RUN fix-permissions "${CONDA_DIR}" && \
+    fix-permissions "/home/${NB_USER}"
+
+USER root
 
 RUN apt-get update && \
     apt-get install -yq --no-install-recommends \
@@ -20,12 +30,15 @@ RUN apt-get update && \
     emacs \
     ripgrep \
     fd-find \
-    nano \
+    nano-tiny \
+    tzdata \
     less \
     git \
     wget \
     unzip \
     openssh-client \
+    # nbconvert dependencies
+    # https://nbconvert.readthedocs.io/en/latest/install.html#installing-tex
     texlive-xetex \
     texlive-latex-recommended \
     texlive-fonts-recommended \
@@ -33,6 +46,12 @@ RUN apt-get update && \
     pandoc \
     dvipng && \
     apt-get clean && rm -rf /var/lib/apt/lists/*
+
+USER ${NB_UID}
+RUN fix-permissions "${CONDA_DIR}" && \
+    fix-permissions "/home/${NB_USER}"
+
+USER root
 
 # Install missing fonts
 RUN cd /usr/share/fonts && \
@@ -49,58 +68,72 @@ RUN mktexlsr
 
 #------------ Install VSCode Server a Root----------------------------
 
-ENV VS_CODE_VERSION=3.4.1
+ENV VS_CODE_VERSION=4.5.1
 RUN mkdir /opt/code-server 
 WORKDIR /opt/code-server 
-RUN wget -qO- https://github.com/cdr/code-server/releases/download/${VS_CODE_VERSION}/code-server-${VS_CODE_VERSION}-linux-x86_64.tar.gz | tar zxvf - --strip-components=1
+RUN wget -qO- https://github.com/coder/code-server/releases/download/v${VS_CODE_VERSION}/code-server-${VS_CODE_VERSION}-linux-amd64.tar.gz | tar zxvf - --strip-components=1
 ENV	PATH=/opt/code-server:$PATH
 
 #------------ Install Lab Extensions in base environment as NB_USER----------------------------
 
 
-USER $NB_UID
-WORKDIR $HOME
+USER ${NB_UID}
+
+RUN ls -la
+
+RUN fix-permissions "${CONDA_DIR}" && \
+    fix-permissions "/home/${NB_USER}"
 
 COPY requirements/common/ /tmp/
-RUN conda install -y -c conda-forge --file /tmp/requirements.txt && \
-    conda clean --all -f -y
+RUN mamba install -y -c conda-forge --file /tmp/requirements.txt && \
+    mamba clean --all -f -y
 
-RUN if [ "$SQLITE" = "true" ] ; then \
-    conda install -y -c conda-forge xeus-sqlite && \
-    conda clean --all -f -y ; \
-    fi 
+RUN ls -la
 
-# Install jupyterlab git extension, this must come before installing extensions with pip (layer below)
-RUN jupyter labextension install '@jupyterlab/git' --no-build && \
-    npm cache clean --force
-
-RUN pip install --upgrade -r /tmp/requirements.pip.txt && \
-    fix-permissions $CONDA_DIR && \
-    fix-permissions /home/$NB_USER
-
-# Install and Enable Extensions
-RUN jupyter serverextension enable --py 'jupyterlab_git' --sys-prefix && \
-    jupyter serverextension enable --py 'nbgitpuller' --sys-prefix && \
-    jupyter nbextension install 'rise' --py --sys-prefix && \
-    jupyter nbextension enable 'rise' --py --sys-prefix && \
-    jupyter serverextension enable --sys-prefix --py 'jupyter_server_proxy' && \
-    jupyter labextension install '@jupyterlab/server-proxy' --no-build && \
-    jupyter nbextension install 'jupytext' --py --sys-prefix && \
-    jupyter nbextension enable 'jupytext' --py --sys-prefix && \
-    # jupyter serverextension enable --sys-prefix 'jupyterlab_latex' && \
-    # jupyter labextension install '@jupyterlab/latex' --no-build && \
-    # jupyter labextension install '@jupyter-widgets/jupyterlab-manager@2.0' 'jupyter-matplotlib@0.7.3' --no-build && \
-    jupyter lab build && \
-    jupyter lab clean -y && \
-    npm cache clean --force && \
-    rm -rf "/home/${NB_USER}/.cache/yarn" && \
-    rm -rf "/home/${NB_USER}/.node-gyp" && \
-    fix-permissions "${CONDA_DIR}"  && \
+RUN fix-permissions "${CONDA_DIR}" && \
     fix-permissions "/home/${NB_USER}"
 
 
+RUN if [ "$SQLITE" = "true" ] ; then \
+    mamba install -y -c conda-forge xeus-sqlite && \
+    mamba clean --all -f -y ; \
+    fi 
+
+# Install jupyterlab git extension, this must come before installing extensions with pip (layer below)
+# RUN jupyter labextension install '@jupyterlab/git' --no-build && \
+#     npm cache clean --force
+
+RUN pip install --upgrade -r /tmp/requirements.pip.txt
+
+RUN fix-permissions "${CONDA_DIR}" && \
+    fix-permissions "/home/${NB_USER}"
+
+# Install and Enable Extensions
+# RUN jupyter serverextension enable --py 'jupyterlab_git' --sys-prefix && \
+#     jupyter serverextension enable --py 'nbgitpuller' --sys-prefix && \
+#     jupyter nbextension install 'rise' --py --sys-prefix && \
+#     jupyter nbextension enable 'rise' --py --sys-prefix && \
+#     jupyter serverextension enable --sys-prefix --py 'jupyter_server_proxy' && \
+#     jupyter labextension install '@jupyterlab/server-proxy' --no-build && \
+#     jupyter nbextension install 'jupytext' --py --sys-prefix && \
+#     jupyter nbextension enable 'jupytext' --py --sys-prefix && \
+#     # jupyter serverextension enable --sys-prefix 'jupyterlab_latex' && \
+#     # jupyter labextension install '@jupyterlab/latex' --no-build && \
+#     # jupyter labextension install '@jupyter-widgets/jupyterlab-manager@2.0' 'jupyter-matplotlib@0.7.3' --no-build && \
+#     jupyter lab build && \
+#     jupyter lab clean -y && \
+#     npm cache clean --force && \
+#     rm -rf "/home/${NB_USER}/.cache/yarn" && \
+#     rm -rf "/home/${NB_USER}/.node-gyp" && \
+#     fix-permissions "${CONDA_DIR}"  && \
+#     fix-permissions "/home/${NB_USER}"
+
+
 # Overwrite default latex/jupyter template to include above fonts    
-COPY scripts/style_jupyter.tplx /opt/conda/lib/python3.8/site-packages/nbconvert/templates/latex/style_jupyter.tplx
+COPY --chown=${NB_UID}:${NB_GID} scripts/style_jupyter.tplx /opt/conda/lib/python3.10/site-packages/nbconvert/templates/latex/style_jupyter.tplx
+
+RUN fix-permissions $CONDA_DIR && \
+    fix-permissions /home/$NB_USER
 
 # De-activate the default kernel spec
 COPY scripts/jupyter_config.py /etc/jupyter/jupyter_config.py
@@ -108,21 +141,30 @@ RUN jupyter kernelspec remove -f python3
 ####################################################################
 # Create Class Conda environment
 
-COPY requirements/classes/${CLASS} /home/$NB_USER/tmp/
-COPY requirements/classes/${CLASS}/condarc /home/$NB_USER/.condarc
+COPY --chown=${NB_UID}:${NB_GID} requirements/classes/${CLASS} /home/$NB_USER/tmp/
+COPY --chown=${NB_UID}:${NB_GID} requirements/classes/${CLASS}/condarc /home/$NB_USER/.mambarc
 
-RUN conda create --quiet --yes -p ${CONDA_DIR}/envs/${CLASS} python=${PYTHON_VERSION} && \
-    conda install -y --name ${CLASS} --file /home/$NB_USER/tmp/requirements.txt && \
-    conda clean --all -f -y
+RUN mamba create --quiet --yes -p ${CONDA_DIR}/envs/${CLASS} python=${PYTHON_VERSION} && \
+    mamba install -y --name ${CLASS} --file /home/$NB_USER/tmp/requirements.txt && \
+    mamba clean --all -f -y
+
+RUN fix-permissions $CONDA_DIR && \
+    fix-permissions /home/$NB_USER
 
 # Link conda environment to Jupyter system-wide
 USER root
 RUN $CONDA_DIR/envs/${CLASS}/bin/python -m ipykernel install --name=${CLASS} --display-name "Python 3"
+RUN fix-permissions $CONDA_DIR && \
+    fix-permissions /home/$NB_USER
+
 USER $NB_USER
 
 # Modify the path directly since the `source activate ${CLASS}`
 # environment won't be preserved here.
 ENV PATH ${CONDA_DIR}/envs/${CLASS}/bin:$PATH
+
+RUN fix-permissions $CONDA_DIR && \
+    fix-permissions /home/$NB_USER
 
 # Class-specific pip installs 
 RUN $CONDA_DIR/envs/${CLASS}/bin/pip install -r /home/$NB_USER/tmp/requirements.pip.txt  && \
@@ -165,8 +207,8 @@ RUN ln -s /bin/tar /bin/gtar
 USER $NB_UID
 WORKDIR $HOME
 
-RUN conda install -y -p ${CONDA_DIR} -c conda-forge r-irkernel && \
-    conda clean --all -f -y && \
+RUN mamba install -y -p ${CONDA_DIR} -c conda-forge r-irkernel && \
+    mamba clean --all -f -y && \
     fix-permissions $CONDA_DIR && \
     fix-permissions /home/$NB_USER
 
@@ -230,8 +272,7 @@ RUN julia -e 'import Pkg; Pkg.update(); Pkg.instantiate(); Pkg.precompile();' &&
     julia -e "using Pkg; pkg\"add WebIO\"" 
 
 USER root
-RUN /opt/conda/bin/jupyter nbextension install /opt/julia/packages/WebIO/*/deps/bundles/webio-jupyter-notebook.js
-RUN /opt/conda/bin/jupyter nbextension enable --sys-prefix 'webio-jupyter-notebook'
+RUN /opt/conda/bin/python -m pip install webio_jupyter_extension
 USER $NB_UID
 
 ENV JULIA_DEPOT_PATH="$HOME/.julia:$JULIA_DEPOT_PATH"
