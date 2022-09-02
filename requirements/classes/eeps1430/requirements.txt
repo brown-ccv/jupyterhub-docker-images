@@ -1,5 +1,5 @@
 # add class-specific packages here:
-# for geol1430
+# for eeps1430
 netCDF4
 metpy
 cartopy
