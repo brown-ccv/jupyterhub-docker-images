@@ -1,3 +1,0 @@
-# add class-specific classes here:
-rpy2
-git+https://github.com/sswatson/voyager-launch 
