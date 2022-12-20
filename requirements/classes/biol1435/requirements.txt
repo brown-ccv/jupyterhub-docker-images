@@ -5,7 +5,7 @@ stdpopsim
 pyslim
 demes
 demesdraw
-ete3
+#ete3
 sage
 #sagemath package is called sage
 
