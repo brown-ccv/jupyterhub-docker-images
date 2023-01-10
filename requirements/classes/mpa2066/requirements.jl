@@ -7,5 +7,6 @@ const julia_packages = [
                         "Primes",
                         "StatsBase",
                         "MLJ",
-                        "Plots"
+                        "Plots",
+                        "Grisu"
                         ]
