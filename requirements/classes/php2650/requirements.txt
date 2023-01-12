@@ -1,10 +1,5 @@
 # add class-specific packages here:
 #r-cluster
-r-arules
-r-rtsne
-r-deriv
-r-plotly
-r-cluster
 
 # these are the scipy base packages ( YOU PROBABLY DON'T WANT TO REMOVE THESE )
 dask 
@@ -68,6 +63,11 @@ r-gbm=2.1*
 r-Metrics=0.1*
 r-keras=2.7
 r-tfdatasets=2.7*
+r-arules=1.7*
+r-rtsne=0.1*
+r-deriv=4.1*
+r-plotly=4.10*
+r-cluster=2.1*
 
 # required for environment and plugins ( DO NOT REMOVE THESE!!! )
 ipython 
