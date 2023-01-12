@@ -1,4 +1,10 @@
 # add class-specific packages here:
+#r-cluster
+r-arules
+r-rtsne
+r-deriv
+r-plotly
+r-cluster
 
 # these are the scipy base packages ( YOU PROBABLY DON'T WANT TO REMOVE THESE )
 dask 
