@@ -230,7 +230,7 @@ USER root
 
 ENV JULIA_DEPOT_PATH=/opt/julia
 ENV JULIA_PKGDIR=/opt/julia
-ENV JULIA_VERSION=1.8.4
+ENV JULIA_VERSION=1.8.5
 ENV JULIA_TAG=v1.8
 
 COPY requirements/classes/${CLASS}/julia_env/Project.toml $JULIA_PKGDIR/environments/$JULIA_TAG/
@@ -242,7 +242,7 @@ WORKDIR /tmp
 # hadolint ignore=SC2046
 RUN mkdir "/opt/julia-${JULIA_VERSION}" && \
     wget -q https://julialang-s3.julialang.org/bin/linux/x64/$(echo "${JULIA_VERSION}" | cut -d. -f 1,2)"/julia-${JULIA_VERSION}-linux-x86_64.tar.gz" && \
-    echo "44658e9c7b45e2b9b5b59239d190cca42de05c175ea86bc346c294a8fe8d9f11 *julia-${JULIA_VERSION}-linux-x86_64.tar.gz" | sha256sum -c - && \
+    echo "e71a24816e8fe9d5f4807664cbbb42738f5aa9fe05397d35c81d4c5d649b9d05 *julia-${JULIA_VERSION}-linux-x86_64.tar.gz" | sha256sum -c - && \
     tar xzf "julia-${JULIA_VERSION}-linux-x86_64.tar.gz" -C "/opt/julia-${JULIA_VERSION}" --strip-components=1 && \
     rm "/tmp/julia-${JULIA_VERSION}-linux-x86_64.tar.gz"
 RUN ln -fs /opt/julia-*/bin/julia /usr/local/bin/julia
