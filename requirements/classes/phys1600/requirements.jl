@@ -8,7 +8,7 @@ const julia_packages = [
                    "StatsBase",
                    "MLJ",
                    "Plots",
-                   "Grisu"
+                   "Grisu",
                    "LinearAlgebra",
                    "Statistics",
                    "FFTW",
