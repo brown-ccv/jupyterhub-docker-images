@@ -9,4 +9,15 @@ const julia_packages = [
                    "MLJ",
                    "Plots",
                    "Grisu"
+                   "LinearAlgebra",
+                   "Statistics",
+                   "FFTW",
+                   "OrdinaryDiffEq",
+                   "StochasticDiffEq",
+                   "Random",
+                   "Distributions",
+                   "NPZ",
+                   "JLD2",
+                   "RecursiveArrayTools",
+                   "DiffEqCallbacks"
                     ]
