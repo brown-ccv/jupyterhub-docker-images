@@ -16,7 +16,6 @@ jobs:
       - name: Set Up GCloud
         uses: google-github-actions/setup-gcloud@v0.6.0
         with:
-          version: '290.0.1'
           project_id: ${{ secrets.GCP_PROJECT_ID_JH_DOCKER }}
           service_account_key: ${{ secrets.GCP_SA_KEY_JH_DOCKER }}
           export_default_credentials: true
@@ -29,8 +28,8 @@ jobs:
       - name: Upload Julia Env Files to Google Storage Bucket
         if: env.TARGET == 'r_julia'
         run: |
-          gsutil cp -r requirements/classes/phys1600/julia_env gs://jupyterhub-environment-files/spring-2022/phys1600/past/${GITHUB_SHA}/julia
-          gsutil cp -r requirements/classes/phys1600/julia_env gs://jupyterhub-environment-files/spring-2022/phys1600/latest/julia
+          gsutil cp -r requirements/classes/phys1600/julia_env gs://jupyterhub-environment-files/spring-2023/phys1600/past/${GITHUB_SHA}/julia
+          gsutil cp -r requirements/classes/phys1600/julia_env gs://jupyterhub-environment-files/spring-2023/phys1600/latest/julia
 
       - name: Configure Docker
         run: gcloud auth configure-docker
@@ -41,13 +40,13 @@ jobs:
           docker tag jupyterhub-docker-images_jh_image:latest gcr.io/jupyterhub-docker-images/phys1600:${GITHUB_REF##*/}
           docker tag jupyterhub-docker-images_jh_image:latest gcr.io/jupyterhub-docker-images/phys1600:${GITHUB_SHA}
           docker tag jupyterhub-docker-images_jh_image:latest gcr.io/jupyterhub-docker-images/phys1600:latest
-          docker tag jupyterhub-docker-images_jh_image:latest gcr.io/jupyterhub-docker-images/phys1600:spring-2022
+          docker tag jupyterhub-docker-images_jh_image:latest gcr.io/jupyterhub-docker-images/phys1600:spring-2023
           docker push gcr.io/jupyterhub-docker-images/phys1600:latest
-          docker push gcr.io/jupyterhub-docker-images/phys1600:spring-2022
+          docker push gcr.io/jupyterhub-docker-images/phys1600:spring-2023
           docker push gcr.io/jupyterhub-docker-images/phys1600:${GITHUB_REF##*/}
           docker push gcr.io/jupyterhub-docker-images/phys1600:${GITHUB_SHA}
 
       - name: Upload Conda Env Files to Google Storage Bucket
         run: |
-          gsutil cp -r requirements/out gs://jupyterhub-environment-files/spring-2022/phys1600/past/${GITHUB_SHA}/conda
-          gsutil cp -r requirements/out gs://jupyterhub-environment-files/spring-2022/phys1600/latest/conda
+          gsutil cp -r requirements/out gs://jupyterhub-environment-files/spring-2023/phys1600/past/${GITHUB_SHA}/conda
+          gsutil cp -r requirements/out gs://jupyterhub-environment-files/spring-2023/phys1600/latest/conda
