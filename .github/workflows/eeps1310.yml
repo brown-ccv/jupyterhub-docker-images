@@ -12,7 +12,7 @@ env:
   CLASS: eeps1310
   TARGET: base
   SQLITE: false
-  PYTHON_VERSION: 3.10
+  PYTHON_VERSION: "3.10"
 
 jobs:
   build:
