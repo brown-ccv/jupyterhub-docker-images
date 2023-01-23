@@ -3,7 +3,7 @@ on: [workflow_dispatch]
 
 env:
   CLASS: eeps1310
-  TARGET: r_julia
+  TARGET: base
   SQLITE: false
   PYTHON_VERSION: 3.10
 
