@@ -34,11 +34,11 @@ protobuf
 xlrd
 bottleneck
 pytables
-scikit-allel
-toyplot
-toytree
-ipcoal
-biopython
+scikit-allel=1.3.*
+toyplot=1.0.*
+toytree=2.0.*
+ipcoal=0.1.*
+biopython=1.*
 
 
 # these are the base r packages in the r-notebook image ( YOU PROBABLY WANT THESE IF YOUR TARGET IN DOCKER IS r_lang OR r_julia )
