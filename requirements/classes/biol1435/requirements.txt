@@ -7,6 +7,12 @@ demes
 demesdraw
 #ete3
 sage
+scikit-allel
+toyplot
+toytree
+ipcoal
+biopython
+
 #sagemath package is called sage
 
 # these are the scipy base packages ( YOU PROBABLY DON'T WANT TO REMOVE THESE )
