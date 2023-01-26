@@ -1,3 +1,5 @@
 # add class-specific classes here:
 ete3
+msprime
+pysam
 momi
