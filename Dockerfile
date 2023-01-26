@@ -26,6 +26,7 @@ USER root
 
 RUN apt-get update && \
     apt-get install -yq --no-install-recommends \
+    gcc \
     vim \
     emacs \
     ripgrep \

@@ -1,5 +1,4 @@
 # add class-specific packages here:
-gcc
 gsl
 tskit
 stdpopsim
@@ -7,7 +6,11 @@ pyslim
 demes
 demesdraw
 sage
-#sagemath package is called sage
+scikit-allel=1.3.*
+toyplot=1.0.*
+toytree=2.0.*
+ipcoal=0.1.*
+biopython=1.*
 
 # these are the scipy base packages ( YOU PROBABLY DON'T WANT TO REMOVE THESE )
 dask 
@@ -34,11 +37,6 @@ protobuf
 xlrd
 bottleneck
 pytables
-scikit-allel=1.3.*
-toyplot=1.0.*
-toytree=2.0.*
-ipcoal=0.1.*
-biopython=1.*
 
 
 # these are the base r packages in the r-notebook image ( YOU PROBABLY WANT THESE IF YOUR TARGET IN DOCKER IS r_lang OR r_julia )
