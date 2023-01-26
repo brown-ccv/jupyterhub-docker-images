@@ -1,11 +1,11 @@
 # add class-specific packages here:
+gcc
 gsl
 tskit
 stdpopsim
 pyslim
 demes
 demesdraw
-#ete3
 sage
 #sagemath package is called sage
 
