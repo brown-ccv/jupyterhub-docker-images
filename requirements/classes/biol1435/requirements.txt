@@ -1,5 +1,6 @@
 # add class-specific packages here:
 msprime>=1.2.0
+gsl
 tskit
 stdpopsim
 pyslim
