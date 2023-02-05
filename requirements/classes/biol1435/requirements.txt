@@ -51,7 +51,7 @@ r-forecast
 r-hexbin=1.28*
 r-htmltools
 r-htmlwidgets=1.5*
-r-irkernel=1.1*
+r-irkernel
 r-nycflights13=1.0*
 r-randomforest=4.6*
 r-rcurl=1.98*
