@@ -58,7 +58,7 @@ r-rcurl=1.98*
 r-rmarkdown=2.*
 r-rodbc=1.3*
 r-rsqlite=2.2*
-r-shiny=1.4*
+r-shiny=1.*
 r-tidyverse=1.3*
 unixodbc=2.3.*
 r-tidymodels
