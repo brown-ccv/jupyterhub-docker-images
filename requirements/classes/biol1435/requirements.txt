@@ -8,6 +8,7 @@ demes
 demesdraw
 #ete3
 sage
+gcc
 #sagemath package is called sage
 
 # these are the scipy base packages ( YOU PROBABLY DON'T WANT TO REMOVE THESE )
