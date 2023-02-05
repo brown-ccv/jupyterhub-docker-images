@@ -53,7 +53,7 @@ r-htmltools
 r-htmlwidgets=1.5*
 r-irkernel
 r-nycflights13=1.0*
-r-randomforest=4.6*
+r-randomforest=4.*
 r-rcurl=1.98*
 r-rmarkdown=2.*
 r-rodbc=1.3*
