@@ -16,6 +16,6 @@ install.packages(c("devtools", "purrr", "kableExtra", "parallel"), dependencies=
 devtools::install_github("brendankelly/micropower")
 
 if (!require("BiocManager", quietly = TRUE))
-    install.packages("BiocManager")
+    install.packages("BiocManager", dependencies=TRUE, repos='http://cran.rstudio.com/')
 
 BiocManager::install("RnaSeqSampleSizeData")
