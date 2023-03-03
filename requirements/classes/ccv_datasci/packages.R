@@ -12,7 +12,7 @@
 #                        "AnnotationHub", "SummarizedExperiment"))
 
 # FOR DSCOV POWER ANALYSES 3/3/23
-install.packages(c("devtools", "purrr", "kableExtra", "parallel"))
+install.packages(c("devtools", "purrr", "kableExtra", "parallel"), dependencies=TRUE, repos='http://cran.rstudio.com')
 devtools::install_github("brendankelly/micropower")
 
 if (!require("BiocManager", quietly = TRUE))
