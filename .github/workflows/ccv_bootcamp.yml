@@ -13,7 +13,7 @@ env:
   CLASS: ccv_bootcamp
   TARGET: r_julia
   SQLITE: true
-  PYTHON_VERSION: "3.10"
+  PYTHON_VERSION: 3.7
 
 jobs:
   build:
