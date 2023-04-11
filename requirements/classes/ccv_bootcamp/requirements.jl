@@ -32,5 +32,6 @@ const julia_packages = [
                    "Plots",
                    "VegaLite",
                    "RDatasets",
-                   "StatsPlots"
+                   "StatsPlots",
+                   "Tidier"
                     ]

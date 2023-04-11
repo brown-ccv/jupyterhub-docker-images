@@ -1,18 +1,32 @@
+# Use this script to install packages via CRAN, for example: 
+
+# NOTE: Code below shows how you install R packages from CRAN and Bioconductor. For CRAN packages, you can use 
+# the standard install.packages() function; for Bioconductor packages, however, you 
+# must first install BiocManager and then use that for installs. 
+
+# install.packages("BiocManager", dependencies=TRUE, repos='http://cran.rstudio.com/')
+# install.packages(c("ggplot2", "pheatmap", "RColorBrewer", "PoiClaClu",
+#                    "patchwork", "tidyr", "GGally"), dependencies=TRUE, 
+#                  repos='http://cran.rstudio.com/')
+# BiocManager::install(c("airway", "DESeq2", "vsn", "biomaRt",
+#                        "AnnotationHub", "SummarizedExperiment"))
+
 install.packages(c(
+"ape",
 "arrow",
 "BiocManager",
 "deldir",
-"devtools",
 "doMC",
 "doRNG",
 "DT",
+"enrichR",
 "GGally",
 "ggrepel",
 "hdf5r",
 "kableExtra",
 "knitr",
 "maps",
-"Matrix.utils",
+"Matrix",
 "metap",
 "mixtools",
 "NMF",
@@ -23,17 +37,23 @@ install.packages(c(
 "pheatmap",
 "plotly",
 "PoiClaClu",
+"purrr",
+"R.utils",
 "R2HTML",
 "RColorBrewer",
 "RcppArmadillo",
+"remotes",
+"Rfast2",
+"rgeos",
 "rsvd",
 "Rtsne",
-"S4Vectors",
 "sctransform",
 "Seurat",
-"Signac",
+"spatstat.explore",
+"spatstat.geom",
 "stringr",
 "tidyverse",
+"VGAM",
 "viridis",
 "zoo"),
  repos = "http://cran.rstudio.com/",
@@ -44,6 +64,7 @@ BiocManager::install(c(
 "AnnotationHub",
 "AUCell",
 "batchelor",
+"Biobase",
 "BiocGenerics",
 "biomaRt",
 "BSgenome",
@@ -54,30 +75,29 @@ BiocManager::install(c(
 "DelayedMatrixStats",
 "DESeq2",
 "DOSE",
+"enrichplot",
 "ensembldb",
 "GENIE3",
 "GenomicFeatures",
 "GenomeInfoDb",
+"GenomicRanges",
 "glmGamPoi",
-"enrichplot",
+"IRanges",
 "JASPAR2018",
 "limma",
 "MAST",
+"monocle",
 "multtest",
 "RcisTarget",
-"rhdf5",
+"RnaSeqSampleSize",
+"rtracklayer",
+"S4Vectors",
 "scater",
 "SingleCellExperiment",
 "SummarizedExperiment",
 "TFBSTools",
 "vsn"))
-devtools::install_github("immunogenomics/harmony")
-devtools::install_github("aertslab/SCopeLoomR")
-devtools::install_github("aertslab/SCENIC")
-devtools::install_github("cole-trapnell-lab/leidenbase")
-devtools::install_github("cole-trapnell-lab/monocle3")
-devtools::install_github("mojaveazure/loomR")
-devtools::install_github("mojaveazure/seurat-disk")
-devtools::install_github("satijalab/seurat-data")
-devtools::install_github("xzhoulab/iDEA")
-devtools::install_github("lucylgao/clusterpval")
+remotes::install_github("mojaveazure/seurat-disk")
+remotes::install_github("satijalab/seurat-data")
+remotes::install_github("brendankelly/micropower")
+
