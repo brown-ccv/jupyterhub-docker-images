@@ -1,7 +1,0 @@
-# add class-specific classes here:
-gofer-grader
-numpy
-
-#for single cell
-llvmlite
-umap-learn
