@@ -7,6 +7,7 @@ on:
       - 'docker-compose.yml'
       - 'scripts/**'
       - '.github/workflows/ccv_bootcamp.yml'
+  workflow_dispatch:
 
 env:
   CLASS: ccv_bootcamp
@@ -18,8 +19,8 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
-
+      - uses: actions/checkout@v3
+        #https://github.blog/changelog/2022-09-22-github-actions-all-actions-will-begin-running-on-node16-instead-of-node12/
       - name: Set Up GCloud
         uses: google-github-actions/setup-gcloud@v0.6.0
         with:
