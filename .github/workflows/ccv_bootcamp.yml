@@ -1,0 +1,46 @@
+name: build-image-ccv_bootcamp
+on: 
+  push:
+      paths:
+      - 'requirements/classes/ccv_bootcamp/**'
+      - 'Dockerfile'
+      - 'docker-compose.yml'
+      - 'scripts/**'
+      - '.github/workflows/ccv_bootcamp.yml'
+
+env:
+  CLASS: ccv_bootcamp
+  TARGET: r_julia
+  SQLITE: true
+  PYTHON_VERSION: "3.10"
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Set Up GCloud
+        uses: google-github-actions/setup-gcloud@v0.6.0
+        with:
+          project_id: ${{ secrets.GCP_PROJECT_ID_JH_DOCKER }}
+          service_account_key: ${{ secrets.GCP_SA_KEY_JH_DOCKER }}
+          export_default_credentials: true
+
+      - name: Create Julia Environment Files
+        if: env.TARGET == 'r_julia'
+        run: |
+          sudo --preserve-env=CLASS docker-compose up julia_build
+
+      - name: Configure Docker
+        run: gcloud auth configure-docker
+      - uses: satackey/action-docker-layer-caching@v0.0.11
+        # Ignore the failure of a step and avoid terminating the job.
+        continue-on-error: true
+      - name: Build and Push JH Image
+        run: |
+          COMPOSE_DOCKER_CLI_BUILD=1 DOCKER_BUILDKIT=1 docker-compose up jh_image
+          docker tag jupyterhub-docker-images_jh_image:latest gcr.io/jupyterhub-docker-images/ccv_bootcamp:${GITHUB_REF##*/}
+          docker tag jupyterhub-docker-images_jh_image:latest gcr.io/jupyterhub-docker-images/ccv_bootcamp:latest
+          docker push gcr.io/jupyterhub-docker-images/ccv_bootcamp:latest
+          docker push gcr.io/jupyterhub-docker-images/ccv_bootcamp:${GITHUB_REF##*/}
