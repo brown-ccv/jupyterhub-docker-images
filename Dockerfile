@@ -44,7 +44,18 @@ RUN apt-get update && \
     texlive-fonts-recommended \
     texlive-plain-generic \
     pandoc \
-    dvipng && \
+    dvipng \
+# single cell dependencies 
+    libboost-all-dev \
+    libcurl4-openssl-dev \
+    libfftw3-dev \
+    libgeos-dev \
+    libgsl-dev \
+    libhdf5-dev \
+    libpng-dev \
+    libxml2-dev \
+    lvm-10 \
+    openjdk-8-jdk && \
     apt-get clean && rm -rf /var/lib/apt/lists/*
 
 USER ${NB_UID}
