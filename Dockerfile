@@ -54,9 +54,17 @@ RUN apt-get update && \
     libhdf5-dev \
     libpng-dev \
     libxml2-dev \
-    llvm-10 \
+    libffi-dev \
+    pkg-config \
     openjdk-8-jdk && \
     apt-get clean && rm -rf /var/lib/apt/lists/*
+
+#also for single cell
+RUN apt-get install -y llvm-10
+
+# Install FIt-SNE also for single cell
+RUN git clone --branch v1.2.1 https://github.com/KlugerLab/FIt-SNE.git
+RUN g++ -std=c++11 -O3 FIt-SNE/src/sptree.cpp FIt-SNE/src/tsne.cpp FIt-SNE/src/nbodyfft.cpp  -o bin/fast_tsne -pthread -lfftw3 -lm
 
 USER ${NB_UID}
 RUN fix-permissions "${CONDA_DIR}" && \
