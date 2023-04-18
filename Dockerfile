@@ -54,7 +54,7 @@ RUN apt-get update && \
     libhdf5-dev \
     libpng-dev \
     libxml2-dev \
-    lvm-10 \
+    llvm-10 \
     openjdk-8-jdk && \
     apt-get clean && rm -rf /var/lib/apt/lists/*
 
