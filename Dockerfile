@@ -46,6 +46,7 @@ RUN apt-get update && \
     pandoc \
     dvipng \
 # single cell dependencies 
+    clang \
     libboost-all-dev \
     libcurl4-openssl-dev \
     libfftw3-dev \
@@ -55,12 +56,15 @@ RUN apt-get update && \
     libpng-dev \
     libxml2-dev \
     libffi-dev \
-    pkg-config \
+    lldb \    
+    lld \
+    llvm-config \
     openjdk-8-jdk && \
+    pkg-config \
     apt-get clean && rm -rf /var/lib/apt/lists/*
 
 #also for single cell
-RUN apt-get install -y llvm-10
+RUN apt-get install -y llvm-10*
 
 # Install FIt-SNE also for single cell
 RUN git clone --branch v1.2.1 https://github.com/KlugerLab/FIt-SNE.git
