@@ -1,6 +1,7 @@
 # add class-specific packages here:
 gofer-grader
 numpy
+plotly
 
 #for single cell
 llvmlite
