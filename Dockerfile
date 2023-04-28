@@ -44,7 +44,10 @@ RUN apt-get update && \
     texlive-fonts-recommended \
     texlive-plain-generic \
     pandoc \
-    dvipng \
+    dvipng && \
+    apt-get clean && rm -rf /var/lib/apt/lists/*
+
+
 # single cell dependencies 
 #    clang \
 #    libboost-all-dev \
@@ -61,7 +64,7 @@ RUN apt-get update && \
 #    llvm-config \
 #    openjdk-8-jdk && \
 #    pkg-config \
-    apt-get clean && rm -rf /var/lib/apt/lists/*
+#    apt-get clean && rm -rf /var/lib/apt/lists/*
 
 #also for single cell
 #RUN apt-get install -y llvm-10
