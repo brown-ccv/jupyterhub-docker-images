@@ -1,11 +1,11 @@
 # add class-specific packages here:
-gofer-grader
-numpy
-plotly
+#gofer-grader
+#numpy
+#plotly
 
 #for single cell
-llvmlite
-umap-learn
+#llvmlite
+#umap-learn
 
 # these are the scipy base packages ( YOU PROBABLY DON'T WANT TO REMOVE THESE )
 dask 
