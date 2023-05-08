@@ -49,29 +49,28 @@ RUN apt-get update && \
 
 
 # single cell dependencies 
-#    clang \
-#    libboost-all-dev \
-#    libcurl4-openssl-dev \
-#    libfftw3-dev \
-#    libgeos-dev \
-#    libgsl-dev \
-#    libhdf5-dev \
-#    libpng-dev \
-#    libxml2-dev \
-#    libffi-dev \
-#    lldb \    
-#    lld \
-#    llvm-config \
-#    openjdk-8-jdk && \
-#    pkg-config \
-#    apt-get clean && rm -rf /var/lib/apt/lists/*
+RUN apt-get update && \
+    apt-get install -yq --no-install-recommends \
+    clang \
+    libboost-all-dev \
+    libcurl4-openssl-dev \
+    libfftw3-dev \
+    libgeos-dev \
+    libgsl-dev \
+    libhdf5-dev \
+    libpng-dev \
+    libxml2-dev \
+    libffi-dev \
+    lldb \    
+    lld \
+    openjdk-8-jdk \
+    pkg-config \
+    apt-get clean && rm -rf /var/lib/apt/lists/*
 
-#also for single cell
-#RUN apt-get install -y llvm-10
 
 # Install FIt-SNE also for single cell
-#RUN git clone --branch v1.2.1 https://github.com/KlugerLab/FIt-SNE.git
-#RUN g++ -std=c++11 -O3 FIt-SNE/src/sptree.cpp FIt-SNE/src/tsne.cpp FIt-SNE/src/nbodyfft.cpp  -o bin/fast_tsne -pthread -lfftw3 -lm
+RUN git clone --branch v1.2.1 https://github.com/KlugerLab/FIt-SNE.git
+RUN g++ -std=c++11 -O3 FIt-SNE/src/sptree.cpp FIt-SNE/src/tsne.cpp FIt-SNE/src/nbodyfft.cpp  -o bin/fast_tsne -pthread -lfftw3 -lm
 
 USER ${NB_UID}
 RUN fix-permissions "${CONDA_DIR}" && \
