@@ -51,6 +51,7 @@ RUN apt-get update && \
 # single cell dependencies 
 RUN apt-get update && \
     apt-get install -yq --no-install-recommends \
+    build-essential \
     clang \
     libboost-all-dev \
     libcurl4-openssl-dev \
@@ -69,8 +70,22 @@ RUN apt-get update && \
 
 
 # Install FIt-SNE also for single cell
-RUN git clone --branch v1.2.1 https://github.com/KlugerLab/FIt-SNE.git
-RUN g++ -std=c++11 -O3 FIt-SNE/src/sptree.cpp FIt-SNE/src/tsne.cpp FIt-SNE/src/nbodyfft.cpp  -o bin/fast_tsne -pthread -lfftw3 -lm
+#RUN git clone --branch v1.2.1 https://github.com/KlugerLab/FIt-SNE.git
+#RUN g++ -std=c++11 -O3 FIt-SNE/src/sptree.cpp FIt-SNE/src/tsne.cpp FIt-SNE/src/nbodyfft.cpp  -o bin/fast_tsne -pthread -lfftw3 -lm
+
+# FFTW, FIt-SNE
+RUN wget http://www.fftw.org/fftw-3.3.8.tar.gz \
+    && tar zxvf fftw-3.3.8.tar.gz \
+    && rm fftw-3.3.8.tar.gz \
+    && cd fftw-3.3.8 \
+    && ./configure \
+    && make \
+    && make install \
+    && git clone https://github.com/KlugerLab/FIt-SNE.git \
+    && cd FIt-SNE/ \
+    && g++ -std=c++11 -O3  src/sptree.cpp src/tsne.cpp src/nbodyfft.cpp  -o bin/fast_tsne -pthread -lfftw3 -lm \
+    && cp bin/fast_tsne /usr/local/bin/
+
 
 USER ${NB_UID}
 RUN fix-permissions "${CONDA_DIR}" && \
