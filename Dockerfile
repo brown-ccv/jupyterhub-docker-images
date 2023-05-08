@@ -1,4 +1,4 @@
-# Copyright (c) Jupyter Development Team.
+Copyright (c) Jupyter Development Team.
 # Distributed under the terms of the Modified BSD License.
 ARG ROOT_CONTAINER="jupyter/base-notebook:lab-3.4.5"
 FROM ${ROOT_CONTAINER} as base
@@ -64,7 +64,7 @@ RUN apt-get update && \
     lldb \    
     lld \
     openjdk-8-jdk \
-    pkg-config \
+    pkg-config && \
     apt-get clean && rm -rf /var/lib/apt/lists/*
 
 
