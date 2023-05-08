@@ -1,5 +1,5 @@
 # add class-specific packages here:
-gofer-grader
+#gofer-grader
 numpy
 plotly
 
