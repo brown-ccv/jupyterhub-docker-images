@@ -1,7 +1,7 @@
 const julia_packages = [
                    "IJulia", # DO NOT REMOVE
                    # add class specific classes here:
-                   "CSV",
+                   #"CSV",
                    "DataFrames",
                    "DataFramesMeta",
                    "Distributions",
@@ -12,7 +12,7 @@ const julia_packages = [
                    "GLM",
                    "HypothesisTests",
                    "Ipopt",
-                   "JuMP",
+                   #"JuMP",
                    "Primes",
                    "Roots",
                    "Optim",
@@ -31,7 +31,8 @@ const julia_packages = [
                    "GR",
                    "Plots",
                    "VegaLite",
-                   "RDatasets",
+                   #"RDatasets",
+                   "MLDatasets",
                    "StatsPlots",
                    "Tidier"
                     ]
