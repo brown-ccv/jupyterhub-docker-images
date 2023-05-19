@@ -49,24 +49,24 @@ RUN apt-get update && \
 
 
 # single cell dependencies 
-RUN apt-get update && \
-    apt-get install -yq --no-install-recommends \
-    build-essential \
-    clang \
-    libboost-all-dev \
-    libcurl4-openssl-dev \
-    libfftw3-dev \
-    libgeos-dev \
-    libgsl-dev \
-    libhdf5-dev \
-    libpng-dev \
-    libxml2-dev \
-    libffi-dev \
-    lldb \    
-    lld \
-    openjdk-8-jdk \
-    pkg-config && \
-    apt-get clean && rm -rf /var/lib/apt/lists/*
+#RUN apt-get update && \
+#    apt-get install -yq --no-install-recommends \
+#    build-essential \
+#    clang \
+#    libboost-all-dev \
+#    libcurl4-openssl-dev \
+#    libfftw3-dev \
+#    libgeos-dev \
+#    libgsl-dev \
+#    libhdf5-dev \
+#    libpng-dev \
+#    libxml2-dev \
+#    libffi-dev \
+#    lldb \    
+#    lld \
+#    openjdk-8-jdk \
+#    pkg-config && \
+#    apt-get clean && rm -rf /var/lib/apt/lists/*
 
 
 USER ${NB_UID}

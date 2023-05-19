@@ -4,23 +4,17 @@
 # the standard install.packages() function; for Bioconductor packages, however, you 
 # must first install BiocManager and then use that for installs. 
 
- install.packages("BiocManager", dependencies=TRUE, repos='http://cran.rstudio.com/')
- install.packages(c("ggplot2", "pheatmap", "RColorBrewer", "PoiClaClu",
-                    "patchwork", "tidyr", "GGally"), dependencies=TRUE, 
-                  repos='http://cran.rstudio.com/')
- BiocManager::install(c("airway", "DESeq2", "vsn", "biomaRt",
-                        "AnnotationHub", "SummarizedExperiment"))
-                        
+install.packages("BiocManager", dependencies=TRUE, repos='http://cran.rstudio.com/')
+install.packages(c("tidyverse"), dependencies=TRUE, repos='http://cran.rstudio.com/')
 install.packages(c(
 "ape",
 "arrow",
-"BiocManager",
 "deldir",
+"devtools",
 "doMC",
 "doRNG",
 "DT",
 "enrichR",
-"GGally",
 "ggrepel",
 "hdf5r",
 "kableExtra",
@@ -52,7 +46,6 @@ install.packages(c(
 "spatstat.explore",
 "spatstat.geom",
 "stringr",
-"tidyverse",
 "VGAM",
 "viridis",
 "zoo"),
