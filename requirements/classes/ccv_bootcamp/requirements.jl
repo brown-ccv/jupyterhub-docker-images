@@ -2,10 +2,10 @@ const julia_packages = [
                    "IJulia", # DO NOT REMOVE
                    # add class specific classes here:
                    #"CSV",
-                   #"DataFrames",
-                   "DataFramesMeta",
+                   "DataFrames",
+                  #"DataFramesMeta",
                    "Distributions",
-                   "ClassImbalance",
+                   #"ClassImbalance",
                    "Clustering",
                    "DecisionTree",
                    "Flux",
@@ -28,7 +28,7 @@ const julia_packages = [
                    "LaTeXStrings",
                    "Feather",
                    "Gadfly",
-                   "GR",
+                  #"GR",
                    "Plots",
                    "VegaLite",
                    #"RDatasets",

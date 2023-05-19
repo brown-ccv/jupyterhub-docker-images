@@ -1,5 +1,5 @@
 # add class-specific packages here:
-#gofer-grader
+gofer-grader
 numpy
 
 # these are the scipy base packages ( YOU PROBABLY DON'T WANT TO REMOVE THESE )
