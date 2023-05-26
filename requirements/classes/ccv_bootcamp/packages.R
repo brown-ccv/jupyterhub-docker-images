@@ -83,7 +83,8 @@ BiocManager::install(c(
 "SingleCellExperiment",
 "SummarizedExperiment",
 "TFBSTools",
-"vsn"))
+"vsn",
+"WGCNA"))
 remotes::install_github("mojaveazure/seurat-disk")
 remotes::install_github("satijalab/seurat-data")
 remotes::install_github("brendankelly/micropower")
