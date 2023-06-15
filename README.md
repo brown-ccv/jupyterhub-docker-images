@@ -62,7 +62,7 @@ To add a new class:
  - `-p`: python version (i.e 3.9 if ommited defaults to 3.10)
  - `-q`: wheter to install sqlite kernel (ommit the `-q` tag if sqlite is not required)
 
-The example below shows creating a class specifying an older version of python (3.9). Omitting the `-p` argument will default version (currently 3.10). The default python is configured in the `docker-compose.yml`.
+The example below shows creating a class specifying an older version of python (3.9). Omitting the `-p` argument will use the default version (currently 3.10). The default python is configured in the `docker-compose.yml`.
 ```bash
 # e.g
 cd dev/
