@@ -59,13 +59,14 @@ To add a new class:
  - `-c`: class name (string) 
  - `-s`: class season/semester (fall, summer, spring) 
  - `-t`: target in docker file (string  – `base`, `r_lang` or `r_julia`) 
- - `-p`: python version (i.e 3.7 if ommited defaults to 3.10)
+ - `-p`: python version (i.e 3.9 if ommited defaults to 3.10)
  - `-q`: wheter to install sqlite kernel (ommit the `-q` tag if sqlite is not required)
 
+The example below shows creating a class specifying an older version of python (3.9). Omitting the `-p` argument will default version (currently 3.10). The default python is configured in the `docker-compose.yml`.
 ```bash
 # e.g
 cd dev/
-./add_class.sh -c data1010 -t r_julia -s fall -p 3.7 -q
+./add_class.sh -c data1010 -t r_julia -s fall -p 3.9 -q
 ```
 
 To build the images locally:
