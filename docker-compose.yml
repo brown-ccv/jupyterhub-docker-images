@@ -23,7 +23,7 @@ services:
       args: 
         CLASS: ${CLASS}
         SQLITE: ${SQLITE:-false}
-        PYTHON_VERSION: ${PYTHON_VERSION:-3.10}
+        PYTHON_VERSION: ${PYTHON_VERSION:-3.9}
     volumes:
       - ./requirements/out:/home/jovyan/tmp/out
     user: root
