@@ -1,15 +1,15 @@
-name: build-image-base
+name: build-image-basepackages
 on: 
   push:
       paths:
-      - 'requirements/classes/base/**'
+      - 'requirements/classes/basepackages/**'
       - 'Dockerfile'
       - 'docker-compose.yml'
       - 'scripts/**'
-      - '.github/workflows/base.yml'
+      - '.github/workflows/basepackages.yml'
 
 env:
-  CLASS: base
+  CLASS: basepackages
   TARGET: r_julia
   SQLITE: false
   PYTHON_VERSION: "3.9.17"
@@ -40,7 +40,7 @@ jobs:
       - name: Build and Push JH Image
         run: |
           COMPOSE_DOCKER_CLI_BUILD=1 DOCKER_BUILDKIT=1 docker-compose up jh_image
-          docker tag jupyterhub-docker-images_jh_image:latest gcr.io/jupyterhub-docker-images/base:${GITHUB_REF##*/}
-          docker tag jupyterhub-docker-images_jh_image:latest gcr.io/jupyterhub-docker-images/base:latest
-          docker push gcr.io/jupyterhub-docker-images/base:latest
-          docker push gcr.io/jupyterhub-docker-images/base:${GITHUB_REF##*/}
+          docker tag jupyterhub-docker-images_jh_image:latest gcr.io/jupyterhub-docker-images/basepackages:${GITHUB_REF##*/}
+          docker tag jupyterhub-docker-images_jh_image:latest gcr.io/jupyterhub-docker-images/basepackages:latest
+          docker push gcr.io/jupyterhub-docker-images/basepackages:latest
+          docker push gcr.io/jupyterhub-docker-images/basepackages:${GITHUB_REF##*/}
