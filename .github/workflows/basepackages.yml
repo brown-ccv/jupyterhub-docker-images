@@ -13,8 +13,7 @@ env:
   TARGET: r_julia
   SQLITE: false
   PYTHON_VERSION: "3.9.17"
-
-  
+ 
 jobs:
   build:
     runs-on: ubuntu-latest
