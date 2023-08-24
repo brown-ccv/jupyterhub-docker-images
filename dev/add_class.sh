@@ -2,15 +2,15 @@
 set -e
 
 #default version of Python to use
-PYTHON_VERSION=3.10
+PYTHON_VERSION=3.11.4
 
 usage () { echo "Usage:"
-           echo "     -h – help"
-           echo "     -c – Class name"
+           echo "     -h - help"
+           echo "     -c - Class name"
            echo "     -s - Season (fall, spring, recurring)"
-           echo "     -t – Target stage in docker file (base, r_lang, or r_julia)"
-           echo "     -p – Python version (optional, if not given uses default)"
-           echo "     -q – Whether to install SQLITE Kernel"; }
+           echo "     -t - Target stage in docker file (base, r_lang, or r_julia)"
+           echo "     -p - Python version (optional, if not given uses default)"
+           echo "     -q - Whether to install SQLITE Kernel"; }
 
 while getopts c:s:t:p:qh option; do
     case "${option}" in

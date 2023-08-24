@@ -2,7 +2,7 @@ version: '3.4'
 services:
 
   julia_build:
-    image: julia:1.8.0-buster
+    image: julia:1.9.2-bullseye
     volumes:
       - ./requirements/classes/${CLASS}:/tmp/env/
       - ./scripts:/tmp/scripts/
@@ -23,7 +23,7 @@ services:
       args: 
         CLASS: ${CLASS}
         SQLITE: ${SQLITE:-false}
-        PYTHON_VERSION: ${PYTHON_VERSION:-3.10}
+        PYTHON_VERSION: ${PYTHON_VERSION:-3.11.4}
     volumes:
       - ./requirements/out:/home/jovyan/tmp/out
     user: root
