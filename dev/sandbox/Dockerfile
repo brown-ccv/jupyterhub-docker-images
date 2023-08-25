@@ -1,4 +1,4 @@
-FROM ubuntu:20.04
+FROM ubuntu:22.04
 
 LABEL maintainer "Paul Stey <paul_stey@brown.edu>"
 LABEL image jh_sandbox
@@ -21,9 +21,9 @@ RUN usermod -aG sudo ccv
 USER ccv
 
 RUN cd /home/ccv \
-    && wget https://repo.anaconda.com/archive/Anaconda3-2020.02-Linux-x86_64.sh \
-    && bash Anaconda3-2020.02-Linux-x86_64.sh -b \
-    && rm Anaconda3-2020.02-Linux-x86_64.sh
+    && wget https://repo.anaconda.com/archive/Anaconda3-2023.07-2-Linux-x86_64.sh \
+    && bash Anaconda3-2023.07-2-Linux-x86_64.sh -b \
+    && rm Anaconda3-2023.07-2-Linux-x86_64.sh
 
 ENV PATH="/home/ccv/anaconda3/bin:${PATH}"
 

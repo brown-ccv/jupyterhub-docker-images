@@ -2,22 +2,24 @@
 set -e
 
 #default version of Python to use
-PYTHON_VERSION=3.10
+PYTHON_VERSION=3.9.17
 
 usage () { echo "Usage:"
-           echo "     -h – help"
-           echo "     -c – Class name"
+           echo "     -h - help"
+           echo "     -c - Class name"
            echo "     -s - Season (fall, spring, recurring)"
-           echo "     -t – Target stage in docker file (base, r_lang, or r_julia)"
-           echo "     -p – Python version (optional, if not given uses default)"
-           echo "     -q – Whether to install SQLITE Kernel"; }
+           echo "     -t - Target stage in docker file (base, r_lang, or r_julia)"
+           echo "     -p - Python version (optional, if not given uses default)"
+           echo "     -q - Whether to install SQLITE Kernel"
+           echo "     -y - Class year"; }
 
-while getopts c:s:t:p:qh option; do
+while getopts c:s:t:p:y:qh option; do
     case "${option}" in
         c) CLASS=${OPTARG};;
         s) SEASON=${OPTARG};;
         t) TARGET=${OPTARG};;
         p) PYTHON_VERSION=${OPTARG};;
+        y) YEAR=${OPTARG};;
         q) ADD_SQLITE=true;;
         h) usage; exit;;
     esac
@@ -31,7 +33,7 @@ if ((OPTIND < 6))
 then
     echo "Incomplete options specified. Make sure to pass at least the class name (-c) and target stage (-t)."
 else
-    export YEAR=$(date +'%Y')
+    export YEAR=$YEAR
     export CLASS=$CLASS
     export TARGET=$TARGET
     export SEASON=$SEASON
