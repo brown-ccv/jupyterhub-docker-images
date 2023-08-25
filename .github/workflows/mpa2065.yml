@@ -7,7 +7,7 @@ on:
       - 'docker-compose.yml'
       - 'scripts/**'
       - '.github/workflows/mpa2065.yml'
-- workflow_dispatch:
+  workflow_dispatch:
 
 env:
   CLASS: mpa2065
