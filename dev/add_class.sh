@@ -33,7 +33,7 @@ if ((OPTIND < 6))
 then
     echo "Incomplete options specified. Make sure to pass at least the class name (-c) and target stage (-t)."
 else
-    #export YEAR=$(date +'%Y')
+    export YEAR=$YEAR
     export CLASS=$CLASS
     export TARGET=$TARGET
     export SEASON=$SEASON
