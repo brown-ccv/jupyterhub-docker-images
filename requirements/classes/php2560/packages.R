@@ -4,11 +4,9 @@
 # the standard install.packages() function; for Bioconductor packages, however, you 
 # must first install BiocManager and then use that for installs. 
 
-install.packages('fivethirtyeightdata', 
-                  dependencies = TRUE,
-                  repos = 'https://fivethirtyeightdata.github.io/drat/', 
-                  type = 'source')
-
-install.packages(c("docstring"), 
-                 dependencies = TRUE, 
-                 repos = 'http://cran.rstudio.com/')
+# install.packages("BiocManager", dependencies=TRUE, repos='http://cran.rstudio.com/')
+# install.packages(c("ggplot2", "pheatmap", "RColorBrewer", "PoiClaClu",
+#                    "patchwork", "tidyr", "GGally"), dependencies=TRUE, 
+#                  repos='http://cran.rstudio.com/')
+# BiocManager::install(c("airway", "DESeq2", "vsn", "biomaRt",
+#                        "AnnotationHub", "SummarizedExperiment"))
