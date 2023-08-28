@@ -1,4 +1,8 @@
 # add class-specific packages here:
+netCDF4
+metpy
+cartopy
+iris
 
 # these are the scipy base packages ( YOU PROBABLY DON'T WANT TO REMOVE THESE )
 dask 
