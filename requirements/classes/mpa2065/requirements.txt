@@ -1,4 +1,7 @@
 # add class-specific packages here:
+pymysql
+mysql
+xeus-sqlite
 
 # these are the scipy base packages ( YOU PROBABLY DON'T WANT TO REMOVE THESE )
 dask 
