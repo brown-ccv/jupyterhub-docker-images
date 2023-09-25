@@ -143,8 +143,7 @@ RUN jupyter kernelspec remove -f python3
 
 COPY --chown=${NB_UID}:${NB_GID} requirements/classes/${CLASS} /home/$NB_USER/tmp/
 COPY --chown=${NB_UID}:${NB_GID} requirements/classes/${CLASS}/condarc /home/$NB_USER/.mambarc
-
-RUN mamba info -a
+COPY --chown=${NB_UID}:${NB_GID} requirements/classes/${CLASS}/condarc /home/$NB_USER/.condarc
 
 RUN mamba create --quiet --yes -p ${CONDA_DIR}/envs/${CLASS} python=${PYTHON_VERSION} && \
     mamba install -y --name ${CLASS} --file /home/$NB_USER/tmp/requirements.txt && \
