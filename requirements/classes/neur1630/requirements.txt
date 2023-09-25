@@ -1,4 +1,19 @@
 # add class-specific packages here:
+ipywidgets
+zarr
+requests
+aiohttp
+louvain
+anndata
+umap-learn
+loompy
+scrublet
+bioconductor-scran
+anndata2ri
+fastcluster
+tqdm
+pynwb
+dandi
 
 # these are the scipy base packages ( YOU PROBABLY DON'T WANT TO REMOVE THESE )
 dask 
