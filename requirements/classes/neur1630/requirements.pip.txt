@@ -4,3 +4,6 @@ harmonypy
 rpy2
 nwbwidgets
 pynapple
+pybiomart
+pyranges
+gseapy
