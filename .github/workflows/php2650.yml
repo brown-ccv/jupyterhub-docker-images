@@ -11,17 +11,17 @@ on:
 env:
   CLASS: php2650
   TARGET: r_julia
-  SQLITE: true
+  SQLITE: false
   PYTHON_VERSION: 3.9
 
 jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
 
       - name: Set Up GCloud
-        uses: google-github-actions/setup-gcloud@v0.6.0
+        uses: google-github-actions/setup-gcloud@v0.6.2
         with:
           project_id: ${{ secrets.GCP_PROJECT_ID_JH_DOCKER }}
           service_account_key: ${{ secrets.GCP_SA_KEY_JH_DOCKER }}

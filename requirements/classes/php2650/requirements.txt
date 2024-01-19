@@ -68,6 +68,9 @@ r-rtsne=0.*
 r-deriv=4.1*
 r-plotly=4.10*
 r-cluster=2.1*
+r-xgboost
+r-ranger
+r-tensorflow
 
 # required for environment and plugins ( DO NOT REMOVE THESE!!! )
 ipython 
