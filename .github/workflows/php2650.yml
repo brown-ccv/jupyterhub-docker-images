@@ -12,7 +12,7 @@ env:
   CLASS: php2650
   TARGET: r_lang
   SQLITE: false
-  PYTHON_VERSION: "3.10.*"
+  PYTHON_VERSION: 3.11
 
 jobs:
   build:
