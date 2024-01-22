@@ -1,2 +1,2 @@
 # add class-specific classes here:
-
+tensorflow==2.9.3
