@@ -4,17 +4,17 @@ on: [workflow_dispatch]
 env:
   CLASS: php2650
   TARGET: r_julia
-  SQLITE: true
-  PYTHON_VERSION: 3.9
+  SQLITE: false
+  PYTHON_VERSION: 3.11
 
 jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
 
       - name: Set Up GCloud
-        uses: google-github-actions/setup-gcloud@v0.6.0
+        uses: google-github-actions/setup-gcloud@v0.6.2
         with:
           project_id: ${{ secrets.GCP_PROJECT_ID_JH_DOCKER }}
           service_account_key: ${{ secrets.GCP_SA_KEY_JH_DOCKER }}
@@ -28,8 +28,8 @@ jobs:
       - name: Upload Julia Env Files to Google Storage Bucket
         if: env.TARGET == 'r_julia'
         run: |
-          gsutil cp -r requirements/classes/php2650/julia_env gs://jupyterhub-environment-files/spring-2023/php2650/past/${GITHUB_SHA}/julia
-          gsutil cp -r requirements/classes/php2650/julia_env gs://jupyterhub-environment-files/spring-2023/php2650/latest/julia
+          gsutil cp -r requirements/classes/php2650/julia_env gs://jupyterhub-environment-files/spring-2024/php2650/past/${GITHUB_SHA}/julia
+          gsutil cp -r requirements/classes/php2650/julia_env gs://jupyterhub-environment-files/spring-2024/php2650/latest/julia
 
       - name: Configure Docker
         run: gcloud auth configure-docker
@@ -40,13 +40,13 @@ jobs:
           docker tag jupyterhub-docker-images_jh_image:latest gcr.io/jupyterhub-docker-images/php2650:${GITHUB_REF##*/}
           docker tag jupyterhub-docker-images_jh_image:latest gcr.io/jupyterhub-docker-images/php2650:${GITHUB_SHA}
           docker tag jupyterhub-docker-images_jh_image:latest gcr.io/jupyterhub-docker-images/php2650:latest
-          docker tag jupyterhub-docker-images_jh_image:latest gcr.io/jupyterhub-docker-images/php2650:spring-2023
+          docker tag jupyterhub-docker-images_jh_image:latest gcr.io/jupyterhub-docker-images/php2650:spring-2024
           docker push gcr.io/jupyterhub-docker-images/php2650:latest
-          docker push gcr.io/jupyterhub-docker-images/php2650:spring-2023
+          docker push gcr.io/jupyterhub-docker-images/php2650:spring-2024
           docker push gcr.io/jupyterhub-docker-images/php2650:${GITHUB_REF##*/}
           docker push gcr.io/jupyterhub-docker-images/php2650:${GITHUB_SHA}
 
       - name: Upload Conda Env Files to Google Storage Bucket
         run: |
-          gsutil cp -r requirements/out gs://jupyterhub-environment-files/spring-2023/php2650/past/${GITHUB_SHA}/conda
-          gsutil cp -r requirements/out gs://jupyterhub-environment-files/spring-2023/php2650/latest/conda
+          gsutil cp -r requirements/out gs://jupyterhub-environment-files/spring-2024/php2650/past/${GITHUB_SHA}/conda
+          gsutil cp -r requirements/out gs://jupyterhub-environment-files/spring-2024/php2650/latest/conda
