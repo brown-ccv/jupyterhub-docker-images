@@ -32,20 +32,20 @@ r-caret=6.*
 r-crayon=1.*
 r-devtools=2.*
 r-forecast=8.*
-r-hexbin=1.28*
-r-htmltools
-r-htmlwidgets=1.5*
+r-hexbin=1.*
+r-htmltools=0.*
+r-htmlwidgets=1.*
 r-irkernel=1.*
-r-nycflights13=1.0*
+r-nycflights13=1.*
 r-randomforest=4.*
 r-rcurl=1.98*
 r-rmarkdown=2.*
-r-rodbc=1.3*
-r-rsqlite=2.2*
+r-rodbc=1.*
+r-rsqlite=2.*
 r-shiny=1.*
-r-tidyverse=1.3*
-unixodbc=2.3.*
-r-tidymodels
+r-tidyverse
+unixodbc=2.*
+r-tidymodels=1.*
 
 # required for environment and plugins ( DO NOT REMOVE THESE!!! )
 ipython 

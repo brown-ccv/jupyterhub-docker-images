@@ -1,2 +1,2 @@
-# add class-specific packages here:
+# add class-specific classes here:
 
