@@ -10,3 +10,12 @@
 #                  repos='http://cran.rstudio.com/')
 # BiocManager::install(c("airway", "DESeq2", "vsn", "biomaRt",
 #                        "AnnotationHub", "SummarizedExperiment"))
+
+# FOR DSCOV POWER ANALYSES 3/3/23
+install.packages(c("devtools", "purrr", "kableExtra", "parallel"), dependencies=TRUE, repos='http://cran.rstudio.com')
+devtools::install_github("brendankelly/micropower")
+
+if (!require("BiocManager", quietly = TRUE))
+    install.packages("BiocManager", dependencies=TRUE, repos='http://cran.rstudio.com/')
+
+BiocManager::install("RnaSeqSampleSize")
