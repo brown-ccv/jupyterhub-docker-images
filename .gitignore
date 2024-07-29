@@ -3,3 +3,5 @@ environment*
 Project.toml
 Manifest.toml
 .DS_Store
+.github/workflows/archive
+requirements/classes/archive
