@@ -1,9 +1,0 @@
-# add class-specific classes here:
-scanpy
-harmonypy
-rpy2
-nwbwidgets
-pynapple
-pybiomart
-pyranges
-gseapy
