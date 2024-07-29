@@ -68,7 +68,7 @@ RUN mktexlsr
 
 #------------ Install VSCode Server a Root----------------------------
 
-ENV VS_CODE_VERSION=4.16.1
+ENV VS_CODE_VERSION=4.91.1
 RUN mkdir /opt/code-server 
 WORKDIR /opt/code-server 
 RUN wget -qO- https://github.com/coder/code-server/releases/download/v${VS_CODE_VERSION}/code-server-${VS_CODE_VERSION}-linux-amd64.tar.gz | tar zxvf - --strip-components=1
