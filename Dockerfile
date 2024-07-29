@@ -1,6 +1,6 @@
 # Copyright (c) Jupyter Development Team.
 # Distributed under the terms of the Modified BSD License.
-ARG ROOT_CONTAINER="jupyter/base-notebook:lab-4.0.4"
+ARG ROOT_CONTAINER="jupyter/base-notebook:lab-4.0.7"
 FROM ${ROOT_CONTAINER} as base
 
 ARG CLASS
