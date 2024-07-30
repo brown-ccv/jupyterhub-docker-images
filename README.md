@@ -18,7 +18,7 @@ gcloud auth configure-docker
 
 ```
 # example
-docker run -it --rm -p 8888:8888 gcr.io/jupyterhub-docker-images/mpa2065:latest
+docker run -it --rm -p 8888:8888 pkg.dev/jupyterhub-docker-images/mpa2065:latest
 ```
 
 #### Environment Files
