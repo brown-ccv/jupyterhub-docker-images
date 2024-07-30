@@ -33,7 +33,7 @@ jobs:
           sudo --preserve-env=CLASS docker-compose up julia_build
 
       - name: Configure Docker
-        run: gcloud auth configure-docker
+        run: gcloud auth configure-docker us-east1-docker.pkg.dev
       - name: Build and Push JH Image
         run: |
           COMPOSE_DOCKER_CLI_BUILD=1 DOCKER_BUILDKIT=1 docker-compose up jh_image
