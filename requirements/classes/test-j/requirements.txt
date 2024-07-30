@@ -28,7 +28,7 @@ pytables
 
 # these are the base r packages in the r-notebook image ( YOU PROBABLY WANT THESE IF YOUR TARGET IN DOCKER IS r_lang OR r_julia )
 # https://stat.ethz.ch/R-manual/R-devel/library/base/html/00Index.html
-r-base=4.4.*
+r-base=4.2.*
 # https://github.com/topepo/caret/releases/tag/v6.0-93
 r-caret=6.*
 # https://cran.r-project.org/web/packages/crayon/index.html
