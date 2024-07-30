@@ -3,7 +3,7 @@ on: [workflow_dispatch]
 
 env:
   CLASS: mpa2065
-  TARGET: r_lang
+  TARGET: r_julia
   SQLITE: false
   PYTHON_VERSION: "3.9.17"
 
