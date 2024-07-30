@@ -37,7 +37,7 @@ jobs:
       - name: Build and Push JH Image
         run: |
           COMPOSE_DOCKER_CLI_BUILD=1 DOCKER_BUILDKIT=1 docker-compose up jh_image
-          docker tag jupyterhub-docker-images_jh_image:latest gcr.io/jupyterhub-docker-images/basepackages:${GITHUB_REF##*/}
-          docker tag jupyterhub-docker-images_jh_image:latest gcr.io/jupyterhub-docker-images/basepackages:latest
-          docker push gcr.io/jupyterhub-docker-images/basepackages:latest
-          docker push gcr.io/jupyterhub-docker-images/basepackages:${GITHUB_REF##*/}
+          docker tag jupyterhub-docker-images_jh_image:latest us-east1-docker.pkg.dev/jupyterhub-docker-images/jupyterhub-docker-images/basepackages:${GITHUB_REF##*/}
+          docker tag jupyterhub-docker-images_jh_image:latest us-east1-docker.pkg.dev/jupyterhub-docker-images/jupyterhub-docker-images/basepackages:latest
+          docker push us-east1-docker.pkg.dev/jupyterhub-docker-images/jupyterhub-docker-images/basepackages:latest
+          docker push us-east1-docker.pkg.dev/jupyterhub-docker-images/jupyterhub-docker-images/basepackages:${GITHUB_REF##*/}
