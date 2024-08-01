@@ -14,10 +14,15 @@ env:
   TARGET: r_julia
   SQLITE: false
   PYTHON_VERSION: "3.9.17"
+  PROJECT_ID: jupyterhub-docker-images
+  REGION: us-east1
+  GAR_LOCATION: us-east1-docker.pkg.dev/jupyterhub-docker-images/mpa2065
 
 jobs:
   build:
     runs-on: ubuntu-latest
+
+    
     steps:
       - uses: actions/checkout@v3.5.3
 
@@ -34,11 +39,12 @@ jobs:
           sudo --preserve-env=CLASS docker-compose up julia_build
 
       - name: Configure Docker
-        run: gcloud auth configure-docker
+        run: gcloud auth configure-docker ${{ env.REGION }}-docker.pkg.dev --quiet
+
       - name: Build and Push JH Image
         run: |
           COMPOSE_DOCKER_CLI_BUILD=1 DOCKER_BUILDKIT=1 docker-compose up jh_image
-          docker tag jupyterhub-docker-images_jh_image:latest pkg.dev/jupyterhub-docker-images/mpa2065:${GITHUB_REF##*/}
-          docker tag jupyterhub-docker-images_jh_image:latest pkg.dev/jupyterhub-docker-images/mpa2065:latest
-          docker push pkg.dev/jupyterhub-docker-images/mpa2065:latest
-          docker push pkg.dev/jupyterhub-docker-images/mpa2065:${GITHUB_REF##*/}
+          docker tag jupyterhub-docker-images_jh_image:latest ${{ env.GAR_LOCATION}}:${GITHUB_REF##*/}
+          docker tag jupyterhub-docker-images_jh_image:latest ${{ env.GAR_LOCATION}}:latest
+          docker push ${{ env.GAR_LOCATION}}:latest
+          docker push ${{ env.GAR_LOCATION}}:${GITHUB_REF##*/}
