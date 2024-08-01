@@ -1,0 +1,3 @@
+# required for environment and plugins ( DO NOT REMOVE THESE!!! )
+ipython 
+ipykernel
