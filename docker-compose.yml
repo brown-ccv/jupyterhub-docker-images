@@ -15,6 +15,7 @@ services:
       '"
 
   jh_image:
+    image: ${CLASS}:latest
     build:
       context: .
       target: ${TARGET}

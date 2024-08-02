@@ -51,8 +51,8 @@ jobs:
 
       - name: Tag JH Image
         run: |
-          docker tag jupyterhub-docker-images_jh_image:latest ${{ env.GAR_LOCATION}}:${GITHUB_REF##*/}
-          docker tag jupyterhub-docker-images_jh_image:latest ${{ env.GAR_LOCATION}}:latest
+          docker tag ${{ env.CLASS}}:latest ${{ env.GAR_LOCATION}}:${GITHUB_REF##*/}
+          docker tag ${{ env.CLASS}}:latest ${{ env.GAR_LOCATION}}:latest
 
       - name: Push JH Image
         run: |
