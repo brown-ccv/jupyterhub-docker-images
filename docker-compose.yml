@@ -19,8 +19,8 @@ services:
     build:
       context: .
       target: ${TARGET}
-      # cache_from: 
-      #   - pkg.dev/jupyterhub-docker-images/${CLASS}:latest
+      cache_from: 
+        - pkg.dev/jupyterhub-docker-images/${CLASS}:latest
       args: 
         CLASS: ${CLASS}
         SQLITE: ${SQLITE:-false}
