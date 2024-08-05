@@ -13,7 +13,10 @@ env:
   TARGET: r_julia
   SQLITE: false
   PYTHON_VERSION: "3.9.17"
- 
+  PROJECT_ID: jupyterhub-docker-images
+  REGION: us-east1
+  GAR_LOCATION: us-east1-docker.pkg.dev/jupyterhub-docker-images/all-classes/basepackages
+
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -34,10 +37,17 @@ jobs:
 
       - name: Configure Docker
         run: gcloud auth configure-docker us-east1-docker.pkg.dev
-      - name: Build and Push JH Image
+      
+      - name: Build JH Image
         run: |
           COMPOSE_DOCKER_CLI_BUILD=1 DOCKER_BUILDKIT=1 docker compose up jh_image
-          docker tag jupyterhub-docker-images_jh_image:latest us-east1-docker.pkg.dev/jupyterhub-docker-images/jupyterhub-docker-images/basepackages:${GITHUB_REF##*/}
-          docker tag jupyterhub-docker-images_jh_image:latest us-east1-docker.pkg.dev/jupyterhub-docker-images/jupyterhub-docker-images/basepackages:latest
-          docker push us-east1-docker.pkg.dev/jupyterhub-docker-images/jupyterhub-docker-images/basepackages:latest
-          docker push us-east1-docker.pkg.dev/jupyterhub-docker-images/jupyterhub-docker-images/basepackages:${GITHUB_REF##*/}
+      
+      - name: Tag JH Image
+        run: |
+          docker tag ${{ env.CLASS }}:latest ${{ env.GAR_LOCATION }}:${GITHUB_REF##*/}
+          docker tag ${{ env.CLASS }}:latest ${{ env.GAR_LOCATION }}:latest
+
+      - name: Push JH Image
+        run: |
+          docker push ${{ env.GAR_LOCATION }}:latest
+          docker push ${{ env.GAR_LOCATION }}:${GITHUB_REF##*/}
