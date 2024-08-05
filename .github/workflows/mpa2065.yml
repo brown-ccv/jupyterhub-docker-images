@@ -16,7 +16,7 @@ env:
   PYTHON_VERSION: "3.9.17"
   PROJECT_ID: jupyterhub-docker-images
   REGION: us-east1
-  GAR_LOCATION: us-east1-docker.pkg.dev/jupyterhub-docker-images/all-classes/mpa2065
+  GAR_LOCATION: pkg.dev/jupyterhub-docker-images/all-classes/mpa2065
 
 jobs:
   build:
