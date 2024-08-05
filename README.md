@@ -18,7 +18,7 @@ gcloud auth configure-docker
 
 ```
 # example
-docker run -it --rm -p 8888:8888 gcr.io/jupyterhub-docker-images/mpa2065:latest
+docker run -it --rm -p 8888:8888 pkg.dev/jupyterhub-docker-images/mpa2065:latest
 ```
 
 #### Environment Files
@@ -73,16 +73,37 @@ To build the images locally:
 
 - Create the environment files (only required if if TARGET is `r_julia`):
 ```
-CLASS=apma0360 docker-compose up julia_build
+CLASS=apma0360 docker compose up julia_build
 ```
 - Build JH Image
 ```
-COMPOSE_DOCKER_CLI_BUILD=1 DOCKER_BUILDKIT=1 CLASS=apma0360 TARGET=base docker-compose up jh_image
+COMPOSE_DOCKER_CLI_BUILD=1 DOCKER_BUILDKIT=1 CLASS=apma0360 TARGET=base docker compose up jh_image
 or
-COMPOSE_DOCKER_CLI_BUILD=1 DOCKER_BUILDKIT=1 CLASS=apma0360 TARGET=base SQLITE=true docker-compose up jh_image
+COMPOSE_DOCKER_CLI_BUILD=1 DOCKER_BUILDKIT=1 CLASS=apma0360 TARGET=base SQLITE=true docker compose up jh_image
 ```
 - Run the image
 ```
-docker run -it --rm -p 8888:8888 jupyterhub-docker-images_jh_image
+docker run -it --rm -p 8888:8888 <class>:latest
 ```
 
+
+- Test pushing to pkg.dev
+
+You will need to authenticate on GCLoud with our Service account. To do so, download a new key for the service account as a JSON file (if you haven't done so before). Authenticate your local `gcloud` with the service account
+
+```
+gcloud auth activate-service-account --key-file=<path-to-json-key>
+```
+
+Then, configure `pkg.dev` for docker and the zone of your registry, e.g.,
+
+```
+gcloud auth configure-docker us-east1-docker.pkg.dev
+```
+
+You could test push a local image as follows (mpa2065 example)
+
+```
+docker tag mpa2065:latest us-east1-docker.pkg.dev/jupyterhub-docker-images/all-classes/mpa2065:test-local
+docker push us-east1-docker.pkg.dev/jupyterhub-docker-images/all-classes/mpa2065:test-local
+```

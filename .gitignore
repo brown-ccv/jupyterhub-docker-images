@@ -3,3 +3,4 @@ environment*
 Project.toml
 Manifest.toml
 .DS_Store
+archive/

@@ -6,6 +6,9 @@ env:
   TARGET: ${TARGET}
   SQLITE: ${SQLITE}
   PYTHON_VERSION: "${PYTHON_VERSION}"
+  PROJECT_ID: jupyterhub-docker-images
+  REGION: us-east1
+  GAR_LOCATION: us-east1-docker.pkg.dev/jupyterhub-docker-images/all-classes/${CLASS}
 
 jobs:
   build:
@@ -23,7 +26,7 @@ jobs:
       - name: Create Julia Environment Files
         if: env.TARGET == 'r_julia'
         run: |
-          sudo --preserve-env=CLASS docker-compose up julia_build
+          sudo --preserve-env=CLASS docker compose up julia_build
 
       - name: Upload Julia Env Files to Google Storage Bucket
         if: env.TARGET == 'r_julia'
@@ -33,18 +36,19 @@ jobs:
 
       - name: Configure Docker
         run: gcloud auth configure-docker
-
-      - name: Build and Push JH Image
+      - name: Build JH Image
         run: |
-          COMPOSE_DOCKER_CLI_BUILD=1 DOCKER_BUILDKIT=1 docker-compose up jh_image
-          docker tag jupyterhub-docker-images_jh_image:latest gcr.io/jupyterhub-docker-images/${CLASS}:${GITHUB_REF##*/}
-          docker tag jupyterhub-docker-images_jh_image:latest gcr.io/jupyterhub-docker-images/${CLASS}:${GITHUB_SHA}
-          docker tag jupyterhub-docker-images_jh_image:latest gcr.io/jupyterhub-docker-images/${CLASS}:latest
-          docker tag jupyterhub-docker-images_jh_image:latest gcr.io/jupyterhub-docker-images/${CLASS}:${SEASON}-${YEAR}
-          docker push gcr.io/jupyterhub-docker-images/${CLASS}:latest
-          docker push gcr.io/jupyterhub-docker-images/${CLASS}:${SEASON}-${YEAR}
-          docker push gcr.io/jupyterhub-docker-images/${CLASS}:${GITHUB_REF##*/}
-          docker push gcr.io/jupyterhub-docker-images/${CLASS}:${GITHUB_SHA}
+          COMPOSE_DOCKER_CLI_BUILD=1 DOCKER_BUILDKIT=1 docker compose up jh_image
+          docker tag ${{ env.CLASS }}:latest ${{ env.GAR_LOCATION }}:latest
+          docker tag ${{ env.CLASS }}:latest ${{ env.GAR_LOCATION }}:${GITHUB_REF##*/}
+          docker tag ${{ env.CLASS }}:latest ${{ env.GAR_LOCATION }}:${GITHUB_SHA}
+          docker tag ${{ env.CLASS }}:latest ${{ env.GAR_LOCATION }}:${SEASON}-${YEAR}
+      - name: Push JH Image
+        run: |
+          docker push ${{ env.GAR_LOCATION }}:latest
+          docker push ${{ env.GAR_LOCATION }}:${GITHUB_REF##*/}
+          docker push ${{ env.GAR_LOCATION }}:${GITHUB_SHA}
+          docker push ${{ env.GAR_LOCATION }}:${SEASON}-${YEAR}
 
       - name: Upload Conda Env Files to Google Storage Bucket
         run: |

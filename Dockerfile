@@ -1,6 +1,6 @@
 # Copyright (c) Jupyter Development Team.
 # Distributed under the terms of the Modified BSD License.
-ARG ROOT_CONTAINER="jupyter/base-notebook:lab-4.0.4"
+ARG ROOT_CONTAINER="jupyter/base-notebook:lab-4.0.7"
 FROM ${ROOT_CONTAINER} as base
 
 ARG CLASS
@@ -68,7 +68,7 @@ RUN mktexlsr
 
 #------------ Install VSCode Server a Root----------------------------
 
-ENV VS_CODE_VERSION=4.16.1
+ENV VS_CODE_VERSION=4.91.1
 RUN mkdir /opt/code-server 
 WORKDIR /opt/code-server 
 RUN wget -qO- https://github.com/coder/code-server/releases/download/v${VS_CODE_VERSION}/code-server-${VS_CODE_VERSION}-linux-amd64.tar.gz | tar zxvf - --strip-components=1
@@ -231,8 +231,8 @@ USER root
 
 ENV JULIA_DEPOT_PATH=/opt/julia
 ENV JULIA_PKGDIR=/opt/julia
-ENV JULIA_VERSION=1.9.2
-ENV JULIA_TAG=v1.9.2
+ENV JULIA_VERSION=1.10.4
+ENV JULIA_TAG=v1.10.4
 
 COPY requirements/classes/${CLASS}/julia_env/Project.toml $JULIA_PKGDIR/environments/$JULIA_TAG/
 COPY requirements/classes/${CLASS}/julia_env/Manifest.toml $JULIA_PKGDIR/environments/$JULIA_TAG/
@@ -243,7 +243,7 @@ WORKDIR /tmp
 # hadolint ignore=SC2046
 RUN mkdir "/opt/julia-${JULIA_VERSION}" && \
     wget -q https://julialang-s3.julialang.org/bin/linux/x64/$(echo "${JULIA_VERSION}" | cut -d. -f 1,2)"/julia-${JULIA_VERSION}-linux-x86_64.tar.gz" && \
-    echo "4c2d799f442d7fe718827b19da2bacb72ea041b9ce55f24eee7b1313f57c4383 *julia-${JULIA_VERSION}-linux-x86_64.tar.gz" | sha256sum -c - && \
+    echo "079f61757c3b5b40d2ade052b3cc4816f50f7ef6df668825772562b3746adff1 *julia-${JULIA_VERSION}-linux-x86_64.tar.gz" | sha256sum -c - && \
     tar xzf "julia-${JULIA_VERSION}-linux-x86_64.tar.gz" -C "/opt/julia-${JULIA_VERSION}" --strip-components=1 && \
     rm "/tmp/julia-${JULIA_VERSION}-linux-x86_64.tar.gz"
 RUN ln -fs /opt/julia-*/bin/julia /usr/local/bin/julia

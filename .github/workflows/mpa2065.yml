@@ -12,8 +12,11 @@ on:
 env:
   CLASS: mpa2065
   TARGET: r_julia
-  SQLITE: true
+  SQLITE: false
   PYTHON_VERSION: "3.9.17"
+  PROJECT_ID: jupyterhub-docker-images
+  REGION: us-east1
+  GAR_LOCATION: us-east1-docker.pkg.dev/jupyterhub-docker-images/all-classes/mpa2065
 
 jobs:
   build:
@@ -31,17 +34,25 @@ jobs:
       - name: Create Julia Environment Files
         if: env.TARGET == 'r_julia'
         run: |
-          sudo --preserve-env=CLASS docker-compose up julia_build
+          sudo --preserve-env=CLASS docker compose up julia_build
 
       - name: Configure Docker
-        run: gcloud auth configure-docker
-#      - uses: satackey/action-docker-layer-caching@v0.0.11
-       # Ignore the failure of a step and avoid terminating the job.
-#        continue-on-error: true
-      - name: Build and Push JH Image
+        run: gcloud auth configure-docker ${{ env.REGION }}-docker.pkg.dev --quiet
+
+      - name: Build JH Image
         run: |
-          COMPOSE_DOCKER_CLI_BUILD=1 DOCKER_BUILDKIT=1 docker-compose up jh_image
-          docker tag jupyterhub-docker-images_jh_image:latest gcr.io/jupyterhub-docker-images/mpa2065:${GITHUB_REF##*/}
-          docker tag jupyterhub-docker-images_jh_image:latest gcr.io/jupyterhub-docker-images/mpa2065:latest
-          docker push gcr.io/jupyterhub-docker-images/mpa2065:latest
-          docker push gcr.io/jupyterhub-docker-images/mpa2065:${GITHUB_REF##*/}
+          COMPOSE_DOCKER_CLI_BUILD=1 DOCKER_BUILDKIT=1 docker compose up jh_image
+
+      - name: List JH Image
+        run: |
+          docker images
+
+      - name: Tag JH Image
+        run: |
+          docker tag ${{ env.CLASS }}:latest ${{ env.GAR_LOCATION }}:${GITHUB_REF##*/}
+          docker tag ${{ env.CLASS }}:latest ${{ env.GAR_LOCATION }}:latest
+
+      - name: Push JH Image
+        run: |
+          docker push ${{ env.GAR_LOCATION }}:latest
+          docker push ${{ env.GAR_LOCATION }}:${GITHUB_REF##*/}

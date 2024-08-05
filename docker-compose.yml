@@ -15,11 +15,12 @@ services:
       '"
 
   jh_image:
+    image: ${CLASS}:latest
     build:
       context: .
       target: ${TARGET}
       cache_from: 
-        - gcr.io/jupyterhub-docker-images/${CLASS}:latest
+        - us-east1-docker.pkg.dev/jupyterhub-docker-images/${CLASS}:latest
       args: 
         CLASS: ${CLASS}
         SQLITE: ${SQLITE:-false}
