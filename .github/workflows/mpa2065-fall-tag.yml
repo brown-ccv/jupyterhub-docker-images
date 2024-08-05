@@ -26,7 +26,7 @@ jobs:
       - name: Create Julia Environment Files
         if: env.TARGET == 'r_julia'
         run: |
-          sudo --preserve-env=CLASS docker-compose up julia_build
+          sudo --preserve-env=CLASS docker compose up julia_build
 
       - name: Upload Julia Env Files to Google Storage Bucket
         if: env.TARGET == 'r_julia'
@@ -39,7 +39,7 @@ jobs:
 
       - name: Build JH Image
         run: |
-          COMPOSE_DOCKER_CLI_BUILD=1 DOCKER_BUILDKIT=1 docker-compose up jh_image
+          COMPOSE_DOCKER_CLI_BUILD=1 DOCKER_BUILDKIT=1 docker compose up jh_image
           docker tag ${{ env.CLASS }}:latest ${{ env.GAR_LOCATION }}:${GITHUB_REF##*/}
           docker tag ${{ env.CLASS }}:latest ${{ env.GAR_LOCATION }}:${GITHUB_SHA}
           docker tag ${{ env.CLASS }}:latest ${{ env.GAR_LOCATION }}:latest

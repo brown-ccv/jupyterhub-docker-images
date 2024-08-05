@@ -73,13 +73,13 @@ To build the images locally:
 
 - Create the environment files (only required if if TARGET is `r_julia`):
 ```
-CLASS=apma0360 docker-compose up julia_build
+CLASS=apma0360 docker compose up julia_build
 ```
 - Build JH Image
 ```
-COMPOSE_DOCKER_CLI_BUILD=1 DOCKER_BUILDKIT=1 CLASS=apma0360 TARGET=base docker-compose up jh_image
+COMPOSE_DOCKER_CLI_BUILD=1 DOCKER_BUILDKIT=1 CLASS=apma0360 TARGET=base docker compose up jh_image
 or
-COMPOSE_DOCKER_CLI_BUILD=1 DOCKER_BUILDKIT=1 CLASS=apma0360 TARGET=base SQLITE=true docker-compose up jh_image
+COMPOSE_DOCKER_CLI_BUILD=1 DOCKER_BUILDKIT=1 CLASS=apma0360 TARGET=base SQLITE=true docker compose up jh_image
 ```
 - Run the image
 ```

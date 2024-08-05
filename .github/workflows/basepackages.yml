@@ -33,7 +33,7 @@ jobs:
       - name: Create Julia Environment Files
         if: env.TARGET == 'r_julia'
         run: |
-          sudo --preserve-env=CLASS docker-compose up julia_build
+          sudo --preserve-env=CLASS docker compose up julia_build
 
       - name: Configure Docker
         run: gcloud auth configure-docker us-east1-docker.pkg.dev
