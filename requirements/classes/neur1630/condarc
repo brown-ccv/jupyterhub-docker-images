@@ -6,6 +6,7 @@
 # The default is just 'defaults'.
 channels:
   - conda-forge
+  - bioconda
 
 # Show channel URLs when displaying what is going to be downloaded
 # and in 'conda list'. The default is False.
