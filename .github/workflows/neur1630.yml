@@ -1,22 +1,22 @@
-name: build-image-${CLASS}
+name: build-image-neur1630
 on: 
   push:
       paths:
-      - 'requirements/classes/${CLASS}/**'
+      - 'requirements/classes/neur1630/**'
       - 'Dockerfile'
       - 'docker-compose.yml'
       - 'scripts/**'
-      - '.github/workflows/${CLASS}.yml'
+      - '.github/workflows/neur1630.yml'
   workflow_dispatch:
 
 env:
-  CLASS: ${CLASS}
-  TARGET: ${TARGET}
-  SQLITE: ${SQLITE}
-  PYTHON_VERSION: "${PYTHON_VERSION}"
+  CLASS: neur1630
+  TARGET: base
+  SQLITE: false
+  PYTHON_VERSION: "3.9.17"
   PROJECT_ID: jupyterhub-docker-images
   REGION: us-east1
-  GAR_LOCATION: us-east1-docker.pkg.dev/jupyterhub-docker-images/all-classes/${CLASS}
+  GAR_LOCATION: us-east1-docker.pkg.dev/jupyterhub-docker-images/all-classes/neur1630
 
 jobs:
   build:

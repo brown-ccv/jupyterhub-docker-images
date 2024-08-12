@@ -1,14 +1,14 @@
-name: tag-image-${CLASS}
+name: tag-image-neur1630
 on: [workflow_dispatch]
 
 env:
-  CLASS: ${CLASS}
-  TARGET: ${TARGET}
-  SQLITE: ${SQLITE}
-  PYTHON_VERSION: "${PYTHON_VERSION}"
+  CLASS: neur1630
+  TARGET: base
+  SQLITE: false
+  PYTHON_VERSION: "3.9.17"
   PROJECT_ID: jupyterhub-docker-images
   REGION: us-east1
-  GAR_LOCATION: us-east1-docker.pkg.dev/jupyterhub-docker-images/all-classes/${CLASS}
+  GAR_LOCATION: us-east1-docker.pkg.dev/jupyterhub-docker-images/all-classes/neur1630
 
 jobs:
   build:
@@ -31,8 +31,8 @@ jobs:
       - name: Upload Julia Env Files to Google Storage Bucket
         if: env.TARGET == 'r_julia'
         run: |
-          gsutil cp -r requirements/classes/${CLASS}/julia_env gs://jupyterhub-environment-files/${SEASON}-${YEAR}/${CLASS}/past/${GITHUB_SHA}/julia
-          gsutil cp -r requirements/classes/${CLASS}/julia_env gs://jupyterhub-environment-files/${SEASON}-${YEAR}/${CLASS}/latest/julia
+          gsutil cp -r requirements/classes/neur1630/julia_env gs://jupyterhub-environment-files/fall-2024/neur1630/past/${GITHUB_SHA}/julia
+          gsutil cp -r requirements/classes/neur1630/julia_env gs://jupyterhub-environment-files/fall-2024/neur1630/latest/julia
 
       - name: Configure Docker
         run: gcloud auth configure-docker ${{ env.REGION }}-docker.pkg.dev --quiet
@@ -42,15 +42,15 @@ jobs:
           docker tag ${{ env.CLASS }}:latest ${{ env.GAR_LOCATION }}:latest
           docker tag ${{ env.CLASS }}:latest ${{ env.GAR_LOCATION }}:${GITHUB_REF##*/}
           docker tag ${{ env.CLASS }}:latest ${{ env.GAR_LOCATION }}:${GITHUB_SHA}
-          docker tag ${{ env.CLASS }}:latest ${{ env.GAR_LOCATION }}:${SEASON}-${YEAR}
+          docker tag ${{ env.CLASS }}:latest ${{ env.GAR_LOCATION }}:fall-2024
       - name: Push JH Image
         run: |
           docker push ${{ env.GAR_LOCATION }}:latest
           docker push ${{ env.GAR_LOCATION }}:${GITHUB_REF##*/}
           docker push ${{ env.GAR_LOCATION }}:${GITHUB_SHA}
-          docker push ${{ env.GAR_LOCATION }}:${SEASON}-${YEAR}
+          docker push ${{ env.GAR_LOCATION }}:fall-2024
 
       - name: Upload Conda Env Files to Google Storage Bucket
         run: |
-          gsutil cp -r requirements/out gs://jupyterhub-environment-files/${SEASON}-${YEAR}/${CLASS}/past/${GITHUB_SHA}/conda
-          gsutil cp -r requirements/out gs://jupyterhub-environment-files/${SEASON}-${YEAR}/${CLASS}/latest/conda
+          gsutil cp -r requirements/out gs://jupyterhub-environment-files/fall-2024/neur1630/past/${GITHUB_SHA}/conda
+          gsutil cp -r requirements/out gs://jupyterhub-environment-files/fall-2024/neur1630/latest/conda
