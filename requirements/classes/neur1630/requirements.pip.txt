@@ -8,3 +8,4 @@ pynapple
 pybiomart
 pyranges
 gseapy
+git+https://github.com/alleninstitute/abc_atlas_access.git
