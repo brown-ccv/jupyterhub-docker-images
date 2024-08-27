@@ -14,7 +14,7 @@ fastcluster
 tqdm
 pynwb
 dandi
-git+https://github.com/alleninstitute/abc_atlas_access
+git+https://github.com/alleninstitute/abc_atlas_access.git
 
 # these are the scipy base packages ( YOU PROBABLY DON'T WANT TO REMOVE THESE )
 dask 
