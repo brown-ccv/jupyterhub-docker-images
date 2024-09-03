@@ -1,7 +1,7 @@
 # add class-specific packages here:
 r-ggplot2
 r-dplyr
-
+r-sf
 
 # these are the scipy base packages ( YOU PROBABLY DON'T WANT TO REMOVE THESE )
 dask 
