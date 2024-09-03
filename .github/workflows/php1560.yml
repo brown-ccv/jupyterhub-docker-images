@@ -11,7 +11,7 @@ on:
 
 env:
   CLASS: php1560
-  TARGET: base
+  TARGET: r_lang
   SQLITE: false
   PYTHON_VERSION: "3.9.17"
   PROJECT_ID: jupyterhub-docker-images
