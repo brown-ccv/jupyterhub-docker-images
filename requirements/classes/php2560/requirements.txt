@@ -1,20 +1,6 @@
 # add class-specific packages here:
 r-ggplot2
 r-dplyr
-r-HDSinRdata
-r-GGally
-r-gt
-r-gtsummary
-r-tidyverse
-r-patchwork
-r-usmap
-r-car
-r-broom
-r-pROC
-r-lmtest
-r-glmnet
-r-testthat
-r-microbenchmark
 
 # these are the scipy base packages ( YOU PROBABLY DON'T WANT TO REMOVE THESE )
 dask 
