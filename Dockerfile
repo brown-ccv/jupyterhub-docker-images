@@ -53,16 +53,6 @@ RUN fix-permissions "${CONDA_DIR}" && \
 
 USER root
 
-# Install missing fonts
-RUN cd /usr/share/fonts && \
-    wget http://mirrors.ctan.org/fonts/tex-gyre/opentype/texgyrepagella-bold.otf && \
-    wget http://mirrors.ctan.org/fonts/tex-gyre/opentype/texgyrepagella-bolditalic.otf && \
-    wget http://mirrors.ctan.org/fonts/tex-gyre/opentype/texgyrepagella-italic.otf && \
-    wget http://mirrors.ctan.org/fonts/tex-gyre/opentype/texgyrepagella-regular.otf && \
-    wget https://noto-website-2.storage.googleapis.com/pkgs/NotoSansMono-unhinted.zip && \
-    unzip NotoSansMono-unhinted.zip && \
-    chmod +r -R /usr/share/fonts
-
 RUN fc-cache -fsv 
 RUN mktexlsr
 
