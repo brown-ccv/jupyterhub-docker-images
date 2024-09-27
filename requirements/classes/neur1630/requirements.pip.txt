@@ -8,3 +8,10 @@ pynapple
 pybiomart
 pyranges
 gseapy
+gdown
+rastermap
+zenodo-get
+cellxgene-census
+ONE-api
+git+https://github.com/alleninstitute/abc_atlas_access.git
+PyYAML>=6.0.0
