@@ -1,0 +1,56 @@
+name: tag-image-biol1435
+on: [workflow_dispatch]
+
+env:
+  CLASS: biol1435
+  TARGET: r_julia
+  SQLITE: false
+  PYTHON_VERSION: "3.9"
+  PROJECT_ID: jupyterhub-docker-images
+  REGION: us-east1
+  GAR_LOCATION: us-east1-docker.pkg.dev/jupyterhub-docker-images/all-classes/biol1435
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3.5.3
+
+      - name: Set Up GCloud
+        uses: google-github-actions/setup-gcloud@v0.6.2
+        with:
+          project_id: ${{ secrets.GCP_PROJECT_ID_JH_DOCKER }}
+          service_account_key: ${{ secrets.GCP_SA_KEY_JH_DOCKER }}
+          export_default_credentials: true
+
+      - name: Create Julia Environment Files
+        if: env.TARGET == 'r_julia'
+        run: |
+          sudo --preserve-env=CLASS docker compose up julia_build
+
+      - name: Upload Julia Env Files to Google Storage Bucket
+        if: env.TARGET == 'r_julia'
+        run: |
+          gsutil cp -r requirements/classes/biol1435/julia_env gs://jupyterhub-environment-files/spring-2025/biol1435/past/${GITHUB_SHA}/julia
+          gsutil cp -r requirements/classes/biol1435/julia_env gs://jupyterhub-environment-files/spring-2025/biol1435/latest/julia
+
+      - name: Configure Docker
+        run: gcloud auth configure-docker ${{ env.REGION }}-docker.pkg.dev --quiet
+      - name: Build JH Image
+        run: |
+          COMPOSE_DOCKER_CLI_BUILD=1 DOCKER_BUILDKIT=1 docker compose up jh_image
+          docker tag ${{ env.CLASS }}:latest ${{ env.GAR_LOCATION }}:latest
+          docker tag ${{ env.CLASS }}:latest ${{ env.GAR_LOCATION }}:${GITHUB_REF##*/}
+          docker tag ${{ env.CLASS }}:latest ${{ env.GAR_LOCATION }}:${GITHUB_SHA}
+          docker tag ${{ env.CLASS }}:latest ${{ env.GAR_LOCATION }}:spring-2025
+      - name: Push JH Image
+        run: |
+          docker push ${{ env.GAR_LOCATION }}:latest
+          docker push ${{ env.GAR_LOCATION }}:${GITHUB_REF##*/}
+          docker push ${{ env.GAR_LOCATION }}:${GITHUB_SHA}
+          docker push ${{ env.GAR_LOCATION }}:spring-2025
+
+      - name: Upload Conda Env Files to Google Storage Bucket
+        run: |
+          gsutil cp -r requirements/out gs://jupyterhub-environment-files/spring-2025/biol1435/past/${GITHUB_SHA}/conda
+          gsutil cp -r requirements/out gs://jupyterhub-environment-files/spring-2025/biol1435/latest/conda
