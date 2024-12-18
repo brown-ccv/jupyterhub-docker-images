@@ -26,9 +26,11 @@ xlrd
 bottleneck
 pytables
 
+tensorflow-cpu
+
 # these are the base r packages in the r-notebook image ( YOU PROBABLY WANT THESE IF YOUR TARGET IN DOCKER IS r_lang OR r_julia )
 # https://stat.ethz.ch/R-manual/R-devel/library/base/html/00Index.html
-r-base=4.2.*
+r-base=4.3.*
 # https://github.com/topepo/caret/releases/tag/v6.0-93
 r-caret=6.*
 # https://cran.r-project.org/web/packages/crayon/index.html
@@ -64,6 +66,32 @@ r-tidyverse
 unixodbc=2.*
 # https://cran.r-project.org/web/packages/tidymodels/index.html
 r-tidymodels=1.*
+
+#additional base r packages
+r-leaflet
+r-microbenchmark
+r-foreach
+r-doParallel
+r-kernlab
+r-e1071
+r-pROC
+r-tree
+r-rpart
+r-caret
+r-doMC
+r-randomForest
+r-gbm
+r-Metrics
+r-keras
+r-tfdatasets
+r-arules
+r-rtsne
+r-deriv
+r-plotly
+r-cluster
+r-xgboost
+r-ranger
+r-tensorflow
 
 # required for environment and plugins ( DO NOT REMOVE THESE!!! )
 ipython 
