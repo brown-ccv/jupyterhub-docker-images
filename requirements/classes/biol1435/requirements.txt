@@ -6,6 +6,8 @@ pyslim
 demes
 demesdraw
 sage
+h5py
+scikit-allel
 
 # these are the scipy base packages ( YOU PROBABLY DON'T WANT TO REMOVE THESE )
 dask 
