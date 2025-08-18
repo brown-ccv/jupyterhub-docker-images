@@ -1,0 +1,54 @@
+name: build-image-php2560
+on: 
+  push:
+      paths:
+      - 'requirements/classes/php2560/**'
+      - 'Dockerfile'
+      - 'docker-compose.yml'
+      - 'scripts/**'
+      - '.github/workflows/php2560.yml'
+  workflow_dispatch:
+
+env:
+  CLASS: php2560
+  TARGET: r_lang
+  SQLITE: false
+  PYTHON_VERSION: "3.9.17"
+  PROJECT_ID: jupyterhub-docker-images
+  REGION: us-east1
+  GAR_LOCATION: us-east1-docker.pkg.dev/jupyterhub-docker-images/all-classes/php2560
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5.0.0
+
+      - name: Set Up GCloud
+        uses: google-github-actions/setup-gcloud@v2.2.0
+        with:
+          project_id: ${{ secrets.GCP_PROJECT_ID_JH_DOCKER }}
+          service_account_key: ${{ secrets.GCP_SA_KEY_JH_DOCKER }}
+          export_default_credentials: true
+
+      - name: Create Julia Environment Files
+        if: env.TARGET == 'r_julia'
+        run: |
+          sudo --preserve-env=CLASS docker compose up julia_build
+
+      - name: Configure Docker
+        run: gcloud auth configure-docker ${{ env.REGION }}-docker.pkg.dev --quiet
+
+      - name: Build JH Image
+        run: |
+          COMPOSE_DOCKER_CLI_BUILD=1 DOCKER_BUILDKIT=1 docker compose up jh_image
+
+      - name: Tag JH Image
+        run: |
+          docker tag ${{ env.CLASS }}:latest ${{ env.GAR_LOCATION }}:${GITHUB_REF##*/}
+          docker tag ${{ env.CLASS }}:latest ${{ env.GAR_LOCATION }}:latest
+
+      - name: Push JH Image
+        run: |
+          docker push ${{ env.GAR_LOCATION }}:latest
+          docker push ${{ env.GAR_LOCATION }}:${GITHUB_REF##*/}
