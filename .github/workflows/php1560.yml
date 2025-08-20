@@ -31,7 +31,9 @@ jobs:
         uses: google-github-actions/auth@v2.1.12
         with:
           project_id: ${{ secrets.GCP_PROJECT_ID_JH_DOCKER }}
-          credentials_json: "./creds.json"
+          credentials_json: ./creds.json
+          export_environment_variables: true
+          create_credentials_file: true
 
       - name: Set Up GCloud
         uses: google-github-actions/setup-gcloud@v2.2.0
