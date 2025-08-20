@@ -28,7 +28,7 @@ jobs:
         uses: google-github-actions/auth@v2.1.12
         with:
           project_id: ${{ secrets.GCP_PROJECT_ID_JH_DOCKER }}
-          credentials_json: '${{ secrets.SA_KEY_JH_DOCKER_2025}}'
+          credentials_json: '${{ secrets.GCP_SA_KEY_JH_DOCKER }}'
           export_environment_variables: true
           create_credentials_file: true
 
