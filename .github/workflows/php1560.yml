@@ -24,14 +24,11 @@ jobs:
     steps:
       - uses: actions/checkout@v5.0.0
 
-      - name: Setup Google Service Account
-        run:  echo '${{ secrets.SA_KEY_JH_DOCKER_2025}}' > ./creds.json
-
       - name: Auth GCloud
         uses: google-github-actions/auth@v2.1.12
         with:
           project_id: ${{ secrets.GCP_PROJECT_ID_JH_DOCKER }}
-          credentials_json: ./creds.json
+          credentials_json: '${{ secrets.SA_KEY_JH_DOCKER_2025}}'
           export_environment_variables: true
           create_credentials_file: true
 
