@@ -13,7 +13,7 @@ env:
   CLASS: php1560
   TARGET: r_lang
   SQLITE: false
-  PYTHON_VERSION: "3.9.17"
+  PYTHON_VERSION: "3.9.23"
   PROJECT_ID: jupyterhub-docker-images
   REGION: us-east1
   GAR_LOCATION: us-east1-docker.pkg.dev/jupyterhub-docker-images/all-classes/php1560
