@@ -266,6 +266,7 @@ USER root
 RUN /opt/conda/bin/python -m pip install webio_jupyter_extension
 USER $NB_UID
 
+ENV R_LIBS_USER="${CONDA_DIR}/envs/${CLASS}/lib/R/library:${CONDA_DIR}/lib/R/library"
 ENV JULIA_DEPOT_PATH="$HOME/.julia:$JULIA_DEPOT_PATH"
 
 USER $NB_UID
