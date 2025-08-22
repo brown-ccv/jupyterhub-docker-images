@@ -45,7 +45,7 @@ RUN apt-get update && \
     texlive-plain-generic \
     pandoc \
     dvipng \
-    cmake && \
+    cmake \
     libmagick++-dev \
     librsvg2-dev \
     libcairo2-dev && \
