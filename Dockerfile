@@ -44,7 +44,8 @@ RUN apt-get update && \
     texlive-fonts-recommended \
     texlive-plain-generic \
     pandoc \
-    dvipng && \
+    dvipng \
+    cmake && \
     apt-get clean && rm -rf /var/lib/apt/lists/*
 
 USER ${NB_UID}
@@ -194,8 +195,11 @@ RUN apt-get update && \
     unixodbc-dev \
     r-cran-rodbc \
     gfortran \
-    gcc && \
-    rm -rf /var/lib/apt/lists/*
+    gcc \
+    libmagick++-dev \
+    librsvg2-dev \
+    libcairo2-dev && \
+    apt-get clean && rm -rf /var/lib/apt/lists/*
 
 # Fix for devtools https://github.com/conda-forge/r-devtools-feedstock/issues/4
 RUN ln -s /bin/tar /bin/gtar
