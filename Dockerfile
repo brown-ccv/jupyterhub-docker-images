@@ -162,6 +162,11 @@ RUN $CONDA_DIR/envs/${CLASS}/bin/pip install -r /home/$NB_USER/tmp/requirements.
     fix-permissions $CONDA_DIR && \
     fix-permissions /home/$NB_USER
 
+# Creating this directory to store output environment.yml files
+RUN mkdir -p /home/$NB_USER/tmp/out && \
+    fix-permissions /home/$NB_USER/tmp/out && \
+    fix-permissions /home/$NB_USER
+
 # make class environment to be the default one
 ENV CONDA_DEFAULT_ENV ${CLASS}
 
@@ -205,7 +210,7 @@ RUN mamba install -y -p ${CONDA_DIR} -c conda-forge r-irkernel && \
 
 # Install necessary R packages along with their dependencies
 RUN Rscript /home/$NB_USER/tmp/packages.R
-
+ENV R_LIBS_USER="${CONDA_DIR}/envs/${CLASS}/lib/R/library:${CONDA_DIR}/lib/R/library"
 
 ####################################################################
 # Add Julia pre-requisites
