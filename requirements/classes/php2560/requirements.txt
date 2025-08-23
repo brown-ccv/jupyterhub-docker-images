@@ -4,6 +4,7 @@ r-dplyr
 r-sf
 r-magick
 r-cairo
+libglib
 
 # these are the scipy base packages ( YOU PROBABLY DON'T WANT TO REMOVE THESE )
 dask 
