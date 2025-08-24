@@ -5,6 +5,7 @@ r-sf
 r-magick
 r-cairo
 librsvg
+glib
 libglib
 
 # these are the scipy base packages ( YOU PROBABLY DON'T WANT TO REMOVE THESE )
