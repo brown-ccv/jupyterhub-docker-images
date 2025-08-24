@@ -47,8 +47,8 @@ RUN apt-get update && \
     dvipng \
     cmake \
     libmagick++-dev \
-    librsvg2-dev \
-    libcairo2-dev && \
+    #librsvg2-dev \
+    #libcairo2-dev && \
     apt-get clean && rm -rf /var/lib/apt/lists/*
 
 USER ${NB_UID}
@@ -199,6 +199,8 @@ RUN apt-get update && \
     r-cran-rodbc \
     gfortran \
     gcc \
+    default-jdk \
+    default-jre \
     libmagick++-dev \
     librsvg2-dev \
     libcairo2-dev && \
