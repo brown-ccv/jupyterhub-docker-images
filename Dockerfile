@@ -199,8 +199,6 @@ RUN apt-get update && \
     r-cran-rodbc \
     gfortran \
     gcc \
-    default-jdk \
-    default-jre \
     libmagick++-dev \
     librsvg2-dev \
     libcairo2-dev && \
