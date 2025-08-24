@@ -46,7 +46,7 @@ RUN apt-get update && \
     pandoc \
     dvipng \
     cmake \
-    libmagick++-dev \
+    libmagick++-dev && \
     #librsvg2-dev \
     #libcairo2-dev && \
     apt-get clean && rm -rf /var/lib/apt/lists/*
