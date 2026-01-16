@@ -11,6 +11,6 @@
 # BiocManager::install(c("airway", "DESeq2", "vsn", "biomaRt",
 #                        "AnnotationHub", "SummarizedExperiment"))
 install.packages(
-    c("HDSinRdata", "GGally", "gt", "gtsummary", "tidyverse", "patchwork", "usmap", "car", "broom", "pROC", "lmtest", "glmnet", "testthat", "microbenchmark"),
+    c("HDSinRdata", "GGally", "gt", "gtsummary", "tidyverse", "patchwork", "usmap", "car", "broom", "pROC", "lmtest", "glmnet", "testthat", "microbenchmark","SmartEDA"),
     dependencies=TRUE, 
     repos='http://cran.rstudio.com/')

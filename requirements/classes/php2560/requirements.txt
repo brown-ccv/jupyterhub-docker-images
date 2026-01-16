@@ -2,6 +2,13 @@
 r-ggplot2
 r-dplyr
 r-sf
+r-magick
+r-cairo
+librsvg
+glib
+libglib
+openjdk
+r-rjava
 
 # these are the scipy base packages ( YOU PROBABLY DON'T WANT TO REMOVE THESE )
 dask 
@@ -31,7 +38,7 @@ pytables
 
 # these are the base r packages in the r-notebook image ( YOU PROBABLY WANT THESE IF YOUR TARGET IN DOCKER IS r_lang OR r_julia )
 # https://stat.ethz.ch/R-manual/R-devel/library/base/html/00Index.html
-r-base=4.2.*
+r-base=4.3.*
 # https://github.com/topepo/caret/releases/tag/v6.0-93
 r-caret=6.*
 # https://cran.r-project.org/web/packages/crayon/index.html

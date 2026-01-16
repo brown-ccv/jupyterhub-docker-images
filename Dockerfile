@@ -1,6 +1,6 @@
 # Copyright (c) Jupyter Development Team.
 # Distributed under the terms of the Modified BSD License.
-ARG ROOT_CONTAINER="jupyter/base-notebook:lab-4.0.7"
+ARG ROOT_CONTAINER="quay.io/jupyter/base-notebook:lab-4.4.6"
 FROM ${ROOT_CONTAINER} as base
 
 ARG CLASS
@@ -44,7 +44,11 @@ RUN apt-get update && \
     texlive-fonts-recommended \
     texlive-plain-generic \
     pandoc \
-    dvipng && \
+    dvipng \
+    cmake \
+    libmagick++-dev && \
+    #librsvg2-dev \
+    #libcairo2-dev && \
     apt-get clean && rm -rf /var/lib/apt/lists/*
 
 USER ${NB_UID}
@@ -58,7 +62,7 @@ RUN mktexlsr
 
 #------------ Install VSCode Server a Root----------------------------
 
-ENV VS_CODE_VERSION=4.91.1
+ENV VS_CODE_VERSION=4.103.1
 RUN mkdir /opt/code-server 
 WORKDIR /opt/code-server 
 RUN wget -qO- https://github.com/coder/code-server/releases/download/v${VS_CODE_VERSION}/code-server-${VS_CODE_VERSION}-linux-amd64.tar.gz | tar zxvf - --strip-components=1
@@ -162,6 +166,11 @@ RUN $CONDA_DIR/envs/${CLASS}/bin/pip install -r /home/$NB_USER/tmp/requirements.
     fix-permissions $CONDA_DIR && \
     fix-permissions /home/$NB_USER
 
+# Creating this directory to store output environment.yml files
+RUN mkdir -p /home/$NB_USER/tmp/out && \
+    fix-permissions /home/$NB_USER/tmp/out && \
+    fix-permissions /home/$NB_USER
+
 # make class environment to be the default one
 ENV CONDA_DEFAULT_ENV ${CLASS}
 
@@ -189,8 +198,11 @@ RUN apt-get update && \
     unixodbc-dev \
     r-cran-rodbc \
     gfortran \
-    gcc && \
-    rm -rf /var/lib/apt/lists/*
+    gcc \
+    libmagick++-dev \
+    librsvg2-dev \
+    libcairo2-dev && \
+    apt-get clean && rm -rf /var/lib/apt/lists/*
 
 # Fix for devtools https://github.com/conda-forge/r-devtools-feedstock/issues/4
 RUN ln -s /bin/tar /bin/gtar
@@ -205,7 +217,7 @@ RUN mamba install -y -p ${CONDA_DIR} -c conda-forge r-irkernel && \
 
 # Install necessary R packages along with their dependencies
 RUN Rscript /home/$NB_USER/tmp/packages.R
-
+ENV R_LIBS_USER="${CONDA_DIR}/envs/${CLASS}/lib/R/library:${CONDA_DIR}/lib/R/library"
 
 ####################################################################
 # Add Julia pre-requisites
@@ -221,8 +233,8 @@ USER root
 
 ENV JULIA_DEPOT_PATH=/opt/julia
 ENV JULIA_PKGDIR=/opt/julia
-ENV JULIA_VERSION=1.10.4
-ENV JULIA_TAG=v1.10.4
+ENV JULIA_VERSION=1.11.6
+ENV JULIA_TAG=v1.11.6
 
 COPY requirements/classes/${CLASS}/julia_env/Project.toml $JULIA_PKGDIR/environments/$JULIA_TAG/
 COPY requirements/classes/${CLASS}/julia_env/Manifest.toml $JULIA_PKGDIR/environments/$JULIA_TAG/
@@ -233,7 +245,7 @@ WORKDIR /tmp
 # hadolint ignore=SC2046
 RUN mkdir "/opt/julia-${JULIA_VERSION}" && \
     wget -q https://julialang-s3.julialang.org/bin/linux/x64/$(echo "${JULIA_VERSION}" | cut -d. -f 1,2)"/julia-${JULIA_VERSION}-linux-x86_64.tar.gz" && \
-    echo "079f61757c3b5b40d2ade052b3cc4816f50f7ef6df668825772562b3746adff1 *julia-${JULIA_VERSION}-linux-x86_64.tar.gz" | sha256sum -c - && \
+    echo "e99e52e2029d845097c68f2372d836186f0eb3fb897a9dde0bdf9ee9250d03d5 *julia-${JULIA_VERSION}-linux-x86_64.tar.gz" | sha256sum -c - && \
     tar xzf "julia-${JULIA_VERSION}-linux-x86_64.tar.gz" -C "/opt/julia-${JULIA_VERSION}" --strip-components=1 && \
     rm "/tmp/julia-${JULIA_VERSION}-linux-x86_64.tar.gz"
 RUN ln -fs /opt/julia-*/bin/julia /usr/local/bin/julia
@@ -266,6 +278,7 @@ USER root
 RUN /opt/conda/bin/python -m pip install webio_jupyter_extension
 USER $NB_UID
 
+ENV R_LIBS_USER="${CONDA_DIR}/envs/${CLASS}/lib/R/library:${CONDA_DIR}/lib/R/library"
 ENV JULIA_DEPOT_PATH="$HOME/.julia:$JULIA_DEPOT_PATH"
 
 USER $NB_UID

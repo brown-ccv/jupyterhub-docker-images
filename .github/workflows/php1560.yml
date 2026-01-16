@@ -13,7 +13,7 @@ env:
   CLASS: php1560
   TARGET: r_lang
   SQLITE: false
-  PYTHON_VERSION: "3.9.17"
+  PYTHON_VERSION: "3.9.23"
   PROJECT_ID: jupyterhub-docker-images
   REGION: us-east1
   GAR_LOCATION: us-east1-docker.pkg.dev/jupyterhub-docker-images/all-classes/php1560
@@ -22,14 +22,20 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3.5.3
+      - uses: actions/checkout@v5.0.0
 
-      - name: Set Up GCloud
-        uses: google-github-actions/setup-gcloud@v0.6.2
+      - name: Auth GCloud
+        uses: google-github-actions/auth@v2.1.12
         with:
           project_id: ${{ secrets.GCP_PROJECT_ID_JH_DOCKER }}
-          service_account_key: ${{ secrets.GCP_SA_KEY_JH_DOCKER }}
-          export_default_credentials: true
+          credentials_json: '${{ secrets.GCP_SA_KEY_JH_DOCKER }}'
+          export_environment_variables: true
+          create_credentials_file: true
+
+      - name: Set Up GCloud
+        uses: google-github-actions/setup-gcloud@v2.2.0
+        with:
+          project_id: ${{ secrets.GCP_PROJECT_ID_JH_DOCKER }}
 
       - name: Create Julia Environment Files
         if: env.TARGET == 'r_julia'
