@@ -9,6 +9,7 @@ glib
 libglib
 openjdk
 r-rjava
+ipympl
 
 # these are the scipy base packages ( YOU PROBABLY DON'T WANT TO REMOVE THESE )
 dask 
