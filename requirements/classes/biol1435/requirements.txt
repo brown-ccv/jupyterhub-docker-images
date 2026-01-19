@@ -8,6 +8,7 @@ demesdraw
 sage
 h5py
 scikit-allel
+ete3
 
 # these are the scipy base packages ( YOU PROBABLY DON'T WANT TO REMOVE THESE )
 dask 
