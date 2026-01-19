@@ -11,7 +11,7 @@ on:
 
 env:
   CLASS: biol1435
-  TARGET: r_julia
+  TARGET: r_lang
   SQLITE: false
   PYTHON_VERSION: "3.12.12"
   PROJECT_ID: jupyterhub-docker-images
