@@ -5,7 +5,7 @@ env:
   CLASS: biol1435
   TARGET: r_julia
   SQLITE: false
-  PYTHON_VERSION: "3.10.19"
+  PYTHON_VERSION: "3.12.12"
   PROJECT_ID: jupyterhub-docker-images
   REGION: us-east1
   GAR_LOCATION: us-east1-docker.pkg.dev/jupyterhub-docker-images/all-classes/biol1435
