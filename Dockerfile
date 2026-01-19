@@ -1,7 +1,8 @@
 # Copyright (c) Jupyter Development Team.
 # Distributed under the terms of the Modified BSD License.
 ARG ROOT_CONTAINER="quay.io/jupyter/base-notebook:lab-4.4.6"
-FROM --platform=linux/amd64 ${ROOT_CONTAINER} as base
+ARG BUILDPLATFORM=linux/amd64
+FROM --platform=${BUILDPLATFORM} ${ROOT_CONTAINER} as base
 
 ARG CLASS
 ARG SQLITE
