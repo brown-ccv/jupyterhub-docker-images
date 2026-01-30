@@ -1,0 +1,60 @@
+name: build-image-apma0365
+on: 
+  push:
+      paths:
+      - 'requirements/classes/apma0365/**'
+      - 'Dockerfile'
+      - 'docker-compose.yml'
+      - 'scripts/**'
+      - '.github/workflows/apma0365.yml'
+  workflow_dispatch:
+
+env:
+  CLASS: apma0365
+  TARGET: base
+  SQLITE: false
+  PYTHON_VERSION: "3.10.19"
+  PROJECT_ID: jupyterhub-docker-images
+  REGION: us-east1
+  GAR_LOCATION: us-east1-docker.pkg.dev/jupyterhub-docker-images/all-classes/apma0365
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5.0.0
+
+      - name: Auth GCloud
+        uses: google-github-actions/auth@v2.1.12
+        with:
+          project_id: ${{ secrets.GCP_PROJECT_ID_JH_DOCKER }}
+          credentials_json: '${{ secrets.GCP_SA_KEY_JH_DOCKER }}'
+          export_environment_variables: true
+          create_credentials_file: true
+
+      - name: Set Up GCloud
+        uses: google-github-actions/setup-gcloud@v2.2.0
+        with:
+          project_id: ${{ secrets.GCP_PROJECT_ID_JH_DOCKER }}
+
+      - name: Create Julia Environment Files
+        if: env.TARGET == 'r_julia'
+        run: |
+          sudo --preserve-env=CLASS docker compose up julia_build
+
+      - name: Configure Docker
+        run: gcloud auth configure-docker ${{ env.REGION }}-docker.pkg.dev --quiet
+
+      - name: Build JH Image
+        run: |
+          COMPOSE_DOCKER_CLI_BUILD=1 DOCKER_BUILDKIT=1 docker compose up jh_image
+
+      - name: Tag JH Image
+        run: |
+          docker tag ${{ env.CLASS }}:latest ${{ env.GAR_LOCATION }}:${GITHUB_REF##*/}
+          docker tag ${{ env.CLASS }}:latest ${{ env.GAR_LOCATION }}:latest
+
+      - name: Push JH Image
+        run: |
+          docker push ${{ env.GAR_LOCATION }}:latest
+          docker push ${{ env.GAR_LOCATION }}:${GITHUB_REF##*/}
